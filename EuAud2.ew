@@ -1,0 +1,827 @@
+without warning
+without type_check
+
+include std/dll.e
+include std/machine.e
+
+include sfFlags.e
+
+atom aud = open_dll("csfml-audio-2.dll")
+
+if aud = -1 then
+	puts(1,"Could not open csfml-audio-2.dll!\n")
+	abort(0)
+end if
+
+--Listener functions
+
+public constant xsfListener_setGlobalVolume = define_c_proc(aud,"sfListener_setGlobalVolume",{C_FLOAT}),
+				xsfListener_getGlobalVolume = define_c_func(aud,"sfListener_getGlobalVolume",{},C_FLOAT),
+				xsfListener_setPosition = define_c_proc(aud,"sfListener_setPosition",{C_FLOAT,C_FLOAT,C_FLOAT}),
+				xsfListener_getPosition = define_c_func(aud,"sfListener_getPosition",{},C_POINTER),
+				xsfListener_setDirection = define_c_proc(aud,"sfListener_setDirection",{C_FLOAT,C_FLOAT,C_FLOAT}),
+				xsfListener_getDirection = define_c_func(aud,"sfListener_getDirection",{},C_POINTER),
+				xsfListener_setUpVector = define_c_proc(aud,"sfListener_setUpVector",{C_FLOAT,C_FLOAT,C_FLOAT}),
+				xsfListener_getUpVector = define_c_func(aud,"sfListener_getUpVector",{},C_POINTER)
+				
+public procedure sfListener_setGlobalVolume(atom vol)
+
+ c_proc(xsfListener_setGlobalVolume,{vol})
+	
+end procedure
+
+public function sfListener_getGlobalVolume()
+
+ return c_func(xsfListener_getGlobalVolume,{})
+	
+end function
+
+public procedure sfListener_setPosition(atom x,atom y,atom z)
+
+ c_proc(xsfListener_setPosition,{x,y,z})
+	
+end procedure
+
+public function sfListener_getPosition()
+
+ return c_func(xsfListener_getPosition,{})
+	
+end function
+
+public procedure sfListener_setDirection(atom x,atom y,atom z)
+
+ c_proc(xsfListener_setDirection,{x,y,z})
+	
+end procedure
+
+public function sfListener_getDirection()
+
+ return c_func(xsfListener_getDirection,{})
+	
+end function
+
+public procedure sfListener_setUpVector(atom x,atom y,atom z)
+
+ c_proc(xsfListener_setUpVector,{x,y,z})
+	
+end procedure
+
+public function sfListener_getUpVector()
+
+ return c_func(xsfListener_getUpVector,{})
+	
+end function
+
+--Music functions
+
+public constant xsfMusic_createFromFile = define_c_func(aud,"sfMusic_createFromFile",{C_POINTER},C_POINTER),
+				xsfMusic_createFromMemory = define_c_func(aud,"sfMusic_createFromMemory",{C_POINTER,C_SIZE_T},C_POINTER),
+				xsfMusic_createFromStream = define_c_func(aud,"sfMusic_createFromStream",{C_POINTER},C_POINTER),
+				xsfMusic_destroy = define_c_proc(aud,"sfMusic_destroy",{C_POINTER}),
+				xsfMusic_setLoop = define_c_proc(aud,"sfMusic_setLoop",{C_POINTER,C_BOOL}),
+				xsfMusic_getLoop = define_c_func(aud,"sfMusic_getLoop",{C_POINTER},C_BOOL),
+				xsfMusic_getDuration = define_c_func(aud,"sfMusic_getDuration",{C_POINTER},C_POINTER),
+				xsfMusic_play = define_c_proc(aud,"sfMusic_play",{C_POINTER}),
+				xsfMusic_pause = define_c_proc(aud,"sfMusic_pause",{C_POINTER}),
+				xsfMusic_stop = define_c_proc(aud,"sfMusic_stop",{C_POINTER}),
+				xsfMusic_getChannelCount = define_c_func(aud,"sfMusic_getChannelCount",{C_POINTER},C_UINT),
+				xsfMusic_getSampleRate = define_c_func(aud,"sfMusic_getSampleRate",{C_POINTER},C_UINT),
+				xsfMusic_getStatus = define_c_func(aud,"sfMusic_getStatus",{C_POINTER},C_POINTER),
+				xsfMusic_getPlayingOffset = define_c_func(aud,"sfMusic_getPlayingOffset",{C_POINTER},C_POINTER),
+				xsfMusic_setPitch = define_c_proc(aud,"sfMusic_setPitch",{C_POINTER,C_FLOAT}),
+				xsfMusic_setVolume = define_c_proc(aud,"sfMusic_setVolume",{C_POINTER,C_FLOAT}),
+				xsfMusic_setPosition = define_c_proc(aud,"sfMusic_setPosition",{C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT}),
+				xsfMusic_setRelativeToListener = define_c_proc(aud,"sfMusic_setRelativeToListener",{C_POINTER,C_BOOL}),
+				xsfMusic_setMinDistance = define_c_proc(aud,"sfMusic_setMinDistance",{C_POINTER,C_FLOAT}),
+				xsfMusic_setAttenuation = define_c_proc(aud,"sfMusic_setAttenuation",{C_POINTER,C_FLOAT}),
+				xsfMusic_setPlayingOffset = define_c_proc(aud,"sfMusic_setPlayingOffset",{C_POINTER,C_POINTER}),
+				xsfMusic_getPitch = define_c_func(aud,"sfMusic_getPitch",{C_POINTER},C_FLOAT),
+				xsfMusic_getVolume = define_c_func(aud,"sfMusic_getVolume",{C_POINTER},C_FLOAT),
+				xsfMusic_getPosition = define_c_func(aud,"sfMusic_getPosition",{C_POINTER},C_POINTER),
+				xsfMusic_isRelativeToListener = define_c_func(aud,"sfMusic_isRelativeToListener",{C_POINTER},C_BOOL),
+				xsfMusic_getMinDistance = define_c_func(aud,"sfMusic_getMinDistance",{C_POINTER},C_FLOAT),
+				xsfMusic_getAttenuation = define_c_func(aud,"sfMusic_getAttenuation",{C_POINTER},C_FLOAT)
+				
+public function sfMusic_createFromFile(sequence file)
+
+ return c_func(xsfMusic_createFromFile,{allocate_string(file,1)})
+	
+end function
+
+public function sfMusic_createFromMemory(object dat,atom size)
+
+ return c_func(xsfMusic_createFromMemory,{dat,size})
+	
+end function
+
+public function sfMusic_createFromStream(sequence str)
+
+ return c_func(xsfMusic_createFromStream,{str})
+	
+end function
+
+public procedure sfMusic_destroy(atom mus)
+
+ c_proc(xsfMusic_destroy,{mus})
+	
+end procedure
+
+public procedure sfMusic_setLoop(atom mus,integer xloop)
+
+ c_proc(xsfMusic_setLoop,{mus,xloop})
+	
+end procedure
+
+public function sfMusic_getLoop(atom mus)
+
+ return c_func(xsfMusic_getLoop,{mus})
+	
+end function
+
+public function sfMusic_getDuration(atom mus)
+
+ return c_func(xsfMusic_getDuration,{mus})
+	
+end function
+
+public procedure sfMusic_play(atom mus)
+
+ c_proc(xsfMusic_play,{mus})
+	
+end procedure
+
+public procedure sfMusic_pause(atom mus)
+
+ c_proc(xsfMusic_pause,{mus})
+	
+end procedure
+
+public procedure sfMusic_stop(atom mus)
+
+ c_proc(xsfMusic_stop,{mus})
+	
+end procedure
+
+public function sfMusic_getChannelCount(atom mus)
+
+ return c_func(xsfMusic_getChannelCount,{mus})
+	
+end function
+
+public function sfMusic_getSampleRate(atom mus)
+
+ return c_func(xsfMusic_getSampleRate,{mus})
+	
+end function
+
+public function sfMusic_getStatus(atom mus)
+
+ return c_func(xsfMusic_getStatus,{mus})
+	
+end function
+
+public function sfMusic_getPlayingOffset(atom mus)
+
+ return c_func(xsfMusic_getPlayingOffset,{mus})
+	
+end function
+
+public procedure sfMusic_setPitch(atom mus,atom pit)
+
+ c_proc(xsfMusic_setPitch,{mus,pit})
+	
+end procedure
+
+public procedure sfMusic_setVolume(atom mus,atom vol)
+
+ c_proc(xsfMusic_setVolume,{mus,vol})
+	
+end procedure
+
+public procedure sfMusic_setPosition(atom mus,atom x,atom y,atom z)
+
+ c_proc(xsfMusic_setPosition,{mus,x,y,z})
+	
+end procedure
+
+public procedure sfMusic_setRelativeToListener(atom mus,integer rel)
+
+ c_proc(xsfMusic_setRelativeToListener,{mus,rel})
+	
+end procedure
+
+public procedure sfMusic_setMinDistance(atom mus,atom dis)
+
+ c_proc(xsfMusic_setMinDistance,{mus,dis})
+	
+end procedure
+
+public procedure sfMusic_setAttenuation(atom mus,atom att)
+
+ c_proc(xsfMusic_setAttenuation,{mus,att})
+	
+end procedure
+
+public procedure sfMusic_setPlayingOffset(atom mus,atom off)
+
+ c_proc(xsfMusic_setPlayingOffset,{mus,off})
+	
+end procedure
+
+public function sfMusic_getPitch(atom mus)
+
+ return c_func(xsfMusic_getPitch,{mus})
+	
+end function
+
+public function sfMusic_getVolume(atom mus)
+
+ return c_func(xsfMusic_getVolume,{mus})
+	
+end function
+
+public function sfMusic_getPosition(atom mus)
+
+ return c_func(xsfMusic_getPosition,{mus})
+	
+end function
+
+public function sfMusic_isRelativeToListener(atom mus)
+
+ return c_func(xsfMusic_isRelativeToListener,{mus})
+	
+end function
+
+public function sfMusic_getMinDistance(atom mus)
+
+ return c_func(xsfMusic_getMinDistance,{mus})
+	
+end function
+
+public function sfMusic_getAttenuation(atom mus)
+
+ return c_func(xsfMusic_getAttenuation,{mus})
+	
+end function
+
+--Sound functions
+
+public constant xsfSound_create = define_c_func(aud,"sfSound_create",{},C_POINTER),
+				xsfSound_copy = define_c_func(aud,"sfSound_copy",{C_POINTER},C_POINTER),
+				xsfSound_destroy = define_c_proc(aud,"sfSound_destroy",{C_POINTER}),
+				xsfSound_play = define_c_proc(aud,"sfSound_play",{C_POINTER}),
+				xsfSound_pause = define_c_proc(aud,"sfSound_pause",{C_POINTER}),
+				xsfSound_stop = define_c_proc(aud,"sfSound_stop",{C_POINTER}),
+				xsfSound_setBuffer = define_c_proc(aud,"sfSound_setBuffer",{C_POINTER,C_POINTER}),
+				xsfSound_getBuffer = define_c_func(aud,"sfSound_getBuffer",{C_POINTER},C_POINTER),
+				xsfSound_setLoop = define_c_proc(aud,"sfSound_setLoop",{C_POINTER,C_BOOL}),
+				xsfSound_getLoop = define_c_func(aud,"sfSound_getLoop",{C_POINTER},C_BOOL),
+				xsfSound_setPitch = define_c_proc(aud,"SfSound_setPitch",{C_POINTER,C_FLOAT}),
+				xsfSound_setVolume = define_c_proc(aud,"sfSound_setVolume",{C_POINTER,C_FLOAT}),
+				xsfSound_setPosition = define_c_proc(aud,"sfSound_setPosition",{C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT}),
+				xsfSound_setRelativeToListener = define_c_proc(aud,"sfSound_setRelativeToListener",{C_POINTER,C_BOOL}),
+				xsfSound_setMinDistance = define_c_proc(aud,"sfSound_setMinDistance",{C_POINTER,C_FLOAT}),
+				xsfSound_setAttenuation = define_c_proc(aud,"sfSound_setAttenuation",{C_POINTER,C_FLOAT}),
+				xsfSound_setPlayingOffset = define_c_proc(aud,"sfSound_setPlayingOffset",{C_POINTER,C_POINTER}),
+				xsfSound_getPitch = define_c_func(aud,"sfSound_getPitch",{C_POINTER},C_FLOAT),
+				xsfSound_getVolume = define_c_func(aud,"sfSound_getVolume",{C_POINTER},C_FLOAT),
+				xsfSound_getPosition = define_c_func(aud,"sfSound_getPosition",{C_POINTER},C_POINTER),
+				xsfSound_isRelativeToListener = define_c_func(aud,"sfSound_isRelativeToListener",{C_POINTER},C_BOOL),
+				xsfSound_getMinDistance = define_c_func(aud,"sfSound_getMinDistance",{C_POINTER},C_FLOAT),
+				xsfSound_getAttenuation = define_c_func(aud,"sfSound_getAttenuation",{C_POINTER},C_FLOAT),
+				xsfSound_getPlayingOffset = define_c_func(aud,"sfSound_getPlayingOffset",{C_POINTER},C_POINTER),
+				xsfSound_getStatus = define_c_func(aud,"sfSound_getStatus",{C_POINTER},C_POINTER)
+				
+public function sfSound_create()
+
+ return c_func(xsfSound_create,{})
+	
+end function
+
+public function sfSound_copy(atom snd)
+
+ return c_func(xsfSound_copy,{snd})
+	
+end function
+
+public procedure sfSound_destroy(atom snd)
+
+ c_proc(xsfSound_destroy,{snd})
+	
+end procedure
+
+public procedure sfSound_play(atom snd)
+
+ c_proc(xsfSound_play,{snd})
+	
+end procedure
+
+public procedure sfSound_pause(atom snd)
+
+ c_proc(xsfSound_pause,{snd})
+	
+end procedure
+
+public procedure sfSound_stop(atom snd)
+
+ c_proc(xsfSound_stop,{snd})
+	
+end procedure
+
+public procedure sfSound_setBuffer(atom snd,atom buf)
+
+ c_proc(xsfSound_setBuffer,{snd,buf})
+	
+end procedure
+
+public function sfSound_getBuffer(atom snd)
+
+ return c_func(xsfSound_getBuffer,{snd})
+	
+end function
+
+public procedure sfSound_setLoop(atom snd,integer xloop)
+
+ c_proc(xsfSound_setLoop,{snd,xloop})
+	
+end procedure
+
+public function sfSound_getLoop(atom snd)
+
+ return c_func(xsfSound_getLoop,{snd})
+	
+end function
+
+public function sfSound_getStatus(atom snd)
+
+ return c_func(xsfSound_getStatus,{snd})
+	
+end function
+
+public procedure sfSound_setPitch(atom snd,atom pit)
+
+ c_proc(xsfSound_setPitch,{snd,pit})
+	
+end procedure
+
+public procedure sfSound_setVolume(atom snd,atom vol)
+
+ c_proc(xsfSound_setVolume,{snd,vol})
+	
+end procedure
+
+public procedure sfSound_setPosition(atom snd,atom x,atom y,atom z)
+
+ c_proc(xsfSound_setPosition,{snd,x,y,z})
+	
+end procedure
+
+public procedure sfSound_setRelativeToListener(atom snd,integer rel)
+
+ c_proc(xsfSound_setRelativeToListener,{snd,rel})
+	
+end procedure
+
+public procedure sfSound_setMinDistance(atom snd,atom dis)
+
+ c_proc(xsfSound_setMinDistance,{snd,dis})
+	
+end procedure
+
+public procedure sfSound_setAttenuation(atom snd,atom att)
+
+ c_proc(xsfSound_setAttenuation,{snd,att})
+	
+end procedure
+
+public procedure sfSound_setPlayingOffset(atom snd,atom off)
+
+ c_proc(xsfSound_setPlayingOffset,{snd,off})
+	
+end procedure
+
+public function sfSound_getPitch(atom snd)
+
+ return c_func(xsfSound_getPitch,{snd})
+	
+end function
+
+public function sfSound_getVolume(atom snd)
+
+ return c_func(xsfSound_getVolume,{snd})
+	
+end function
+
+public function sfSound_getPosition(atom snd)
+
+ return c_func(xsfSound_getPosition,{snd})
+	
+end function
+
+public function sfSound_isRelativeToListener(atom snd)
+
+ return c_func(xsfSound_isRelativeToListener,{snd})
+	
+end function
+
+public function sfSound_getMinDistance(atom snd)
+
+ return c_func(xsfSound_getMinDistance,{snd})
+	
+end function
+
+public function sfSound_getAttenuation(atom snd)
+
+ return c_func(xsfSound_getAttenuation,{snd})
+	
+end function
+
+public function sfSound_getPlayingOffset(atom snd)
+
+ return c_func(xsfSound_getPlayingOffset,{snd})
+	
+end function
+
+--Sound Buffer functions
+
+public constant xsfSoundBuffer_createFromFile = define_c_func(aud,"sfSoundBuffer_createFromFile",{C_POINTER},C_POINTER),
+				xsfSoundBuffer_createFromMemory = define_c_func(aud,"sfSoundBuffer_createFromMemory",{C_POINTER,C_SIZE_T},C_POINTER),
+				xsfSoundBuffer_createFromStream = define_c_func(aud,"sfSoundBuffer_createFromStream",{C_POINTER},C_POINTER),
+				xsfSoundBuffer_createFromSamples = define_c_func(aud,"sfSoundBuffer_createFromSamples",{C_POINTER,C_SIZE_T,C_UINT,C_UINT},C_POINTER),
+				xsfSoundBuffer_copy = define_c_func(aud,"sfSoundBuffer_copy",{C_POINTER},C_POINTER),
+				xsfSoundBuffer_destroy = define_c_proc(aud,"sfSoundBuffer_destroy",{C_POINTER}),
+				xsfSoundBuffer_saveToFile = define_c_func(aud,"sfSoundBuffer_saveToFile",{C_POINTER,C_POINTER},C_BOOL),
+				xsfSoundBuffer_getSamples = define_c_func(aud,"SfSoundBuffer_getSamples",{C_POINTER},C_POINTER),
+				xsfSoundBuffer_getSampleCount = define_c_func(aud,"sfSoundBuffer_getSampleCount",{C_POINTER},C_SIZE_T),
+				xsfSoundBuffer_getSampleRate = define_c_func(aud,"sfSoundBuffer_getSampleRate",{C_POINTER},C_UINT),
+				xsfSoundBuffer_getChannelCount = define_c_func(aud,"sfSoundBuffer_getChannelCount",{C_POINTER},C_UINT),
+				xsfSoundBuffer_getDuration = define_c_func(aud,"sfSoundBuffer_getDuration",{C_POINTER},C_POINTER)
+				
+public function sfSoundBuffer_createFromFile(sequence file)
+
+ return c_func(xsfSoundBuffer_createFromFile,{allocate_string(file,1)})
+	
+end function
+
+public function sfSoundBuffer_createFromMemory(object dat,atom size)
+
+ return c_func(xsfSoundBuffer_createFromMemory,{dat,size})
+	
+end function
+
+public function sfSoundBuffer_createFromStream(sequence str)
+
+ return c_func(xsfSoundBuffer_createFromStream,{str})
+	
+end function
+
+public function sfSoundBuffer_createFromSamples(atom samp,atom cnt,atom chan,atom rat)
+
+ return c_func(xsfSoundBuffer_createFromSamples,{samp,cnt,chan,rat})
+	
+end function
+
+public function sfSoundBuffer_copy(atom sb)
+
+ return c_func(xsfSoundBuffer_copy,{sb})
+	
+end function
+
+public procedure sfSoundBuffer_destroy(atom sb)
+
+ c_proc(xsfSoundBuffer_destroy,{sb})
+	
+end procedure
+
+public function sfSoundBuffer_saveToFile(atom sb,sequence file)
+
+ return c_func(xsfSoundBuffer_saveToFile,{sb,allocate_string(file,1)})
+	
+end function
+
+public function sfSoundBuffer_getSamples(atom sb)
+
+ return c_func(xsfSoundBuffer_getSamples,{sb})
+	
+end function
+
+public function sfSoundBuffer_getSampleCount(atom sb)
+
+ return c_func(xsfSoundBuffer_getSampleCount,{sb})
+	
+end function
+
+public function sfSoundBuffer_getSampleRate(atom sb)
+
+ return c_func(xsfSoundBuffer_getSampleRate,{sb})
+	
+end function
+
+public function sfSoundBuffer_getChannelCount(atom sb)
+
+ return c_func(xsfSoundBuffer_getChannelCount,{sb})
+	
+end function
+
+public function sfSoundBuffer_getDuration(atom sb)
+
+ return c_func(xsfSoundBuffer_getDuration,{sb})
+	
+end function
+
+--SoundBufferRecorder functions
+
+public constant xsfSoundBufferRecorder_create = define_c_func(aud,"sfSoundBufferRecorder_create",{},C_POINTER),
+				xsfSoundBufferRecorder_destroy = define_c_proc(aud,"sfSoundBufferRecorder_destroy",{C_POINTER}),
+				xsfSoundBufferRecorder_start = define_c_proc(aud,"sfSoundBufferRecorder_start",{C_POINTER,C_UINT}),
+				xsfSoundBufferRecorder_stop = define_c_proc(aud,"sfSoundBufferRecorder_stop",{C_POINTER}),
+				xsfSoundBufferRecorder_getSampleRate = define_c_func(aud,"sfSoundBufferRecorder_getSampleRate",{C_POINTER},C_UINT),
+				xsfSoundBufferRecorder_getBuffer = define_c_func(aud,"sfSoundBufferRecorder_getBuffer",{C_POINTER},C_POINTER)
+				
+public function sfSoundBufferRecorder_create()
+
+ return c_func(xsfSoundBufferRecorder_create,{})
+	
+end function
+
+public procedure sfSoundBufferRecorder_destroy(atom sbr)
+
+ c_proc(xsfSoundBufferRecorder_destroy,{sbr})
+	
+end procedure
+
+public procedure sfSoundBufferRecorder_start(atom sbr,atom sr)
+
+ c_proc(xsfSoundBufferRecorder_start,{sbr,sr})
+	
+end procedure
+
+public procedure sfSoundBufferRecorder_stop(atom sbr)
+
+ c_proc(xsfSoundBufferRecorder_stop,{sbr})
+	
+end procedure
+
+public function sfSoundBufferRecorder_getSampleRate(atom sbr)
+
+ return c_func(xsfSoundBufferRecorder_getSampleRate,{sbr})
+	
+end function
+
+public function sfSoundBufferRecorder_getBuffer(atom sbr)
+
+ return c_func(xsfSoundBufferRecorder_getBuffer,{sbr})
+	
+end function
+
+--SoundRecorder functions
+
+public constant xsfSoundRecorder_create = define_c_func(aud,"sfSoundRecorder_create",{C_POINTER,C_POINTER,C_POINTER,C_POINTER},C_POINTER),
+				xsfSoundRecorder_destroy = define_c_proc(aud,"sfSoundRecorder_destroy",{C_POINTER}),
+				xsfSoundRecorder_start = define_c_func(aud,"sfSoundRecoder_start",{C_POINTER,C_UINT},C_BOOL),
+				xsfSoundRecorder_stop = define_c_proc(aud,"sfSoundRecorder_stop",{C_POINTER}),
+				xsfSoundRecorder_getSampleRate = define_c_func(aud,"sfSoundRecorder_getSampleRate",{C_POINTER},C_UINT),
+				xsfSoundRecorder_isAvailable = define_c_func(aud,"sfSoundRecorder_isAvailable",{},C_BOOL),
+				xsfSoundRecorder_setProcessingInterval = define_c_proc(aud,"sfSoundRecorder_setProcessingInterval",{C_POINTER,C_POINTER}),
+				xsfSoundRecorder_getAvailableDevices = define_c_func(aud,"sfSoundRecorder_getAvailableDevices",{C_SIZE_T},C_POINTER),
+				xsfSoundRecorder_getDefaultDevice = define_c_func(aud,"sfSoundRecorder_getDefaultDevice",{},C_POINTER),
+				xsfSoundRecorder_setDevice = define_c_func(aud,"sfSoundRecorder_setDevice",{C_POINTER,C_POINTER},C_BOOL),
+				xsfSoundRecorder_getDevice = define_c_func(aud,"SfSoundRecorder_getDevice",{C_POINTER},C_POINTER)
+				
+public function sfSoundRecorder_create(object s,object p,object o,object d)
+
+ return c_func(xsfSoundRecorder_create,{s,p,o,d})
+	
+end function
+
+public procedure sfSoundRecorder_destroy(atom sr)
+
+ c_proc(xsfSoundRecorder_destroy,{sr})
+	
+end procedure
+
+public function sfSoundRecorder_start(atom sr,atom sr2)
+
+ return c_func(xsfSoundRecorder_start,{sr,sr2})
+	
+end function
+
+public procedure sfSoundRecorder_stop(atom sr)
+
+ c_proc(xsfSoundRecorder_stop,{sr})
+	
+end procedure
+
+public function sfSoundRecorder_getSampleRate(atom sr)
+
+ return c_func(xsfSoundRecorder_getSampleRate,{sr})
+	
+end function
+
+public function sfSoundRecorder_isAvailable()
+
+ return c_func(xsfSoundRecorder_isAvailable,{})
+	
+end function
+
+public procedure sfSoundRecorder_setProcessingInterval(atom sr,atom xint)
+
+ c_proc(xsfSoundRecorder_setProcessingInterval,{sr,xint})
+	
+end procedure
+
+public function sfSoundRecorder_getAvailableDevices(atom cnt)
+
+ return c_func(xsfSoundRecorder_getAvailableDevices,{cnt})
+	
+end function
+
+public function sfSoundRecorder_getDefaultDevice()
+
+ return c_func(xsfSoundRecorder_getDefaultDevice,{})
+	
+end function
+
+public function sfSoundRecorder_setDevice(atom sr,sequence name)
+
+ return c_func(xsfSoundRecorder_setDevice,{sr,allocate_string(name,1)})
+	
+end function
+
+public function sfSoundRecorder_getDevice(atom sr)
+
+ return c_func(xsfSoundRecorder_getDevice,{sr})
+	
+end function
+
+--SoundStream functions
+
+public constant xsfSoundStream_create = define_c_func(aud,"sfSoundStream_create",{C_POINTER,C_POINTER,C_UINT,C_UINT,C_POINTER},C_POINTER),
+				xsfSoundStream_destroy = define_c_proc(aud,"sfSoundStream_destroy",{C_POINTER}),
+				xsfSoundStream_play = define_c_proc(aud,"sfSoundStream_play",{C_POINTER}),
+				xsfSoundStream_pause = define_c_proc(aud,"sfSoundStream_pause",{C_POINTER}),
+				xsfSoundStream_stop = define_c_proc(aud,"sfSoundStream_stop",{C_POINTER}),
+				xsfSoundStream_getStatus = define_c_func(aud,"sfSoundStream_getStatus",{C_POINTER},C_POINTER),
+				xsfSoundStream_getChannelCount = define_c_func(aud,"sfSoundStream_getChannelCount",{C_POINTER},C_UINT),
+				xsfSoundStream_getSampleRate = define_c_func(aud,"sfSoundStream_getSampleRate",{C_POINTER},C_UINT),
+				xsfSoundStream_setPitch = define_c_proc(aud,"sfSoundStream_setPitch",{C_POINTER,C_FLOAT}),
+				xsfSoundStream_setVolume = define_c_proc(aud,"sfSoundStream_setVolume",{C_POINTER,C_FLOAT}),
+				xsfSoundStream_setPosition = define_c_proc(aud,"sfSoundStream_setPosition",{C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT}),
+				xsfSoundStream_setRelativeToListener = define_c_proc(aud,"sfSoundStream_setRelativeToListener",{C_POINTER,C_BOOL}),
+				xsfSoundStream_setMinDistance = define_c_proc(aud,"sfSoundStream_setMinDistance",{C_POINTER,C_FLOAT}),
+				xsfSoundStream_setAttenuation = define_c_proc(aud,"sfSoundStream_setAttenuation",{C_POINTER,C_FLOAT}),
+				xsfSoundStream_setPlayingOffset = define_c_proc(aud,"sfSoundStream_setPlayingOffset",{C_POINTER,C_POINTER}),
+				xsfSoundStream_setLoop = define_c_proc(aud,"sfSoundStream_setLoop",{C_POINTER,C_BOOL}),
+				xsfSoundStream_getPitch = define_c_func(aud,"sfSoundStream_getPitch",{C_POINTER},C_FLOAT),
+				xsfSoundStream_getVolume = define_c_func(aud,"sfSoundStream_getVolume",{C_POINTER},C_FLOAT),
+				xsfSoundStream_getPosition = define_c_func(aud,"sfSoundStream_getPosition",{C_POINTER},C_POINTER),
+				xsfSoundStream_isRelativeToListener = define_c_func(aud,"sfSoundStream_isRelativeToListener",{C_POINTER},C_BOOL),
+				xsfSoundStream_getMinDistance = define_c_func(aud,"sfSoundStream_getMinDistance",{C_POINTER},C_FLOAT),
+				xsfSoundStream_getAttenuation = define_c_func(aud,"sfSoundStream_getAttenuation",{C_POINTER},C_FLOAT),
+				xsfSoundStream_getLoop = define_c_func(aud,"sfSoundStream_getLoop",{C_POINTER},C_BOOL),
+				xsfSoundStream_getPlayingOffset = define_c_func(aud,"sfSoundStream_getPlayingOffset",{C_POINTER},C_POINTER)
+				
+public function sfSoundStream_create(object g,atom o,atom cnt,atom r,object dat)
+
+ return c_func(xsfSoundStream_create,{g,o,cnt,r,dat})
+	
+end function
+
+public procedure sfSoundStream_destroy(atom ss)
+
+ c_proc(xsfSoundStream_destroy,{ss})
+	
+end procedure
+
+public procedure sfSoundStream_play(atom ss)
+
+ c_proc(xsfSoundStream_play,{ss})
+	
+end procedure
+
+public procedure sfSoundStream_pause(atom ss)
+
+ c_proc(xsfSoundStream_pause,{ss})
+	
+end procedure
+
+public procedure sfSoundStream_stop(atom ss)
+
+ c_proc(xsfSoundStream_stop,{ss})
+	
+end procedure
+
+public function sfSoundStream_getStatus(atom ss)
+
+ return c_func(xsfSoundStream_getStatus,{ss})
+	
+end function
+
+public function sfSoundStream_getChannelCount(atom ss)
+
+ return c_func(xsfSoundStream_getChannelCount,{ss})
+	
+end function
+
+public function sfSoundStream_getSampleRate(atom ss)
+
+ return c_func(xsfSoundStream_getSampleRate,{ss})
+	
+end function
+
+public procedure sfSoundStream_setPitch(atom ss,atom pit)
+
+ c_proc(xsfSoundStream_setPitch,{ss,pit})
+	
+end procedure
+
+public procedure sfSoundStream_setVolume(atom ss,atom vol)
+
+ c_proc(xsfSoundStream_setVolume,{ss,vol})
+	
+end procedure
+
+public procedure sfSoundStream_setPosition(atom ss,atom x,atom y,atom z)
+
+ c_proc(xsfSoundStream_setPosition,{ss,x,y,z})
+	
+end procedure
+
+public procedure sfSoundStream_setRelativeToListener(atom ss,integer rel)
+
+ c_proc(xsfSoundStream_setRelativeToListener,{ss,rel})
+	
+end procedure
+
+public procedure sfSoundStream_setMinDistance(atom ss,atom dis)
+
+ c_proc(xsfSoundStream_setMinDistance,{ss,dis})
+	
+end procedure
+
+public procedure sfSoundStream_setAttenuation(atom ss,atom att)
+
+ c_proc(xsfSoundStream_setAttenuation,{ss,att})
+	
+end procedure
+
+public procedure sfSoundStream_setPlayingOffset(atom ss,atom off)
+
+ c_proc(xsfSoundStream_setPlayingOffset,{ss,off})
+	
+end procedure
+
+public procedure sfSoundStream_setLoop(atom ss,integer xloop)
+
+ c_proc(xsfSoundStream_setLoop,{ss,xloop})
+	
+end procedure
+
+public function sfSoundStream_getPitch(atom ss)
+
+ return c_func(xsfSoundStream_getPitch,{ss})
+	
+end function
+
+public function sfSoundStream_getVolume(atom ss)
+
+ return c_func(xsfSoundStream_getVolume,{ss})
+	
+end function
+
+public function sfSoundStream_getPosition(atom ss)
+
+ return c_func(xsfSoundStream_getPosition,{ss})
+	
+end function
+
+public function sfSoundStream_isRelativeToListener(atom ss)
+
+ return c_func(xsfSoundStream_isRelativeToListener,{ss})
+	
+end function
+
+public function sfSoundStream_getMinDistance(atom ss)
+
+ return c_func(xsfSoundStream_getMinDistance,{ss})
+	
+end function
+
+public function sfSoundStream_getAttenuation(atom ss)
+
+ return c_func(xsfSoundStream_getAttenuation,{ss})
+	
+end function
+
+public function sfSoundStream_getLoop(atom ss)
+
+ return c_func(xsfSoundStream_getLoop,{ss})
+	
+end function
+
+public function sfSoundStream_getPlayingOffset(atom ss)
+
+ return c_func(xsfSoundStream_getPlayingOffset,{ss})
+	
+end function
+­744.51

@@ -1,0 +1,59 @@
+--Note, shape demo not working ATM
+without warning
+
+include std/machine.e
+include EuSys2.ew
+include EuGfx2.ew
+
+include sfFlags.e
+
+constant event = allocate(4 * 6)
+
+atom win = sfRenderWindow_create(800,600,32,"Shape Window",sfClose,0)
+
+if win = -1 then
+	puts(1,"Could not create render window!\n")
+	abort(0)
+end if
+
+atom circle = sfCircleShape_create()
+atom col = sfColor_fromRGB(0,255,0)
+atom shapecol = sfColor_fromRGB(255,0,0)
+
+atom tex = sfTexture_createFromFile("sfml-logo-small.png",0,0,0,0)
+
+if tex = -1 then
+	puts(1,"Could not load image!\n")
+	abort(0)
+end if
+
+sfCircleShape_setFillColor(circle,shapecol)
+sfCircleShape_setTexture(circle,tex,0)
+
+while sfRenderWindow_isOpen(win) do
+
+	while sfRenderWindow_pollEvent(win,event) do
+		integer eventType = peek4s(event)
+		integer code = peek4s(event+4)
+		integer alt = peek4s(event+8)
+		integer control = peek4s(event+12)
+		integer shift = peek4s(event+16)
+		integer system = peek4s(event+20)
+		
+		if eventType = sfEvtClosed then
+			sfRenderWindow_close(win)
+		end if
+		
+	end while
+	
+	sfRenderWindow_clear(win,col)
+	
+	sfRenderWindow_drawCircleShape(win,circle,sfBlendFactorZero)
+	
+	sfRenderWindow_display(win)
+	
+end while
+
+sfCircleShape_destroy(circle)
+sfRenderWindow_destroy(win)
+­1.34

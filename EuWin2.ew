@@ -1,0 +1,384 @@
+without warning
+without type_check
+
+include std/dll.e
+include std/machine.e
+
+include sfFlags.e
+
+atom win = open_dll("csfml-window-2.dll")
+
+if win = -1 then
+	
+	puts(1,"Could not open csfml-window-2.dll!\n")
+	abort(0)
+
+end if
+
+--Context functions
+
+public constant xsfContext_create = define_c_func(win,"sfContext_create",{},C_POINTER),
+				xsfContext_destroy = define_c_proc(win,"sfContext_destroy",{C_POINTER}),
+				xsfContext_setActive = define_c_proc(win,"sfContext_setActive",{C_POINTER,C_BOOL})
+				
+public function sfContext_create()
+
+ return c_func(xsfContext_create,{})
+	
+end function
+
+public procedure sfContext_destroy(atom ctx)
+
+ c_proc(xsfContext_destroy,{ctx})
+	
+end procedure
+
+public procedure sfContext_setActive(atom ctx,integer active)
+
+ c_proc(xsfContext_setActive,{ctx,active})
+	
+end procedure
+
+--Joystick functions
+
+public constant xsfJoystick_getAxisPosition = define_c_func(win,"sfJoystick_getAxisPosition",{C_UINT,C_POINTER},C_FLOAT),
+				xsfJoystick_getButtonCount = define_c_func(win,"sfJoystick_getButtonCount",{C_UINT},C_UINT),
+				xsfJoystick_hasAxis = define_c_func(win,"sfJoystick_hasAxis",{C_UINT,C_POINTER},C_BOOL),
+				xsfJoystick_isButtonPressed = define_c_func(win,"sfJoystick_isButtonPressed",{C_UINT,C_UINT},C_BOOL),
+				xsfJoystick_getIdentification = define_c_func(win,"sfJoystick_get_identification",{C_UINT},C_POINTER),
+				xsfJoystick_update = define_c_proc(win,"sfJoystick_update",{}),
+				xsfJoystick_isConnected = define_c_func(win,"sfJoystick_isConnected",{C_UINT},C_BOOL)
+
+public function sfJoystick_getAxisPosition(atom joy,sfJoystickAxis ax)
+
+ return c_func(xsfJoystick_getAxisPosition,{joy,ax})
+	
+end function
+
+public function sfJoystick_getButtonCount(atom joy)
+
+ return c_func(xsfJoystick_getButtonCount,{joy})
+	
+end function
+
+public function sfJoystick_hasAxis(atom joy,sfJoystickAxis ax)
+
+ return c_func(xsfJoystick_hasAxis,{joy,ax})
+	
+end function
+
+public function sfJoystick_isButtonPressed(atom joy,atom btn)
+
+ return c_func(xsfJoystick_isButtonPressed,{joy,btn})
+	
+end function
+
+public function sfJoystick_getIdentification(atom joy)
+
+ return c_func(xsfJoystick_getIdentification,{joy})
+	
+end function
+
+public function sfJoystick_isConnected(atom joy)
+
+ return c_func(xsfJoystick_isConnected,{joy})
+	
+end function
+
+public procedure sfJoystick_update()
+
+ c_proc(xsfJoystick_update,{})
+	
+end procedure
+
+--Keyboard functions
+
+public constant xsfKeyboard_isKeyPressed = define_c_func(win,"sfKeyboard_isKeyPressed",{C_POINTER},C_BOOL)
+
+public function sfKeyboard_isKeyPressed(sfKeyCode key)
+
+ return c_func(xsfKeyboard_isKeyPressed,{key})
+	
+end function
+
+--Mouse functions
+
+public constant xsfMouse_isButtonPressed = define_c_func(win,"sfMouse_isButtonPressed",{C_POINTER},C_BOOL),
+				xsfMouse_getPosition = define_c_func(win,"sfMouse_getPosition",{C_POINTER},C_POINTER),
+				xsfMouse_setPosition = define_c_proc(win,"sfMouse_setPosition",{C_POINTER,C_POINTER})
+
+public function sfMouse_isButtonPressed(sfMouseButton btn)
+
+ return c_func(xsfMouse_isButtonPressed,{btn})
+	
+end function
+
+public function sfMouse_getPosition(atom sfWin)
+
+ return c_func(xsfMouse_getPosition,{sfWin})
+	
+end function
+
+public procedure sfMouse_setPosition(object pos, atom sfWin)
+
+ c_proc(xsfMouse_setPosition,{pos,sfWin})
+	
+end procedure
+
+--Sensor functions
+
+public constant xsfSensor_isAvailable = define_c_func(win,"sfSensor_isAvailable",{C_POINTER},C_BOOL),
+				xsfSensor_setEnabled = define_c_proc(win,"sfSensor_setEnabled",{C_POINTER,C_BOOL}),
+				xsfSensor_getValue = define_c_func(win,"sfSensor_getValue",{C_POINTER},C_POINTER)
+				
+public function sfSensor_isAvailable(sfSensorType sens)
+
+ return c_func(xsfSensor_isAvailable,{sens})
+	
+end function
+
+public procedure sfSensor_setEnabled(sfSensorType sens,integer enabled)
+
+ c_proc(xsfSensor_setEnabled,{sens,enabled})
+	
+end procedure
+
+public function sfSensor_getValue(sfSensorType sens)
+
+ return c_func(xsfSensor_getValue,{sens})
+	
+end function
+
+--Touch functions
+
+public constant xsfTouch_isDown = define_c_func(win,"sfTouch_isDown",{C_UINT},C_BOOL),
+				xsfTouch_getPosition = define_c_func(win,"sfTouch_getPosition",{C_UINT,C_POINTER},C_POINTER)
+				
+public function sfTouch_isDown(atom fing)
+
+ return c_func(xsfTouch_isDown,{fing})
+	
+end function
+
+public function sfTouch_getPosition(atom fing,atom sfWin)
+
+ return c_func(xsfTouch_getPosition,{fing,sfWin})
+	
+end function
+
+--Video Mode functions
+
+public constant xsfVideoMode_getDesktopMode = define_c_func(win,"sfVideoMode_getDesktopMode",{},C_POINTER),
+				xsfVideoMode_getFullscreenModes = define_c_func(win,"sfVideoMode_getFullscreenModes",{C_SIZE_T},C_POINTER),
+				xsfVideoMode_isValid = define_c_func(win,"sfVideoMode_isValid",{C_POINTER},C_BOOL)
+				
+public function sfVideoMode_getDesktopMode()
+
+ return c_func(xsfVideoMode_getDesktopMode,{})
+	
+end function
+
+public function sfVideoMode_getFullscreenModes(atom count)
+
+ return c_func(xsfVideoMode_getFullscreenModes,{count})
+	
+end function
+
+public function sfVideoMode_isValid(object mode)
+
+ return c_func(xsfVideoMode_isValid,{mode})
+	
+end function
+
+--Window functions
+
+public constant xsfWindow_create = define_c_func(win,"sfWindow_create",{C_INT,C_INT,C_INT,C_POINTER,C_UINT,C_POINTER},C_POINTER),
+				xsfWindow_createUnicode = define_c_func(win,"sfWindow_createUnicode",{C_INT,C_INT,C_INT,C_POINTER,C_UINT,C_POINTER},C_POINTER),
+				xsfWindow_createFromHandle = define_c_func(win,"sfWindow_createFromHandle",{C_POINTER,C_POINTER},C_POINTER),
+				xsfWindow_destroy = define_c_proc(win,"sfWindow_destroy",{C_POINTER}),
+				xsfWindow_close = define_c_proc(win,"sfWindow_close",{C_POINTER}),
+				xsfWindow_isOpen = define_c_func(win,"sfWindow_isOpen",{C_POINTER},C_BOOL),
+				xsfWindow_getSettings = define_c_func(win,"sfWindow_getSettings",{C_POINTER},C_POINTER),
+				xsfWindow_pollEvent = define_c_func(win,"sfWindow_pollEvent",{C_POINTER,C_POINTER},C_BOOL),
+				xsfWindow_waitEvent = define_c_func(win,"sfWindow_waitEvent",{C_POINTER,C_POINTER},C_BOOL),
+				xsfWindow_getPosition = define_c_func(win,"sfWindow_getPosition",{C_POINTER},C_POINTER),
+				xsfWindow_setPosition = define_c_proc(win,"sfWindow_setPosition",{C_POINTER,C_INT,C_INT}),
+				xsfWindow_getSize = define_c_func(win,"sfWindow_getSize",{C_POINTER},C_POINTER),
+				xsfWindow_setSize = define_c_proc(win,"sfWindow_setSize",{C_POINTER,C_UINT,C_UINT}),
+				xsfWindow_setTitle = define_c_proc(win,"sfWindow_setTitle",{C_POINTER,C_POINTER}),
+				xsfWindow_setUnicodeTitle = define_c_proc(win,"sfWindow_setUnicodeTitle",{C_POINTER,C_POINTER}),
+				xsfWindow_setIcon = define_c_proc(win,"sfWindow_setIcon",{C_POINTER,C_UINT,C_UINT,C_POINTER}),
+				xsfWindow_setVisible = define_c_proc(win,"sfWindow_setVisible",{C_POINTER,C_BOOL}),
+				xsfWindow_setMouseCursorVisible = define_c_proc(win,"sfWindow_setMouseCursorVisible",{C_POINTER,C_BOOL}),
+				xsfWindow_setVerticalSyncEnabled = define_c_proc(win,"sfWindow_setVeritcalSyncEnabled",{C_POINTER,C_BOOL}),
+				xsfWindow_setKeyRepeatEnabled = define_c_proc(win,"sfWindow_setKeyRepeatEnabled",{C_POINTER,C_BOOL}),
+				xsfWindow_setActive = define_c_func(win,"sfWindow_setActive",{C_POINTER,C_BOOL},C_BOOL),
+				xsfWindow_requestFocus = define_c_proc(win,"sfWindow_requestFocus",{C_POINTER}),
+				xsfWindow_hasFocus = define_c_func(win,"sfWindow_hasFocus",{C_POINTER},C_BOOL),
+				xsfWindow_display = define_c_proc(win,"sfWindow_display",{C_POINTER}),
+				xsfWindow_setFramerateLimit = define_c_proc(win,"sfWindow_setFramerateLimit",{C_POINTER,C_UINT}),
+				xsfWindow_setJoystickThreshold = define_c_proc(win,"sfWindow_setJoystickThreshold",{C_POINTER,C_FLOAT}),
+				xsfWindow_getSystemHandle = define_c_func(win,"sfWindow_getSystemHandle",{C_POINTER},C_POINTER)
+				
+public function sfWindow_create(integer w,integer h,integer b,sequence title,sfWindowStyle style,atom sett)
+
+ return c_func(xsfWindow_create,{w,h,b,allocate_string(title,1),style,sett})
+	
+end function
+
+public function sfWindow_createUnicode(integer w,integer h,integer b,sequence title,sfWindowStyle style,atom sett)
+
+ return c_func(xsfWindow_createUnicode,{w,h,b,allocate_string(title,1),style,sett})
+	
+end function
+
+public function sfWindow_createFromHandle(atom hand,object sett)
+
+ return c_func(xsfWindow_createFromHandle,{hand,sett})
+	
+end function
+
+public procedure sfWindow_destroy(atom win)
+
+ c_proc(xsfWindow_destroy,{win})
+	
+end procedure
+
+public procedure sfWindow_close(atom win)
+
+ c_proc(xsfWindow_close,{win})
+	
+end procedure
+
+public function sfWindow_isOpen(atom win)
+
+ return c_func(xsfWindow_isOpen,{win})
+	
+end function
+
+public function sfWindow_getSettings(atom win)
+
+ return c_func(xsfWindow_getSettings,{win})
+	
+end function
+
+public function sfWindow_pollEvent(atom win, sfEventType evt)
+
+ return c_func(xsfWindow_pollEvent,{win, evt})
+	
+end function
+
+public function sfWindow_waitEvent(atom win, sfEventType evt)
+
+ return c_func(xsfWindow_waitEvent,{win,evt})
+	
+end function
+
+public function sfWindow_getPosition(atom win)
+
+ return c_func(xsfWindow_getPosition,{win})
+	
+end function
+
+public procedure sfWindow_setPosition(atom win,integer x,integer y)
+
+ c_proc(xsfWindow_setPosition,{win,x,y})
+	
+end procedure
+
+public function sfWindow_getSize(atom win)
+
+ return c_func(xsfWindow_getSize,{win})
+	
+end function
+
+public procedure sfWindow_setSize(atom win,atom x,atom y)
+
+ c_proc(xsfWindow_setSize,{win,x,y})
+	
+end procedure
+
+public procedure sfWindow_setTitle(atom win,sequence title)
+
+ c_proc(xsfWindow_setTitle,{win,allocate_string(title,1)})
+ 
+end procedure
+
+public procedure sfWindow_setUnicodeTitle(atom win,sequence title)
+
+ c_proc(xsfWindow_setUnicodeTitle,{win,allocate_string(title,1)})
+	
+end procedure
+
+public procedure sfWindow_setIcon(atom win,atom w,atom h,atom pix)
+
+ c_proc(xsfWindow_setIcon,{win,w,h,pix})
+	
+end procedure
+
+public procedure sfWindow_setVisible(atom win,integer vis)
+
+ c_proc(xsfWindow_setVisible,{win,vis})
+	
+end procedure
+
+public procedure sfWindow_setMouseCursorVisible(atom win,integer vis)
+
+ c_proc(xsfWindow_setMouseCursorVisible,{win,vis})
+	
+end procedure
+
+public procedure sfWindow_setVerticalSyncEnabled(atom win,integer vis)
+
+ c_proc(xsfWindow_setVerticalSyncEnabled,{win,vis})
+	
+end procedure
+
+public procedure sfWindow_setKeyRepeatEnabled(atom win,integer en)
+
+ c_proc(xsfWindow_setKeyRepeatEnabled,{win,en})
+	
+end procedure
+
+public function sfwindow_setActive(atom win,integer act)
+
+ return c_func(xsfWindow_setActive,{win,act})
+	
+end function
+
+public procedure sfWindow_requestFocus(atom win)
+
+ c_proc(xsfWindow_requestFocus,{win})
+	
+end procedure
+
+public function sfWindow_hasFocus(atom win)
+
+ return c_func(xsfWindow_hasFocus,{win})
+	
+end function
+
+public procedure sfWindow_display(atom win)
+
+ c_proc(xsfWindow_display,{win})
+	
+end procedure
+
+public procedure sfWindow_setFramerateLimit(atom win,atom lim)
+
+ c_proc(xsfWindow_setFramerateLimit,{win,lim})
+	
+end procedure
+
+public procedure sfWindow_setJoystickThreshold(atom win,atom thr)
+
+ c_proc(xsfWindow_setJoystickThreshold,{win,thr})
+	
+end procedure
+
+public function sfWindow_getSystemHandle(atom win)
+
+ return c_func(xsfWindow_getSystemHandle,{win})
+	
+end function
+­297.34

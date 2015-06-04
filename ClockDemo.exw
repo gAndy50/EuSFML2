@@ -1,0 +1,40 @@
+without warning
+
+include std/machine.e
+include std/get.e
+include EuSys2.ew
+
+include sfFlags.e
+
+atom ticks = 0
+atom clock = sfClock_create()
+atom xtime = sfTime_asSeconds(ticks)
+
+integer running = 1
+integer key
+
+while running = 1 do
+
+	ticks = ticks + 1
+	
+	key = get_key()
+	
+	if key = 27 then
+		running = 0
+		exit
+	end if
+	
+ xtime = sfClock_getElapsedTime(clock)
+ 
+ position(1,1)
+
+ if ticks >= 1000 then
+ 	xtime = sfClock_restart(clock)
+ end if
+	
+printf(1,"Ticks: %d",{xtime})
+
+end while
+
+sfClock_destroy(clock)
+­35.27

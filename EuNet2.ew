@@ -1,0 +1,964 @@
+without warning
+without type_check
+
+include std/dll.e
+include std/machine.e
+
+include sfFlags.e
+
+atom net = open_dll("csfml-network-2.dll")
+
+if net = -1 then
+	puts(1,"Could not open csfml-network-2.dll!\n")
+	abort(0)
+end if
+
+--FTP functions
+
+public constant xsfFtpListingResponse_destroy = define_c_proc(net,"sfFtpListingResponse_destroy",{C_POINTER}),
+				xsfFtpListingResponse_isOk = define_c_func(net,"sfFtpListingResponse_isOk",{C_POINTER},C_BOOL),
+				xsfFtpListingResponse_getStatus = define_c_func(net,"sfFtpListingResponse_getStatus",{C_POINTER},C_POINTER),
+				xsfFtpListingResponse_getMessage = define_c_func(net,"sfFtpListingResponse_getMessage",{C_POINTER},C_POINTER),
+				xsfFtpListingResponse_getCount = define_c_func(net,"sfFtpListingResponse_getCount",{C_POINTER},C_SIZE_T),
+				xsfFtpListingResponse_getName = define_c_func(net,"sfFtpListingResponse_getName",{C_POINTER,C_SIZE_T},C_POINTER),
+				xsfFtpDirectoryResponse_destroy = define_c_proc(net,"sfFtpDirectoryResponse_destroy",{C_POINTER}),
+				xsfFtpDirectoryResponse_isOk = define_c_func(net,"sfFtpDirectoryResponse_isOk",{C_POINTER},C_BOOL),
+				xsfFtpDirectoryResponse_getStatus = define_c_func(net,"sfFtpDirectoryResponse_getStatus",{C_POINTER},C_POINTER),
+				xsfFtpDirectoryResponse_getMessage = define_c_func(net,"sfFtpDirectoryResponse_getMessage",{C_POINTER},C_POINTER),
+				xsfFtpDirectoryResponse_getDirectory = define_c_func(net,"sfFtpDirectoryResponse_getDirectory",{C_POINTER},C_POINTER),
+				xsfFtpResponse_destroy = define_c_proc(net,"sfFtpResponse_destroy",{C_POINTER}),
+				xsfFtpResponse_isOk = define_c_func(net,"sfFtpResponse_isOk",{C_POINTER},C_BOOL),
+				xsfFtpResponse_getStatus = define_c_func(net,"sfFtpResponse_getStatus",{C_POINTER},C_POINTER),
+				xsfFtpResponse_getMessage = define_c_func(net,"sfFtpResponse_getMessage",{C_POINTER},C_POINTER),
+				xsfFtp_create = define_c_func(net,"sfFtp_create",{},C_POINTER),
+				xsfFtp_destroy = define_c_proc(net,"sfFtp_destroy",{C_POINTER}),
+				xsfFtp_connect = define_c_func(net,"sfFtp_connect",{C_POINTER,C_POINTER,C_UINT,C_POINTER},C_POINTER),
+				xsfFtp_loginAnonymous = define_c_func(net,"sfFtp_loginAnonymous",{C_POINTER},C_POINTER),
+				xsfFtp_login = define_c_func(net,"sfFtp_login",{C_POINTER,C_POINTER,C_POINTER},C_POINTER),
+				xsfFtp_disconnect = define_c_func(net,"sfFtp_disconnect",{C_POINTER},C_POINTER),
+				xsfFtp_keepAlive = define_c_func(net,"sfFtp_keepAlive",{C_POINTER},C_POINTER),
+				xsfFtp_getWorkingDirectory = define_c_func(net,"sfFtp_getWorkingDirectory",{C_POINTER},C_POINTER),
+				xsfFtp_getDirectoryListing = define_c_func(net,"sfFtp_getDirectoryListing",{C_POINTER,C_POINTER},C_POINTER),
+				xsfFtp_changeDirectory = define_c_func(net,"sfFtp_changeDirectory",{C_POINTER,C_POINTER},C_POINTER),
+				xsfFtp_parentDirectory = define_c_func(net,"sfFtp_parentDirectory",{C_POINTER},C_POINTER),
+				xsfFtp_createDirectory = define_c_func(net,"sfFtp_createDirectory",{C_POINTER,C_POINTER},C_POINTER),
+				xsfFtp_deleteDirectory = define_c_func(net,"sfFtp_deleteDirectory",{C_POINTER,C_POINTER},C_POINTER),
+				xsfFtp_renameFile = define_c_func(net,"sfFtp_renameFile",{C_POINTER,C_POINTER,C_POINTER},C_POINTER),
+				xsfFtp_deleteFile = define_c_func(net,"sfFtp_deleteFile",{C_POINTER,C_POINTER},C_POINTER),
+				xsfFtp_download = define_c_func(net,"sfFtp_download",{C_POINTER,C_POINTER,C_POINTER,C_POINTER},C_POINTER),
+				xsfFtp_upload = define_c_func(net,"sfFtp_upload",{C_POINTER,C_POINTER,C_POINTER,C_POINTER},C_POINTER)
+				
+public procedure sfFtpListingResponse_destroy(atom flr)
+
+ c_proc(xsfFtpListingResponse_destroy,{flr})
+	
+end procedure
+
+public function sfFtpListingResponse_isOk(atom flr)
+
+ return c_func(xsfFtpListingResponse_isOk,{flr})
+	
+end function
+
+public function sfFtpListingResponse_getStatus(atom flr)
+
+ return c_func(xsfFtpListingResponse_getStatus,{flr})
+	
+end function
+
+public function sfFtpListingResponse_getMessage(atom flr)
+
+ return c_func(xsfFtpListingResponse_getMessage,{flr})
+	
+end function
+
+public function sfFtpListingResponse_getName(atom flr,atom idx)
+
+ return c_func(xsfFtpListingResponse_getName,{flr,idx})
+	
+end function
+
+public procedure sfFtpDirectoryResponse_destroy(atom ftr)
+
+ c_proc(xsfFtpDirectoryResponse_destroy,{ftr})
+	
+end procedure
+
+public function sfFtpDirectoryResponse_isOk(atom fdr)
+
+ return c_func(xsfFtpDirectoryResponse_isOk,{fdr})
+	
+end function
+
+public function sfFtpDirectoryResponse_getStatus(atom fdr)
+
+ return c_func(xsfFtpDirectoryResponse_getStatus,{fdr})
+	
+end function
+
+public function sfFtpDirectoryResponse_getMessage(atom fdr)
+
+ return c_func(xsfFtpDirectoryResponse_getMessage,{fdr})
+	
+end function
+
+public function sfFtpDirectoryResponse_getDirectory(atom fdr)
+
+ return c_func(xsfFtpDirectoryResponse_getDirectory,{fdr})
+	
+end function
+
+public procedure sfFtpResponse_destroy(atom res)
+
+ c_proc(xsfFtpResponse_destroy,{res})
+	
+end procedure
+
+public function sfFtpResponse_isOk(atom fr)
+
+ return c_func(xsfFtpResponse_isOk,{fr})
+	
+end function
+
+public function sfFtpResponse_getStatus(atom fr)
+
+ return c_func(xsfFtpResponse_getStatus,{fr})
+	
+end function
+
+public function sfFtpResponse_getMessage(atom fr)
+
+ return c_func(xsfFtpResponse_getMessage,{fr})
+	
+end function
+
+public function sfFtp_create()
+
+ return c_func(xsfFtp_create,{})
+	
+end function
+
+public procedure sfFtp_destroy(atom ftp)
+
+ c_proc(xsfFtp_destroy,{ftp})
+	
+end procedure
+
+public function sfFtp_connect(atom ftp,atom serv,atom prt,atom xtime)
+
+ return c_func(xsfFtp_connect,{ftp,serv,prt,xtime})
+	
+end function
+
+public function sfFtp_loginAnonymous(atom ftp)
+
+ return c_func(xsfFtp_loginAnonymous,{ftp})
+	
+end function
+
+public function sfFtp_login(atom ftp,sequence user,sequence pass)
+
+ return c_func(xsfFtp_login,{ftp,allocate_string(user,1),allocate_string(pass,1)})
+	
+end function
+
+public function sfFtp_disconnect(atom ftp)
+
+ return c_func(xsfFtp_disconnect,{ftp})
+	
+end function
+
+public function sfFtp_keepAlive(atom ftp)
+
+ return c_func(xsfFtp_keepAlive,{ftp})
+	
+end function
+
+public function sfFtp_getWorkingDirectory(atom ftp)
+
+ return c_func(xsfFtp_getWorkingDirectory,{ftp})
+	
+end function
+
+public function sfFtp_getDirectoryListing(atom ftp,sequence xdir)
+
+ return c_func(xsfFtp_getDirectoryListing,{ftp,allocate_string(xdir,1)})
+	
+end function
+
+public function sfFtp_changeDirectory(atom ftp,sequence xdir)
+
+ return c_func(xsfFtp_changeDirectory,{ftp,allocate_string(xdir,1)})
+	
+end function
+
+public function sfFtp_parentDirectory(atom ftp)
+
+ return c_func(xsfFtp_parentDirectory,{ftp})
+	
+end function
+
+public function sfFtp_createDirectory(atom ftp,sequence name)
+
+ return c_func(xsfFtp_createDirectory,{ftp,allocate_string(name,1)})
+	
+end function
+
+public function sfFtp_deleteDirectory(atom ftp,sequence name)
+
+ return c_func(xsfFtp_deleteDirectory,{ftp,allocate_string(name,1)})
+	
+end function
+
+public function sfFtp_renameFile(atom ftp,sequence file,sequence name)
+
+ return c_func(xsfFtp_renameFile,{ftp,allocate_string(file,1),allocate_string(name,1)})
+	
+end function
+
+public function sfFtp_deleteFile(atom ftp,sequence name)
+
+ return c_func(xsfFtp_deleteFile,{ftp,allocate_string(name,1)})
+	
+end function
+
+public function sfFtp_download(atom ftp,sequence file,sequence path,atom mode)
+
+ return c_func(xsfFtp_download,{ftp,allocate_string(file,1),allocate_string(path,1),mode})
+	
+end function
+
+public function sfFtp_upload(atom ftp,sequence file,sequence path,atom mode)
+
+ return c_func(xsfFtp_upload,{ftp,allocate_string(file,1),allocate_string(path,1),mode})
+	
+end function
+
+--HTTP functions
+
+public constant xsfHttpRequest_create = define_c_func(net,"sfHttpRequest_create",{},C_POINTER),
+				xsfHttpRequest_destroy = define_c_proc(net,"sfHttpRequest_destroy",{C_POINTER}),
+				xsfHttpRequest_setField = define_c_proc(net,"sfHttpRequest_setField",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfHttpRequest_setMethod = define_c_proc(net,"sfHttpRequest_setMethod",{C_POINTER,C_POINTER}),
+				xsfHttpRequest_setUri = define_c_proc(net,"sfHttpRequest_setUri",{C_POINTER,C_POINTER}),
+				xsfHttpRequest_setHttpVersion = define_c_proc(net,"sfHttpRequest_setHttpVersion",{C_POINTER,C_UINT,C_UINT}),
+				xsfHttpRequest_setBody = define_c_proc(net,"sfHttpRequest_setBody",{C_POINTER,C_POINTER}),
+				xsfHttpResponse_destroy = define_c_proc(net,"sfHttpResponse_destroy",{C_POINTER}),
+				xsfHttpResponse_getField = define_c_func(net,"sfHttpResponse_getField",{C_POINTER,C_POINTER},C_POINTER),
+				xsfHttpResponse_getStatus = define_c_func(net,"sfHttpResponse_getStatus",{C_POINTER},C_POINTER),
+				xsfHttpResponse_getMajorVersion = define_c_func(net,"sfHttpResponse_getMajorVersion",{C_POINTER},C_UINT),
+				xsfHttpResponse_getMinorVersion = define_c_func(net,"sfHttpResponse_getMinorVersion",{C_POINTER},C_UINT),
+				xsfHttpResponse_getBody = define_c_func(net,"sfHttpResponse_getBody",{C_POINTER},C_POINTER),
+				xsfHttp_create = define_c_func(net,"sfHttp_create",{},C_POINTER),
+				xsfHttp_destroy = define_c_proc(net,"sfHttp_destroy",{C_POINTER}),
+				xsfHttp_setHost = define_c_proc(net,"sfHttp_setHost",{C_POINTER,C_POINTER,C_USHORT}),
+				xsfHttp_sendRequest = define_c_func(net,"sfHttp_sendRequest",{C_POINTER,C_POINTER,C_POINTER},C_POINTER)
+				
+public function sfHttpRequest_create()
+
+ return c_func(xsfHttpRequest_create,{})
+	
+end function
+
+public procedure sfHttpRequest_destroy(atom hr)
+
+ c_proc(xsfHttpRequest_destroy,{hr})
+	
+end procedure
+
+public procedure sfHttpRequest_setField(atom hr,sequence field,sequence val)
+
+ c_proc(xsfHttpRequest_setField,{hr,allocate_string(field,1),allocate_string(val,1)})
+	
+end procedure
+
+public procedure sfHttpRequest_setMethod(atom hr,atom met)
+
+ c_proc(xsfHttpRequest_setMethod,{hr,met})
+	
+end procedure
+
+public procedure sfHttpRequest_setUri(atom hr,sequence uri)
+
+ c_proc(xsfHttpRequest_setUri,{hr,allocate_string(uri,1)})
+	
+end procedure
+
+public procedure sfHttpRequest_setHttpVersion(atom hr,atom m,atom m2)
+
+ c_proc(xsfHttpRequest_setHttpVersion,{hr,m,m2})
+	
+end procedure
+
+public procedure sfHttpRequest_setBody(atom hr,sequence body)
+
+ c_proc(xsfHttpRequest_setBody,{hr,allocate_string(body,1)})
+	
+end procedure
+
+public procedure sfHttpResponse_destroy(atom hr)
+
+ c_proc(xsfHttpResponse_destroy,{hr})
+	
+end procedure
+
+public function sfHttpResponse_getField(atom hr,sequence field)
+
+ return c_func(xsfHttpResponse_getField,{hr,allocate_string(field,1)})
+	
+end function
+
+public function sfHttpResponse_getStatus(atom hr)
+
+ return c_func(xsfHttpResponse_getStatus,{hr})
+	
+end function
+
+public function sfHttpResponse_getMajorVersion(atom hr)
+
+ return c_func(xsfHttpResponse_getMajorVersion,{hr})
+	
+end function
+
+public function sfHttpResponse_getMinorVersion(atom hr)
+
+ return c_func(xsfHttpResponse_getMinorVersion,{hr})
+	
+end function
+
+public function sfHttpResponse_getBody(atom hr)
+
+ return c_func(xsfHttpResponse_getBody,{hr})
+	
+end function
+
+public function sfHttp_create()
+
+ return c_func(xsfHttp_create,{})
+	
+end function
+
+public procedure sfHttp_destroy(atom ht)
+
+ c_proc(xsfHttp_destroy,{ht})
+	
+end procedure
+
+public procedure sfHttp_setHost(atom ht,sequence host,atom port)
+
+ c_proc(xsfHttp_setHost,{ht,allocate_string(host,1),port})
+	
+end procedure
+
+public function sfHttp_sendRequest(atom ht,atom req,atom xtime)
+
+ return c_func(xsfHttp_sendRequest,{ht,req,xtime})
+	
+end function
+
+--IP Address functions
+
+public constant xsfIpAddress_fromString = define_c_func(net,"sfIpAddress_fromString",{C_POINTER},C_POINTER),
+				xsfIpAddress_fromBytes = define_c_func(net,"sfIpAddress_fromBytes",{C_UINT,C_UINT,C_UINT,C_UINT},C_POINTER),
+				xsfIpAddress_fromInteger = define_c_func(net,"sfIpAddress_fromInteger",{C_UINT},C_POINTER),
+				xsfIpAddress_toString = define_c_proc(net,"sfIpAddress_toString",{C_POINTER,C_POINTER}),
+				xsfIpAddress_toInteger = define_c_func(net,"sfIpAddress_toInteger",{C_POINTER},C_UINT),
+				xsfIpAddress_getLocalAddress = define_c_func(net,"sfIpAddress_getLocalAddress",{},C_POINTER),
+				xsfIpAddress_getPublicAddress = define_c_func(net,"sfIpAddress_getPublicAddress",{C_POINTER},C_POINTER)
+
+public function sfIpAddress_fromString(sequence add)
+
+ return c_func(xsfIpAddress_fromString,{allocate_string(add,1)})
+	
+end function
+
+public function sfIpAddress_fromBytes(atom b,atom b1,atom b2,atom b3)
+
+ return c_func(xsfIpAddress_fromBytes,{b,b1,b2,b3})
+	
+end function
+
+public function sfIpAddress_fromInteger(atom add)
+
+ return c_func(xsfIpAddress_fromInteger,{add})
+	
+end function
+
+public procedure sfIpAddress_toString(atom add,sequence str)
+
+ c_proc(xsfIpAddress_toString,{add,allocate_string(str,1)})
+	
+end procedure
+
+public function sfIpAddress_toInteger(atom add)
+
+ return c_func(xsfIpAddress_toInteger,{add})
+	
+end function
+
+public function sfIpAddress_getLocalAddress()
+
+ return c_func(xsfIpAddress_getLocalAddress,{})
+	
+end function
+
+public function sfIpAddress_getPublicAddress(atom xtime)
+
+ return c_func(xsfIpAddress_getPublicAddress,{xtime})
+	
+end function
+
+--Packet functions
+
+public constant xsfPacket_create = define_c_func(net,"sfPacket_create",{},C_POINTER),
+				xsfPacket_copy = define_c_func(net,"sfPacket_copy",{C_POINTER},C_POINTER),
+				xsfPacket_destroy = define_c_proc(net,"sfPacket_destroy",{C_POINTER}),
+				xsfPacket_append = define_c_proc(net,"sfPacket_append",{C_POINTER,C_POINTER,C_SIZE_T}),
+				xsfPacket_clear = define_c_proc(net,"sfPacket_clear",{C_POINTER}),
+				xsfPacket_getData = define_c_func(net,"sfPacket_getData",{C_POINTER},C_POINTER),
+				xsfPacket_getDataSize = define_c_func(net,"sfPacket_getDataSize",{C_POINTER},C_SIZE_T),
+				xsfPacket_endOfPacket = define_c_func(net,"sfPacket_endOfPacket",{C_POINTER},C_BOOL),
+				xsfPacket_canRead = define_c_func(net,"sfPacket_canRead",{C_POINTER},C_BOOL),
+				xsfPacket_readBool = define_c_func(net,"sfPacket_readBool",{C_POINTER},C_BOOL),
+				xsfPacket_readInt8 = define_c_func(net,"sfPacket_readInt8",{C_POINTER},C_POINTER),
+				xsfPacket_readUint8 = define_c_func(net,"sfPacket_readUint8",{C_POINTER},C_POINTER),
+				xsfPacket_readInt16 = define_c_func(net,"sfPacket_readInt16",{C_POINTER},C_POINTER),
+				xsfPacket_readUint16 = define_c_func(net,"sfPacket_readUint16",{C_POINTER},C_POINTER),
+				xsfPacket_readInt32 = define_c_func(net,"sfPacket_readInt32",{C_POINTER},C_POINTER),
+				xsfPacket_readUint32 = define_c_func(net,"sfPacket_readUint32",{C_POINTER},C_POINTER),
+				xsfPacket_readFloat = define_c_func(net,"sfPacket_readFloat",{C_POINTER},C_FLOAT),
+				xsfPacket_readDouble = define_c_func(net,"sfPacket_readDouble",{C_POINTER},C_DOUBLE),
+				xsfPacket_readString = define_c_proc(net,"sfPacket_readString",{C_POINTER,C_POINTER}),
+				xsfPacket_readWideString = define_c_proc(net,"sfPacket_readWideString",{C_POINTER,C_POINTER}),
+				xsfPacket_writeBool = define_c_proc(net,"sfPacket_writeBool",{C_POINTER,C_BOOL}),
+				xsfPacket_writeInt8 = define_c_proc(net,"sfPacket_writeInt8",{C_POINTER,C_POINTER}),
+				xsfPacket_writeUint8 = define_c_proc(net,"sfPacket_writeUint8",{C_POINTER,C_POINTER}),
+				xsfPacket_writeInt16 = define_c_proc(net,"sfPacket_writeIn16",{C_POINTER,C_POINTER}),
+				xsfPacket_writeUint16 = define_c_proc(net,"sfPacket_writeUint16",{C_POINTER,C_POINTER}),
+				xsfPacket_writeInt32 = define_c_proc(net,"sfPacket_writeInt32",{C_POINTER,C_POINTER}),
+				xsfPacket_writeUint32 = define_c_proc(net,"sfPacket_writeUint32",{C_POINTER,C_POINTER}),
+				xsfPacket_writeFloat = define_c_proc(net,"sfPacket_writeFloat",{C_POINTER,C_FLOAT}),
+				xsfPacket_writeDouble = define_c_proc(net,"sfPacket_writeDouble",{C_POINTER,C_DOUBLE}),
+				xsfPacket_writeString = define_c_proc(net,"sfPacket_writeString",{C_POINTER,C_POINTER}),
+				xsfPacket_writeWideString = define_c_proc(net,"sfPacket_writeWideString",{C_POINTER,C_POINTER})
+				
+public function sfPacket_create()
+
+ return c_func(xsfPacket_create,{})
+	
+end function
+
+public function sfPacket_copy(atom pack)
+
+ return c_func(xsfPacket_copy,{pack})
+	
+end function
+
+public procedure sfPacket_destroy(atom pack)
+
+ c_proc(xsfPacket_destroy,{pack})
+	
+end procedure
+
+public procedure sfPacket_append(atom pack,object dat,atom size)
+
+ c_proc(xsfPacket_append,{pack,dat,size})
+	
+end procedure
+
+public procedure sfPacket_clear(atom pack)
+
+ c_proc(xsfPacket_clear,{pack})
+	
+end procedure
+
+public function sfPacket_getData(atom pack)
+
+ return c_func(xsfPacket_getData,{pack})
+	
+end function
+
+public function sfPacket_getDataSize(atom pack)
+
+ return c_func(xsfPacket_getDataSize,{pack})
+	
+end function
+
+public function sfPacket_endOfPacket(atom pack)
+
+ return c_func(xsfPacket_endOfPacket,{pack})
+	
+end function
+
+public function sfPacket_canRead(atom pack)
+
+ return c_func(xsfPacket_canRead,{pack})
+	
+end function
+
+public function sfPacket_readBool(atom pack)
+
+ return c_func(xsfPacket_readBool,{pack})
+	
+end function
+
+public function sfPacket_readInt8(atom pack)
+
+ return c_func(xsfPacket_readInt8,{pack})
+	
+end function
+
+public function sfPacket_readUint8(atom pack)
+
+ return c_func(xsfPacket_readUint8,{pack})
+	
+end function
+
+public function sfPacket_readInt16(atom pack)
+
+ return c_func(xsfPacket_readInt16,{pack})
+	
+end function
+
+public function sfPacket_readUint16(atom pack)
+
+ return c_func(xsfPacket_readUint16,{pack})
+	
+end function
+
+public function sfPacket_readInt32(atom pack)
+
+ return c_func(xsfPacket_readInt32,{pack})
+	
+end function
+
+public function sfPacket_readUint32(atom pack)
+
+ return c_func(xsfPacket_readUint32,{pack})
+	
+end function
+
+public function sfPacket_readFloat(atom pack)
+
+ return c_func(xsfPacket_readFloat,{pack})
+	
+end function
+
+public function sfPacket_readDouble(atom pack)
+
+ return c_func(xsfPacket_readDouble,{pack})
+	
+end function
+
+public procedure sfPacket_readString(atom pack,sequence str)
+
+ c_proc(xsfPacket_readString,{pack,allocate_string(str,1)})
+	
+end procedure
+
+public procedure sfPacket_readWideString(atom pack,sequence str)
+
+ c_proc(xsfPacket_readWideString,{pack,allocate_string(str,1)})
+	
+end procedure
+
+public procedure sfPacket_writeBool(atom pack,integer bool)
+
+ c_proc(xsfPacket_writeBool,{pack,bool})
+	
+end procedure
+
+public procedure sfPacket_writeInt8(atom pack,atom e)
+
+ c_proc(xsfPacket_writeInt8,{pack,e})
+	
+end procedure
+
+public procedure sfPacket_writeUint8(atom pack,atom ue)
+
+ c_proc(xsfPacket_writeUint8,{pack,ue})
+	
+end procedure
+
+public procedure sfPacket_writeInt16(atom pack,atom e)
+
+ c_proc(xsfPacket_writeInt16,{pack,e})
+	
+end procedure
+
+public procedure sfPacket_writeUint16(atom pack,atom ue)
+
+ c_proc(xsfPacket_writeUint16,{pack,ue})
+	
+end procedure
+
+public procedure sfPacket_writeInt32(atom pack,atom e)
+
+ c_proc(xsfPacket_writeInt32,{pack,e})
+	
+end procedure
+
+public procedure sfPacket_writeUint32(atom pack,atom ue)
+
+ c_proc(xsfPacket_writeUint32,{pack,ue})
+	
+end procedure
+
+public procedure sfPacket_writeFloat(atom pack,atom f)
+
+ c_proc(xsfPacket_writeFloat,{pack,f})
+	
+end procedure
+
+public procedure sfPacket_writeDouble(atom pack,atom d)
+
+ c_proc(xsfPacket_writeDouble,{pack,d})
+	
+end procedure
+
+public procedure sfPacket_writeString(atom pack,sequence str)
+
+ c_proc(xsfPacket_writeString,{pack,allocate_string(str,1)})
+	
+end procedure
+
+public procedure sfPacket_writeWideString(atom pack,sequence str)
+
+ c_proc(xsfPacket_writeWideString,{pack,allocate_string(str,1)})
+	
+end procedure
+
+--SocketSelector functions
+
+public constant xsfSocketSelector_create = define_c_func(net,"sfSocketSelector_create",{},C_POINTER),
+				xsfSocketSelector_copy = define_c_func(net,"sfSocketSelector_copy",{C_POINTER},C_POINTER),
+				xsfSocketSelector_destroy = define_c_proc(net,"sfSocketSelector_destroy",{C_POINTER}),
+				xsfSocketSelector_addTcpListener = define_c_proc(net,"sfSocketSelector_addTcpListener",{C_POINTER,C_POINTER}),
+				xsfSocketSelector_addTcpSocket = define_c_proc(net,"sfSocketSelector_addTcpSocket",{C_POINTER,C_POINTER}),
+				xsfSocketSelector_addUdpSocket = define_c_proc(net,"sfSocketSelector_addUdpSocket",{C_POINTER,C_POINTER}),
+				xsfSocketSelector_removeTcpListener = define_c_proc(net,"sfSocketSelector_removeTcpListener",{C_POINTER,C_POINTER}),
+				xsfSocketSelector_removeTcpSocket = define_c_proc(net,"sfSocketSelector_removeTcpSocket",{C_POINTER,C_POINTER}),
+				xsfSocketSelector_removeUdpSocket = define_c_proc(net,"sfSocketSelector_removeUdpSocket",{C_POINTER,C_POINTER}),
+				xsfSocketSelector_clear = define_c_proc(net,"sfSocketSelector_clear",{C_POINTER}),
+				xsfSocketSelector_wait = define_c_func(net,"sfSocketSelector_wait",{C_POINTER,C_POINTER},C_BOOL),
+				xsfSocketSelector_isTcpListenerReady = define_c_func(net,"sfSocketSelector_isTcpListenerReady",{C_POINTER,C_POINTER},C_BOOL),
+				xsfSocketSelector_isTcpSocketReady = define_c_func(net,"sfSocketSelector_isTcpSocketReady",{C_POINTER,C_POINTER},C_BOOL),
+				xsfSocketSelector_isUdpSocketReady = define_c_func(net,"sfSocketSelector_isUdpSocketReady",{C_POINTER,C_POINTER},C_BOOL)
+				
+public function sfSocketSelector_create()
+
+ return c_func(xsfSocketSelector_create,{})
+	
+end function
+
+public function sfSocketSelector_copy(atom sel)
+
+ return c_func(xsfSocketSelector_copy,{sel})
+	
+end function
+
+public procedure sfSocketSelector_destroy(atom sel)
+
+ c_proc(xsfSocketSelector_destroy,{sel})
+	
+end procedure
+
+public procedure sfSocketSelector_addTcpListener(atom sel,atom sock)
+
+ c_proc(xsfSocketSelector_addTcpListener,{sel,sock})
+	
+end procedure
+
+public procedure sfSocketSelector_addTcpSocket(atom sel,atom sock)
+
+ c_proc(xsfSocketSelector_addTcpSocket,{sel,sock})
+	
+end procedure
+
+public procedure sfSocketSelector_addUdpSocket(atom sel,atom sock)
+
+ c_proc(xsfSocketSelector_addUdpSocket,{sel,sock})
+	
+end procedure
+
+public procedure sfSocketSelector_removeTcpListener(atom sel,atom sock)
+
+ c_proc(xsfSocketSelector_removeTcpListener,{sel,sock})
+	
+end procedure
+
+public procedure sfSocketSelector_removeTcpSocket(atom sel,atom sock)
+
+ c_proc(xsfSocketSelector_removeTcpSocket,{sel,sock})
+	
+end procedure
+
+public procedure sfSocketSelector_removeUdpSocket(atom sel,atom sock)
+
+ c_proc(xsfSocketSelector_removeUdpSocket,{sel,sock})
+	
+end procedure
+
+public procedure sfSocketSelector_clear(atom sel)
+
+ c_proc(xsfSocketSelector_clear,{sel})
+	
+end procedure
+
+public function sfSocketSelector_wait(atom sel,atom xtime)
+
+ return c_func(xsfSocketSelector_wait,{sel,xtime})
+	
+end function
+
+public function sfSocketSelector_isTcpListenerReady(atom sel,atom sock)
+
+ return c_func(xsfSocketSelector_isTcpListenerReady,{sel,sock})
+	
+end function
+
+public function sfSocketSelector_isTcpSocketReady(atom sel,atom sock)
+
+ return c_func(xsfSocketSelector_isTcpSocketReady,{sel,sock})
+	
+end function
+
+public function sfSocketSelector_isUdpSocketReady(atom sel,atom sock)
+
+ return c_func(xsfSocketSelector_isUdpSocketReady,{sel,sock})
+	
+end function
+
+--TcpListener functions
+
+public constant xsfTcpListener_create = define_c_func(net,"sfTcpListener_create",{},C_POINTER),
+				xsfTcpListener_destroy = define_c_proc(net,"sfTcpListener_destroy",{C_POINTER}),
+				xsfTcpListener_setBlocking = define_c_proc(net,"sfTcpListener_setBlocking",{C_POINTER,C_BOOL}),
+				xsfTcpListener_isBlocking = define_c_func(net,"sfTcpListener_isBlocking",{C_POINTER},C_BOOL),
+				xsfTcpListener_getLocalPort = define_c_func(net,"sfTcpListener_getLocalPort",{C_POINTER},C_USHORT),
+				xsfTcpListener_listen = define_c_func(net,"sfTcpListener_listen",{C_POINTER,C_USHORT},C_POINTER),
+				xsfTcpListener_accept = define_c_func(net,"sfTcpListener_accept",{C_POINTER,C_POINTER},C_POINTER)
+				
+public function sfTcpListener_create()
+
+ return c_func(xsfTcpListener_create,{})
+	
+end function
+
+public procedure sfTcpListener_destroy(atom lis)
+
+ c_proc(xsfTcpListener_destroy,{lis})
+	
+end procedure
+
+public procedure sfTcpListener_setBlocking(atom lis,integer blk)
+
+ c_proc(xsfTcpListener_setBlocking,{lis,blk})
+	
+end procedure
+
+public function sfTcpListener_isBlocking(atom lis)
+
+ return c_func(xsfTcpListener_isBlocking,{lis})
+	
+end function
+
+public function sfTcpListener_getLocalPort(atom lis)
+
+ return c_func(xsfTcpListener_getLocalPort,{lis})
+	
+end function
+
+public function sfTcpListener_listen(atom lis,atom prt)
+
+ return c_func(xsfTcpListener_listen,{lis,prt})
+	
+end function
+
+public function sfTcpListener_accept(atom lis,atom con)
+
+ return c_func(xsfTcpListener_accept,{lis,con})
+	
+end function
+
+--TCPSocket functions
+
+public constant xsfTcpSocket_create = define_c_func(net,"sfTcpSocket_create",{},C_POINTER),
+				xsfTcpSocket_destroy = define_c_proc(net,"sfTcpSocket_destroy",{C_POINTER}),
+				xsfTcpSocket_setBlocking = define_c_proc(net,"sfTcpSocket_setBlocking",{C_POINTER,C_BOOL}),
+				xsfTcpSocket_isBlocking = define_c_func(net,"sfTcpSocket_isBlocking",{C_POINTER},C_BOOL),
+				xsfTcpSocket_getLocalPort = define_c_func(net,"sfTcpSocket_getLocalPort",{C_POINTER},C_USHORT),
+				xsfTcpSocket_getRemoteAddress = define_c_func(net,"sfTcpSocket_getRemoteAddress",{C_POINTER},C_POINTER),
+				xsfTcpSocket_getRemotePort = define_c_func(net,"sfTcpSocket_getRemotePort",{C_POINTER},C_USHORT),
+				xsfTcpSocket_connect = define_c_func(net,"sfTcpSocket_connect",{C_POINTER,C_POINTER,C_USHORT,C_POINTER},C_POINTER),
+				xsfTcpSocket_disconnect = define_c_proc(net,"sfTcpSocket_disconnect",{C_POINTER}),
+				xsfTcpSocket_send = define_c_func(net,"sfTcpSocket_send",{C_POINTER,C_POINTER,C_SIZE_T},C_POINTER),
+				xsfTcpSocket_receive = define_c_func(net,"sfTcpSocket_receive",{C_POINTER,C_POINTER,C_SIZE_T,C_SIZE_T},C_POINTER),
+				xsfTcpSocket_sendPacket = define_c_func(net,"sfTcpSocket_sendPacket",{C_POINTER,C_POINTER},C_POINTER),
+				xsfTcpSocket_receivePacket = define_c_func(net,"sfTcpSocket_receivePacket",{C_POINTER,C_POINTER},C_POINTER)
+				
+public function sfTcpSocket_create()
+
+ return c_func(xsfTcpSocket_create,{})
+	
+end function
+
+public procedure sfTcpSocket_destroy(atom sock)
+
+ c_proc(xsfTcpSocket_destroy,{sock})
+	
+end procedure
+
+public procedure sfTcpSocket_setBlocking(atom sock,integer blk)
+
+ c_proc(xsfTcpSocket_setBlocking,{sock,blk})
+	
+end procedure
+
+public function sfTcpSocket_isBlocking(atom sock)
+
+ return c_func(xsfTcpSocket_isBlocking,{sock})
+	
+end function
+
+public function sfTcpSocket_getLocalPort(atom sock)
+
+ return c_func(xsfTcpSocket_getLocalPort,{sock})
+	
+end function
+
+public function sfTcpSocket_getRemoteAddress(atom sock)
+
+ return c_func(xsfTcpSocket_getRemoteAddress,{sock})
+	
+end function
+
+public function sfTcpSocket_getRemotePort(atom sock)
+
+ return c_func(xsfTcpSocket_getRemotePort,{sock})
+	
+end function
+
+public function sfTcpSocket_connect(atom sock,atom host,atom port,atom xtime)
+
+ return c_func(xsfTcpSocket_connect,{sock,host,port,xtime})
+	
+end function
+
+public procedure sfTcpSocket_disconnect(atom sock)
+
+ c_proc(xsfTcpSocket_disconnect,{sock})
+	
+end procedure
+
+public function sfTcpSocket_send(atom sock,object dat,atom size)
+
+ return c_func(xsfTcpSocket_send,{sock,dat,size})
+	
+end function
+
+public function sfTcpSocket_receive(atom sock,object dat,atom max,atom size)
+
+ return c_func(xsfTcpSocket_receive,{sock,dat,max,size})
+	
+end function
+
+public function sfTcpSocket_sendPacket(atom sock,atom pack)
+
+ return c_func(xsfTcpSocket_sendPacket,{sock,pack})
+	
+end function
+
+public function sfTcpSocket_receivePacket(atom sock,atom pack)
+
+ return c_func(xsfTcpSocket_receivePacket,{sock,pack})
+	
+end function
+
+--UDPSocket functions
+
+public constant xsfUdpSocket_create = define_c_func(net,"sfUdpSocket_create",{},C_POINTER),
+				xsfUdpSocket_destroy = define_c_proc(net,"sfUdpSocket_destroy",{C_POINTER}),
+				xsfUdpSocket_setBlocking = define_c_proc(net,"sfUdpSocket_setBlocking",{C_POINTER,C_BOOL}),
+				xsfUdpSocket_isBlocking = define_c_func(net,"sfUdpSocket_isBlocking",{C_POINTER},C_BOOL),
+				xsfUdpSocket_getLocalPort = define_c_func(net,"sfUdpSocket_getLocalPort",{C_POINTER},C_USHORT),
+				xsfUdpSocket_bind = define_c_func(net,"sfUdpSocket_bind",{C_POINTER,C_USHORT},C_POINTER),
+				xsfUdpSocket_unbind = define_c_proc(net,"sfUdpSocket_unbind",{C_POINTER}),
+				xsfUdpSocket_send = define_c_func(net,"sfUdpSocket_send",{C_POINTER,C_POINTER,C_SIZE_T,C_POINTER,C_USHORT},C_POINTER),
+				xsfUdpSocket_receive = define_c_func(net,"sfUdpSocket_receive",{C_POINTER,C_POINTER,C_SIZE_T,C_SIZE_T,C_POINTER,C_POINTER},C_POINTER),
+				xsfUdpSocket_sendPacket = define_c_func(net,"sfUdpSocket_sendPacket",{C_POINTER,C_POINTER,C_POINTER,C_USHORT},C_POINTER),
+				xsfUdpSocket_receivePacket = define_c_func(net,"sfUdpSocket_receivePacket",{C_POINTER,C_POINTER,C_POINTER,C_POINTER},C_POINTER),
+				xsfUdpSocket_maxDatagramSize = define_c_func(net,"sfUdpSocket_maxDatagramSize",{},C_UINT)
+				
+public function sfUdpSocket_create()
+
+ return c_func(xsfUdpSocket_create,{})
+	
+end function
+
+public procedure sfUdpSocket_destroy(atom sock)
+
+ c_proc(xsfUdpSocket_destroy,{sock})
+	
+end procedure
+
+public procedure sfUdpSocket_setBlocking(atom sock,integer blk)
+
+ c_proc(xsfUdpSocket_setBlocking,{sock,blk})
+	
+end procedure
+
+public function sfUdpSocket_isBlocking(atom sock)
+
+ return c_func(xsfUdpSocket_isBlocking,{sock})
+	
+end function
+
+public function sfUdpSocket_getLocalPort(atom sock)
+
+ return c_func(xsfUdpSocket_getLocalPort,{sock})
+	
+end function
+
+public function sfUdpSocket_bind(atom sock,atom port)
+
+ return c_func(xsfUdpSocket_bind,{sock,port})
+	
+end function
+
+public procedure sfUdpSocket_unbind(atom sock)
+
+ c_proc(xsfUdpSocket_unbind,{sock})
+	
+end procedure
+
+public function sfUdpSocket_send(atom sock,object dat,atom size,atom add,atom port)
+
+ return c_func(xsfUdpSocket_send,{sock,dat,size,add,port})
+	
+end function
+
+public function sfUdpSocket_receive(atom sock,object dat,atom max,atom size,atom add,atom port)
+
+ return c_func(xsfUdpSocket_receive,{sock,dat,max,size,add,port})
+	
+end function
+
+public function sfUdpSocket_sendPacket(atom sock,atom pack,atom add,atom port)
+
+ return c_func(xsfUdpSocket_sendPacket,{sock,pack,add,port})
+	
+end function
+
+public function sfUdpSocket_receivePacket(atom sock,atom pack,atom add,atom port)
+
+ return c_func(xsfUdpSocket_receivePacket,{sock,pack,add,port})
+	
+end function
+
+public function sfUdpSocket_maxDatagramSize()
+
+ return c_func(xsfUdpSocket_maxDatagramSize,{})
+	
+end function
+­5.6
