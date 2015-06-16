@@ -1,4 +1,3 @@
---Note, shape demo not working ATM
 without warning
 
 include std/machine.e
@@ -17,7 +16,7 @@ if win = -1 then
 end if
 
 atom circle = sfCircleShape_create()
-atom col = sfColor_fromRGB(0,255,0)
+atom col = sfColor_fromRGB(0,0,0)
 atom shapecol = sfColor_fromRGB(255,0,0)
 
 atom tex = sfTexture_createFromFile("sfml-logo-small.png",0,0,0,0)
@@ -27,8 +26,11 @@ if tex = -1 then
 	abort(0)
 end if
 
+sfCircleShape_setRadius(circle,50.0)
+sfCircleShape_setPosition(circle,800 / 2, 600 / 2)
+
 sfCircleShape_setFillColor(circle,shapecol)
-sfCircleShape_setTexture(circle,tex,0)
+--sfCircleShape_setTexture(circle,tex,0)
 
 while sfRenderWindow_isOpen(win) do
 
@@ -48,7 +50,7 @@ while sfRenderWindow_isOpen(win) do
 	
 	sfRenderWindow_clear(win,col)
 	
-	sfRenderWindow_drawCircleShape(win,circle,sfBlendFactorZero)
+	sfRenderWindow_drawCircleShape(win,circle,sfBlendEquationAdd)
 	
 	sfRenderWindow_display(win)
 	
@@ -56,4 +58,3 @@ end while
 
 sfCircleShape_destroy(circle)
 sfRenderWindow_destroy(win)
-­1.34
