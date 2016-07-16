@@ -28,5 +28,7 @@ Updates:
 
 Updated wrapper to make more Euphoria friendly. Fixed and updated demos. 
 
+Updated for SFML 2.3.2
+
 SFML2 Documentation: http://www.sfml-dev.org/
 Euphoria Documentation: openeuphoria.org
