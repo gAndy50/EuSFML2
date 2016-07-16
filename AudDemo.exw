@@ -1,25 +1,34 @@
 without warning
 
 include std/machine.e
+
 include EuSys2.ew
 include EuGfx2.ew
+include EuAud2.ew
 
 include sfFlags.e
 
 constant event = allocate(4 * 6)
 
-atom win = sfRenderWindow_create(800,600,32,"My Window - Event",sfClose,0)
+atom win = sfRenderWindow_create(800,600,32,"My Window - Audio",sfClose,0)
 
 if win = -1 then
 	puts(1,"Could not create render window!\n")
 	abort(0)
 end if
 
+atom snd = sfMusic_createFromFile("Test.wav")
+sfMusic_setVolume(snd,100.0)
+
+if snd = -1 then
+	puts(1,"Could not create/load sound!\n")
+	abort(0)
+end if
+
 while sfRenderWindow_isOpen(win) do
 	
-
 	while sfRenderWindow_pollEvent(win,event) do
-		
+	
 		integer eventType = peek4s(event)
 		integer code = peek4s(event+4)
 		integer alt = peek4s(event+8)
@@ -27,20 +36,23 @@ while sfRenderWindow_isOpen(win) do
 		integer shift = peek4s(event+16)
 		integer system = peek4s(event+20)
 		
-		if eventType = sfEvtClosed then
-			sfRenderWindow_close(win)
-		elsif eventType = sfEvtKeyPressed then
+		if eventType = sfEvtKeyPressed then
 			if code = sfKeyEscape then
 				sfRenderWindow_close(win)
 			end if
+			elsif eventType = sfEvtClosed then
+				sfRenderWindow_close(win)
 		end if
-
 	end while
 	
 	sfRenderWindow_clear(win,sfBlack)
+	
+	sfMusic_play(snd)
+	
 	sfRenderWindow_display(win)
 
 end while
 
+sfMusic_destroy(snd)
 sfRenderWindow_destroy(win)
-­26.35
+­21.27

@@ -1,0 +1,62 @@
+without warning
+
+include std/machine.e
+include EuSys2.ew
+include EuGfx2.ew
+
+include sfFlags.e
+
+constant event = allocate(4 * 6)
+
+integer w = 800
+integer h = 600
+integer b = 32
+
+atom win = sfRenderWindow_create(w,h,b,"My Window - Font",sfClose,0)
+
+if win = -1 then
+    puts(1,"Could not create render window!\n")
+    abort(0)
+end if
+
+atom font = sfFont_createFromFile("arial.ttf")
+
+if font = -1 then
+	puts(1,"Could not load font file!\n")
+	abort(0)
+end if
+
+atom text = sfText_create()
+sfText_setString(text,"Hello World")
+sfText_setFont(text,font)
+sfText_setCharacterSize(text,50)
+
+while sfRenderWindow_isOpen(win) do
+
+  while sfRenderWindow_pollEvent(win,event) do
+    
+    integer eventType = peek4s(event)
+    integer code = peek4s(event+4)
+    integer alt = peek4s(event+8)
+    integer control = peek4s(event+14)
+    integer shift = peek4s(event+16)
+    integer system = peek4s(event+20)
+    
+    if eventType = sfEvtClosed then
+		sfRenderWindow_close(win)
+    end if
+    
+  end while
+    
+  sfRenderWindow_clear(win,sfBlack)
+  
+  sfRenderWindow_drawText(win,text,0)
+
+  sfRenderWindow_display(win)
+    
+end while
+
+sfText_destroy(text)
+sfFont_destroy(font)
+sfRenderWindow_destroy(win)
+­41.37

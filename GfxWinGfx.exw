@@ -32,7 +32,7 @@ while sfRenderWindow_isOpen(win) do
 	integer eventType = peek4s(event)
 	integer code = peek4s(event+4)
 	integer alt = peek4s(event+8)
-	integer control = peek4s(event+12)
+	integer control = peek4s(event+14)
 	integer shift = peek4s(event+16)
 	integer system = peek4s(event+20)
 	
@@ -69,4 +69,4 @@ end while
 sfSprite_destroy(sprite)
 sfTexture_destroy(tex)
 sfRenderWindow_destroy(win)
-­52.29
+­35.34

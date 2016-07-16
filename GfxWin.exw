@@ -1,4 +1,5 @@
 without warning
+without type_check
 
 include std/machine.e
 include EuSys2.ew
@@ -22,7 +23,7 @@ while sfRenderWindow_isOpen(win) do
 	  integer eventType = peek4s(event)
 	  integer code = peek4s(event+4)
 	  integer alt = peek4s(event+8)
-	  integer control = peek4s(event+12)
+	  integer control = peek4s(event+13)
 	  integer shift = peek4s(event+16)
 	  integer system = peek4s(event+20)
 	  
@@ -39,4 +40,4 @@ while sfRenderWindow_isOpen(win) do
 end while
 
 sfRenderWindow_destroy(win)
-­35.33
+­26.36

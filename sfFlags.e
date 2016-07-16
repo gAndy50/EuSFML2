@@ -1,8 +1,8 @@
 include std/math.e
 
 public constant CSFML_VERSION_MAJOR = 2,
-				CSFML_VERSION_MINOR = 2,
-				CSFML_VERSION_PATCH = 0
+				CSFML_VERSION_MINOR = 3,
+				CSFML_VERSION_PATCH = 2
 				
 public constant CSFML_SYSTEM_WINDOWS = 1,
 				CSFML_SYSTEM_LINUX = 2,
@@ -363,4 +363,4 @@ public enum type sfSocketStatus
 	sfSocketError
 	
 end type
-­8.11
+­5.27

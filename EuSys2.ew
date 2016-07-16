@@ -9,10 +9,8 @@ include sfFlags.e
 atom sys = open_dll("csfml-system-2.dll")
 
 if sys = -1 then
-
 	puts(1,"Could not load csfml-system-2.dll!\n")
 	abort(0)
-	
 end if
 
 --Clock functions
@@ -53,15 +51,14 @@ public function sfClock_restart(atom clock)
 	
 end function
 
---Time functions
+--Time Functions
 
 public constant xsfTime_asSeconds = define_c_func(sys,"sfTime_asSeconds",{C_POINTER},C_FLOAT),
-				xsfTime_asMilliseconds = define_c_func(sys,"sfTime_asMilliseconds",{C_POINTER},C_INT),
-				xsfTime_asMicroseconds = define_c_func(sys,"sfTime_asMicroseconds",{C_POINTER},C_LONG),
-				xsfSeconds = define_c_func(sys,"sfSeconds",{C_FLOAT},C_POINTER),
-				xsfMilliseconds = define_c_func(sys,"sfMilliseconds",{C_INT},C_POINTER),
-				xsfMicroseconds = define_c_func(sys,"sfMicroseconds",{C_LONG},C_POINTER),
-				xsfTime_Zero = define_c_func(sys,"sfTime_Zero",{},C_POINTER)
+				xsfTime_asMilliseconds = define_c_func(sys,"sfTime_asMilliseconds",{C_POINTER},C_POINTER),
+				xsfTime_asMicroseconds = define_c_func(sys,"sfTime_asMircoseconds",{C_POINTER},C_POINTER),
+				xsfSeconds = define_c_func(sys,"sfTime_sfSeconds",{C_FLOAT},C_POINTER),
+				xsfMilliseconds = define_c_func(sys,"sfTime_Milliseconds",{C_POINTER},C_POINTER),
+				xsfMicroseconds = define_c_func(sys,"sfTime_Microseconds",{C_POINTER},C_POINTER)
 				
 public function sfTime_asSeconds(atom xtime)
 
@@ -87,21 +84,15 @@ public function sfSeconds(atom amount)
 	
 end function
 
-public function sfMilliseconds(atom xtime)
+public function sfMilliseconds(atom amount)
 
- return c_func(xsfMilliseconds,{xtime})
+ return c_func(xsfMilliseconds,{amount})
 	
 end function
 
-public function sfMicroseconds(atom xtime)
+public function sfMicroseconds(atom amount)
 
- return c_func(xsfMicroseconds,{xtime})
-	
-end function
-
-public function sfTime_Zero()
-
- return c_func(xsfTime_Zero,{})
+ return c_func(xsfMicroseconds,{amount})
 	
 end function
 
@@ -118,69 +109,59 @@ public function sfMutex_create()
 	
 end function
 
-public procedure sfMutex_destroy(atom mut)
+public procedure sfMutex_destroy(atom mutex)
 
- c_proc(xsfMutex_destroy,{mut})
+ c_proc(xsfMutex_destroy,{mutex})
 	
 end procedure
 
-public procedure sfMutex_lock(atom mut)
+public procedure sfMutex_lock(atom mutex)
 
- c_proc(xsfMutex_lock,{mut})
+ c_proc(xsfMutex_lock,{mutex})
 	
 end procedure
 
-public procedure sfMutex_unlock(atom mut)
+public procedure sfMutex_unlock(atom mutex)
 
- c_proc(xsfMutex_unlock,{mut})
+ c_proc(xsfMutex_unlock,{mutex})
 	
 end procedure
 
 --Thread functions
 
-public constant xsfThread_create = define_c_func(sys,"sfThread_create",{C_POINTER,C_POINTER},C_POINTER),
+public constant xsfThread_create = define_c_func(sys,"sfThread_create",{C_POINTER,C_POINTER,C_POINTER},C_POINTER),
 				xsfThread_destroy = define_c_proc(sys,"sfThread_destroy",{C_POINTER}),
 				xsfThread_launch = define_c_proc(sys,"sfThread_launch",{C_POINTER}),
 				xsfThread_wait = define_c_proc(sys,"sfThread_wait",{C_POINTER}),
 				xsfThread_terminate = define_c_proc(sys,"sfThread_terminate",{C_POINTER})
 				
-public function sfThread_create(object func, object dat)
+public function sfThread_create(object x,object func,object data)
 
- return c_func(xsfThread_create,{func,dat})
+ return c_func(xsfThread_create,{x,func,data})
 	
 end function
 
-public procedure sfThread_destroy(atom thrd)
+public procedure sfThread_destroy(atom thread)
 
- c_proc(xsfThread_destroy,{thrd})
+ c_proc(xsfThread_destroy,{thread})
 	
 end procedure
 
-public procedure sfThread_launch(atom thrd)
+public procedure sfThread_launch(atom thread)
 
- c_proc(xsfThread_launch,{thrd})
+ c_proc(xsfThread_launch,{thread})
 	
 end procedure
 
-public procedure sfThread_wait(atom thrd)
+public procedure sfThread_wait(atom thread)
 
- c_proc(xsfThread_wait,{thrd})
+ c_proc(xsfThread_wait,{thread})
 	
 end procedure
 
-public procedure sfThread_terminate(atom thrd)
+public procedure sfThread_terminate(atom thread)
 
- c_proc(xsfThread_terminate,{thrd})
+ c_proc(xsfThread_terminate,{thread})
 	
 end procedure
-
---Sleep function
-
-public constant xsfSleep = define_c_proc(sys,"sfSleep",{C_POINTER})
-
-public procedure sfSleep(atom duration)
-
- c_proc(xsfSleep,{duration})
-	
-end procedure
-­63.77
+­164.37
