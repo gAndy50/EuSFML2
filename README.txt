@@ -1,7 +1,7 @@
 EuSFML2
 Version of SFML2 Wrapped: 2.4
 Written In: Euphoria 4.0.5
-Written By: Andy Patterson (Icy_Viking)
+Written By: Andy P. (Icy_Viking)
 Icy Viking Games
 Contact: g_andy <at> live.com
 
