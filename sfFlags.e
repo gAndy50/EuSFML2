@@ -1,8 +1,8 @@
 include std/math.e
 
 public constant CSFML_VERSION_MAJOR = 2,
-				CSFML_VERSION_MINOR = 3,
-				CSFML_VERSION_PATCH = 2
+				CSFML_VERSION_MINOR = 5,
+				CSFML_VERSION_PATCH = 0
 				
 public constant CSFML_SYSTEM_WINDOWS = 1,
 				CSFML_SYSTEM_LINUX = 2,
@@ -363,4 +363,30 @@ public enum type sfSocketStatus
 	sfSocketError
 	
 end type
-­5.27
+
+public enum type sfCursorType
+
+	sfCursorArrow,
+	sfCursorArrowWait,
+	sfCursorWait,
+	sfCursorText,
+	sfCursorHand,
+	sfCursorSizeHorizontal,
+	sfCursorSizeVertical,
+	sfCursorSizeTopLeftBottomRight,
+	sfCursorSizeBottomLeftTopRight,
+	sfCursorSizeAll,
+	sfCursorCross,
+	sfCursorHelp,
+	sfCursorNotAllowed
+	
+end type
+
+public enum type sfVertexBufferUsage
+
+ sfVertexBufferStream,
+ sfVertexBufferDynamic,
+ sfVertexBufferStatic
+	
+end type
+­389.21

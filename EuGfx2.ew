@@ -1242,7 +1242,7 @@ public constant xsfRenderWindow_create = define_c_func(gfx,"sfRenderWindow_creat
 				
 public function sfRenderWindow_create(atom w,atom h,atom b,sequence title,atom style,atom settings)
 
- atom str = allocate_string(title)
+ atom str = allocate_string(title,1)
  atom ret = c_func(xsfRenderWindow_create,{w,h,b,str,style,settings})
  
  return ret
@@ -1251,7 +1251,7 @@ end function
 
 public function sfRenderWindow_createUnicode(atom w,atom h,atom b,sequence title,atom style,atom settings)
 
- atom str = allocate_string(title)
+ atom str = allocate_string(title,1)
  atom ret = c_func(xsfRenderWindow_createUnicode,{w,h,b,str,style,settings})
  
  return ret
@@ -1326,14 +1326,14 @@ end procedure
 
 public procedure sfRenderWindow_setTitle(atom rw,sequence title)
 
- atom str = allocate_string(title)
+ atom str = allocate_string(title,1)
  c_proc(xsfRenderWindow_setTitle,{rw,str})
 	
 end procedure
 
 public procedure sfRenderWindow_setUnicodeTitle(atom rw,sequence title)
 
- atom str = allocate_string(title)
+ atom str = allocate_string(title,1)
  c_proc(xsfRenderWindow_setUnicodeTitle,{rw,str})
 	
 end procedure
@@ -1564,8 +1564,8 @@ public constant xsfShader_createFromFile = define_c_func(gfx,"sfShader_createFro
 				
 public function sfShader_createFromFile(sequence file,sequence file2)
 
- atom str = allocate_string(file)
- atom str2 = allocate_string(file2)
+ atom str = allocate_string(file,1)
+ atom str2 = allocate_string(file2,1)
  atom ret = c_func(xsfShader_createFromFile,{str,str2})
  
  return ret
@@ -1574,8 +1574,8 @@ end function
 
 public function sfShader_createFromMemory(sequence shad,sequence shad2)
 
- atom str = allocate_string(shad)
- atom str2 = allocate_string(shad2)
+ atom str = allocate_string(shad,1)
+ atom str2 = allocate_string(shad2,1)
  atom ret = c_func(xsfShader_createFromMemory,{str,str2})
  
  return ret
@@ -1596,70 +1596,70 @@ end procedure
 
 public procedure sfShader_setFloatParameter(atom shad,sequence file,atom x)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  c_proc(xsfShader_setFloatParameter,{shad,str,x})
 	
 end procedure
 
 public procedure sfShader_setFloat2Parameter(atom shad,sequence file,atom x,atom y)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  c_proc(xsfShader_setFloat2Parameter,{shad,str,x,y})
 	
 end procedure
 
 public procedure sfShader_setFloat3Parameter(atom shad,sequence file,atom x,atom y,atom z)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  c_proc(xsfShader_setFloat3Parameter,{shad,str,x,y,z})
 	
 end procedure
 
 public procedure sfShader_setFloat4Parameter(atom shad,sequence file,atom x,atom y,atom z,atom w)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  c_proc(xsfShader_setFloat4Parameter,{shad,str,x,y,z,w})
 	
 end procedure
 
 public procedure sfShader_setVector2Parameter(atom shad,sequence file,atom x,atom y)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  c_proc(xsfShader_setVector2Parameter,{shad,str,x,y})
 	
 end procedure
 
 public procedure sfShader_setVector3Parameter(atom shad,sequence file,atom x,atom y,atom z)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  c_proc(xsfShader_setVector3Parameter,{shad,str,x,y,z})
 	
 end procedure
 
 public procedure sfShader_setColorParameter(atom shad,sequence file,sfColor col)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  c_proc(xsfShader_setColorParameter,{shad,str,col})
 	
 end procedure
 
 public procedure sfShader_setTransformParameter(atom shad,sequence file,atom trans)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  c_proc(xsfShader_setTransformParameter,{shad,str,trans})
 	
 end procedure
 
 public procedure sfShader_setTextureParameter(atom shad,sequence file,atom tex)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  c_proc(xsfShader_setTextureParameter,{shad,str,tex})
 	
 end procedure
 
 public procedure sfShader_setCurrentTextureParameter(atom shad,sequence file)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  c_proc(xsfShader_setCurrentTextureParameter,{shad,str})
 	
 end procedure
@@ -1909,7 +1909,9 @@ public constant xsfText_create = define_c_func(gfx,"sfText_create",{},C_POINTER)
 				xsfText_getColor = define_c_func(gfx,"sfText_getColor",{C_POINTER},C_POINTER),
 				xsfText_findCharacterPos = define_c_func(gfx,"sfText_findCharacterPos",{C_POINTER,C_SIZE_T},C_POINTER),
 				xsfText_getLocalBounds = define_c_func(gfx,"sfText_getLocalBounds",{C_POINTER},C_FLOAT),
-				xsfText_getGlobalBounds = define_c_func(gfx,"sfText_getGlobalBounds",{C_POINTER},C_FLOAT)
+				xsfText_getGlobalBounds = define_c_func(gfx,"sfText_getGlobalBounds",{C_POINTER},C_FLOAT),
+				xsfText_setLineSpacing = define_c_proc(gfx,"sfText_setLineSpacing",{C_POINTER,C_FLOAT}),
+				xsfText_setLetterSpacing = define_c_proc(gfx,"sfText_setLetterSpacing",{C_POINTER,C_FLOAT})
 				
 public function sfText_create()
 
@@ -2009,14 +2011,14 @@ end function
 
 public procedure sfText_setString(atom txt,sequence st)
 
- atom str = allocate_string(st)
+ atom str = allocate_string(st,1)
  c_proc(xsfText_setString,{txt,str})
 	
 end procedure
 
 public procedure sfText_setUnicodeString(atom txt,sequence st)
 
- atom str = allocate_string(st)
+ atom str = allocate_string(st,1)
  c_proc(xsfText_setUnicodeString,{txt,str})
 	
 end procedure
@@ -2093,6 +2095,18 @@ public function sfText_getGlobalBounds(atom txt)
 	
 end function
 
+public procedure sfText_setLetterSpacing(atom txt,atom spc)
+
+ c_proc(xsfText_setLetterSpacing,{txt,spc})
+	
+end procedure
+
+public procedure sfText_setLineSpacing(atom txt,atom spc)
+
+ c_proc(xsfText_setLineSpacing,{txt,spc})
+	
+end procedure
+
 --Texture Functions
 
 public constant xsfTexture_create = define_c_func(gfx,"sfTexture_create",{C_UINT,C_UINT},C_POINTER),
@@ -2124,7 +2138,7 @@ end function
 
 public function sfTexture_createFromFile(sequence file,integer left,integer top,integer w,integer h)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  atom ret = c_func(xsfTexture_createFromFile,{str,left,top,w,h})
  
  return ret
@@ -2817,4 +2831,105 @@ public procedure sfView_zoom(atom view,atom factor)
  c_proc(xsfView_zoom,{view,factor})
 	
 end procedure
-­2817.35
+
+--Vertexbuffer Functions
+
+public constant xsfVertexBuffer_create = define_c_func(gfx,"sfVertexBuffer_create",{C_UINT,C_POINTER,C_POINTER},C_POINTER),
+				xsfVertexBuffer_copy = define_c_func(gfx,"sfVertexBuffer_copy",{C_POINTER},C_POINTER),
+				xsfVertexBuffer_destroy = define_c_proc(gfx,"sfVertexBuffer_destroy",{C_POINTER}),
+				xsfVertexBuffer_getVertexCount = define_c_func(gfx,"sfVertexBuffer_getVertexCount",{C_POINTER},C_UINT),
+				xsfVertexBuffer_update = define_c_func(gfx,"sfVertexBuffer_update",{C_POINTER,C_UINT,C_UINT},C_BOOL),
+				xsfVertexBuffer_updateFromVertexBuffer = define_c_func(gfx,"sfVertexBuffer_updateFromVertexBuffer",{C_POINTER,C_POINTER},C_BOOL),
+				xsfVertexBuffer_swap = define_c_proc(gfx,"sfVertexBuffer_swap",{C_POINTER,C_POINTER}),
+				xsfVertexBuffer_getNativeHandle = define_c_func(gfx,"sfVertexBuffer_getNativeHandle",{C_POINTER},C_UINT),
+				xsfVertexBuffer_setPrimitiveType = define_c_proc(gfx,"sfVertexBuffer_setPrimitiveType",{C_POINTER,C_POINTER}),
+				xsfVertexBuffer_getPrimitiveType = define_c_func(gfx,"sfVertexBuffer_getPrimitiveType",{C_POINTER},C_POINTER),
+				xsfVertexBuffer_setUsage = define_c_proc(gfx,"sfVertexBuffer_setUsage",{C_POINTER,C_POINTER}),
+				xsfVertexBuffer_getUsage = define_c_func(gfx,"sfVertexBuffer_getUsage",{C_POINTER},C_POINTER),
+				xsfVertexBuffer_bind = define_c_proc(gfx,"sfVertexBuffer_bind",{C_POINTER}),
+				xsfVertexBuffer_isAvailable = define_c_func(gfx,"sfVertexBuffer_isAvailable",{},C_BOOL)
+
+public function sfVertexBuffer_create(atom cnt,sfPrimitiveType prim,sfVertexBufferUsage usg)
+
+ return c_func(xsfVertexBuffer_create,{cnt,prim,usg})
+	
+end function
+
+public function sfVertexBuffer_copy(atom vb)
+
+ return c_func(xsfVertexBuffer_copy,{vb})
+	
+end function
+
+public procedure sfVertexBuffer_destroy(atom vb)
+
+ c_proc(xsfVertexBuffer_copy,{vb})
+	
+end procedure
+
+public function sfVertexBuffer_getVertexCount(atom vb)
+
+ return c_func(xsfVertexBuffer_getVertexCount,{vb})
+	
+end function
+
+public function sfVertexBuffer_update(atom vb,atom verts,atom cnt,atom off)
+
+ return c_func(xsfVertexBuffer_update,{vb,verts,cnt,off})
+	
+end function
+
+public function sfVertexBuffer_updateFromVertexBuffer(atom vb,atom oth)
+
+ return c_func(xsfVertexBuffer_updateFromVertexBuffer,{vb,oth})
+	
+end function
+
+public procedure sfVertexBuffer_swap(atom l,atom r)
+
+ c_proc(xsfVertexBuffer_swap,{l,r})
+	
+end procedure
+
+public function sfVertexBuffer_getNativeHandle(atom vb)
+
+ return c_func(xsfVertexBuffer_getNativeHandle,{vb})
+	
+end function
+
+public procedure sfVertexBuffer_setPrimitiveType(atom vb,sfPrimitiveType xtype)
+
+ c_proc(xsfVertexBuffer_setPrimitiveType,{vb,xtype})
+	
+end procedure
+
+public function sfVertexBuffer_getPrimitiveType(atom vb)
+
+ return c_func(xsfVertexBuffer_getPrimitiveType,{vb})
+	
+end function
+
+public procedure sfVertexBuffer_setUsage(atom vb,sfVertexBufferUsage usg)
+
+ c_proc(xsfVertexBuffer_setUsage,{vb,usg})
+	
+end procedure
+
+public function sfVertexBuffer_getUsage(atom vb)
+
+ return c_func(xsfVertexBuffer_getUsage,{vb})
+	
+end function
+
+public procedure sfVertexBuffer_bind(atom vb)
+
+ c_proc(xsfVertexBuffer_bind,{vb})
+	
+end procedure
+
+public function sfVertexBuffer_isAvailable()
+
+ return c_func(xsfVertexBuffer_isAvailable,{})
+	
+end function
+­29.14

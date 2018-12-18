@@ -46,7 +46,7 @@ public constant xsfFtpListingResponse_destroy = define_c_proc(net,"sfFtpListingR
 				xsfFtp_renameFile = define_c_func(net,"sfFtp_renameFile",{C_POINTER,C_POINTER,C_POINTER},C_POINTER),
 				xsfFtp_deleteFile = define_c_func(net,"sfFtp_deleteFile",{C_POINTER,C_POINTER},C_POINTER),
 				xsfFtp_download = define_c_func(net,"sfFtp_download",{C_POINTER,C_POINTER,C_POINTER,C_POINTER},C_POINTER),
-				xsfFtp_upload = define_c_func(net,"sfFtp_upload",{C_POINTER,C_POINTER,C_POINTER,C_POINTER},C_POINTER)
+				xsfFtp_upload = define_c_func(net,"sfFtp_upload",{C_POINTER,C_POINTER,C_POINTER,C_POINTER,C_BOOL},C_POINTER)
 				
 public procedure sfFtpListingResponse_destroy(atom flr)
 
@@ -228,9 +228,9 @@ public function sfFtp_download(atom ftp,sequence file,sequence path,atom mode)
 	
 end function
 
-public function sfFtp_upload(atom ftp,sequence file,sequence path,atom mode)
+public function sfFtp_upload(atom ftp,sequence file,sequence path,atom mode,integer app)
 
- return c_func(xsfFtp_upload,{ftp,allocate_string(file,1),allocate_string(path,1),mode})
+ return c_func(xsfFtp_upload,{ftp,allocate_string(file,1),allocate_string(path,1),mode,app})
 	
 end function
 
@@ -961,4 +961,4 @@ public function sfUdpSocket_maxDatagramSize()
  return c_func(xsfUdpSocket_maxDatagramSize,{})
 	
 end function
-­963.12
+­233.90

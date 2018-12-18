@@ -100,11 +100,12 @@ public constant xsfMusic_createFromFile = define_c_func(aud,"sfMusic_createFromF
 				xsfMusic_getPosition = define_c_func(aud,"sfMusic_getPosition",{C_POINTER},C_POINTER),
 				xsfMusic_isRelativeToListener = define_c_func(aud,"sfMusic_isRelativeToListener",{C_POINTER},C_BOOL),
 				xsfMusic_getMinDistance = define_c_func(aud,"sfMusic_getMinDistance",{C_POINTER},C_FLOAT),
-				xsfMusic_getAttenuation = define_c_func(aud,"sfMusic_getAttenuation",{C_POINTER},C_FLOAT)
+				xsfMusic_getAttenuation = define_c_func(aud,"sfMusic_getAttenuation",{C_POINTER},C_FLOAT),
+				xsfMusic_getLoopPoints = define_c_func(aud,"sfMusic_getLoopPoints",{C_POINTER},C_POINTER)
 				
 public function sfMusic_createFromFile(sequence file)
 
- atom str = allocate_string(file)
+ atom str = allocate_string(file,1)
  atom ret = c_func(xsfMusic_createFromFile,{str})
  
  return ret
@@ -264,6 +265,12 @@ end function
 public function sfMusic_getAttenuation(atom mus)
 
  return c_func(xsfMusic_getAttenuation,{mus})
+	
+end function
+
+public function sfMusic_getLoopPoints(atom mus)
+
+ return c_func(xsfMusic_getLoopPoints,{mus})
 	
 end function
 
@@ -824,4 +831,4 @@ public function sfSoundStream_getPlayingOffset(atom ss)
  return c_func(xsfSoundStream_getPlayingOffset,{ss})
 	
 end function
-­92.57
+­273.44

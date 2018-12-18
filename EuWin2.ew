@@ -389,4 +389,61 @@ public function sfWindow_getSystemHandle(atom window)
  return c_func(xsfWindow_getSystemHandle,{window})
 	
 end function
-­100.46
+
+--Cursor functions
+
+public constant xsfCursor_createFromPixels = define_c_func(win,"sfCursor_createFromPixels",{C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT},C_POINTER),
+				xsfCursor_createFromSystem = define_c_func(win,"sfCursor_createFromSystem",{C_POINTER},C_POINTER),
+				xsfCursor_destroy = define_c_proc(win,"sfCursor_destroy",{C_POINTER})
+				
+public function sfCursor_createFromPixels(atom pix,atom x,atom y,atom x2,atom y2)
+
+ return c_func(xsfCursor_createFromPixels,{pix,x,y,x2,y2})
+	
+end function
+
+public function sfCursor_createFromSystem(sfCursorType xtype)
+
+ return c_func(xsfCursor_createFromSystem,{xtype})
+	
+end function
+
+public procedure sfCursor_destroy(atom cur)
+
+ c_proc(xsfCursor_destroy,{cur})
+	
+end procedure
+
+--Clipboard Functions
+
+public constant xsfClipboard_getString = define_c_func(win,"sfClipboard_getString",{},C_POINTER),
+				xsfClipboard_getUnicodeString = define_c_func(win,"sfClipboard_getUnicodeString",{},C_POINTER),
+				xsfClipboard_setString = define_c_proc(win,"sfClipboard_setString",{C_POINTER}),
+				xsfClipboard_setUnicodeString = define_c_proc(win,"sfClipboard_setUnicodeString",{C_POINTER})
+				
+public function sfClipboard_getString()
+
+ return c_func(xsfClipboard_getString,{})
+	
+end function
+
+public function sfClipboard_getUnicodeString()
+
+ return c_func(xsfClipboard_getUnicodeString,{})
+	
+end function
+
+public procedure sfClipboard_setString(sequence text)
+
+ atom str = allocate_string(text,1)
+ c_proc(xsfClipboard_setString,{str})
+	
+end procedure
+
+public procedure sfClipboard_setUnicodeString(sequence text)
+
+ atom str = allocate_string(text,1)
+ c_proc(xsfClipboard_setUnicodeString,{str})
+	
+end procedure
+­395.136
