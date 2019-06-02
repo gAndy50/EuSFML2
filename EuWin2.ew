@@ -17,9 +17,9 @@ end if
 
 --Context functions
 
-public constant xsfContext_create = define_c_func(win,"sfContext_create",{},C_POINTER),
-				xsfContext_destroy = define_c_proc(win,"sfContext_destroy",{C_POINTER}),
-				xsfContext_setActive = define_c_proc(win,"sfContext_setActive",{C_POINTER,C_BOOL})
+public constant xsfContext_create = define_c_func(win,"+sfContext_create",{},C_POINTER),
+				xsfContext_destroy = define_c_proc(win,"+sfContext_destroy",{C_POINTER}),
+				xsfContext_setActive = define_c_proc(win,"+sfContext_setActive",{C_POINTER,C_BOOL})
 				
 public function sfContext_create()
 
@@ -41,13 +41,13 @@ end procedure
 
 --Joystick functions
 
-public constant xsfJoystick_isConnected = define_c_func(win,"sfJoystick_isConnected",{C_UINT},C_BOOL),
-				xsfJoystick_getButtonCount = define_c_func(win,"sfJoystick_getButtonCount",{C_UINT},C_UINT),
-				xsfJoystick_hasAxis = define_c_func(win,"sfJoystick_hasAxis",{C_UINT,C_POINTER},C_BOOL),
-				xsfJoystick_isButtonPressed = define_c_func(win,"sfJoystick_isButtonPressed",{C_UINT,C_UINT},C_BOOL),
-				xsfJoystick_getAxisPosition = define_c_func(win,"sfJoystick_getAxisPosition",{C_UINT,C_POINTER},C_FLOAT),
-				xsfJoystick_getIdentification = define_c_func(win,"sfJoystick_getIdentification",{C_UINT},C_POINTER),
-				xsfJoystick_update = define_c_proc(win,"sfJoystick_update",{})
+public constant xsfJoystick_isConnected = define_c_func(win,"+sfJoystick_isConnected",{C_UINT},C_BOOL),
+				xsfJoystick_getButtonCount = define_c_func(win,"+sfJoystick_getButtonCount",{C_UINT},C_UINT),
+				xsfJoystick_hasAxis = define_c_func(win,"+sfJoystick_hasAxis",{C_UINT,C_POINTER},C_BOOL),
+				xsfJoystick_isButtonPressed = define_c_func(win,"+sfJoystick_isButtonPressed",{C_UINT,C_UINT},C_BOOL),
+				xsfJoystick_getAxisPosition = define_c_func(win,"+sfJoystick_getAxisPosition",{C_UINT,C_POINTER},C_FLOAT),
+				xsfJoystick_getIdentification = define_c_func(win,"+sfJoystick_getIdentification",{C_UINT},C_POINTER),
+				xsfJoystick_update = define_c_proc(win,"+sfJoystick_update",{})
 				
 public function sfJoystick_isConnected(atom joy)
 
@@ -93,7 +93,7 @@ end procedure
 
 --Keyboard function
 
-public constant xsfKeyboard_isKeyPressed = define_c_func(win,"sfKeyboard_isKeyPressed",{C_POINTER},C_BOOL)
+public constant xsfKeyboard_isKeyPressed = define_c_func(win,"+sfKeyboard_isKeyPressed",{C_POINTER},C_BOOL)
 
 public function sfKeyboard_isKeyPressed(sfKeyCode key)
 
@@ -103,9 +103,9 @@ end function
 
 --Mouse functions
 
-public constant xsfMouse_isButtonPressed = define_c_func(win,"sfMouse_isButtonPressed",{C_POINTER},C_BOOL),
-				xsfMouse_getPosition = define_c_func(win,"sfMouse_getPosition",{C_POINTER},C_INT),
-				xsfMouse_setPosition = define_c_proc(win,"sfMouse_setPosition",{C_INT,C_INT,C_POINTER})
+public constant xsfMouse_isButtonPressed = define_c_func(win,"+sfMouse_isButtonPressed",{C_POINTER},C_BOOL),
+				xsfMouse_getPosition = define_c_func(win,"+sfMouse_getPosition",{C_POINTER},C_INT),
+				xsfMouse_setPosition = define_c_proc(win,"+sfMouse_setPosition",{C_INT,C_INT,C_POINTER})
 				
 public function sfMouse_isButtonPressed(atom btn)
 
@@ -127,9 +127,9 @@ end procedure
 
 --Sensor functions
 
-public constant xsfSensor_isAvailable = define_c_func(win,"sfSensor_isAvailable",{C_POINTER},C_BOOL),
-				xsfSensor_setEnabled = define_c_proc(win,"sfSensor_setEnabled",{C_POINTER,C_BOOL}),
-				xsfSensor_getValue = define_c_func(win,"sfSensor_getValue",{C_POINTER},C_FLOAT)
+public constant xsfSensor_isAvailable = define_c_func(win,"+sfSensor_isAvailable",{C_POINTER},C_BOOL),
+				xsfSensor_setEnabled = define_c_proc(win,"+sfSensor_setEnabled",{C_POINTER,C_BOOL}),
+				xsfSensor_getValue = define_c_func(win,"+sfSensor_getValue",{C_POINTER},C_FLOAT)
 				
 public function sfSensor_isAvailable(atom sensor)
 
@@ -151,8 +151,8 @@ end function
 
 --Touch functions
 
-public constant xsfTouch_isDown = define_c_func(win,"sfTouch_isDown",{C_UINT},C_BOOL),
-				xsfTouch_getPosition = define_c_func(win,"sfTouch_getPosition",{C_UINT,C_POINTER},C_INT)
+public constant xsfTouch_isDown = define_c_func(win,"+sfTouch_isDown",{C_UINT},C_BOOL),
+				xsfTouch_getPosition = define_c_func(win,"+sfTouch_getPosition",{C_UINT,C_POINTER},C_INT)
 				
 public function sfTouch_isDown(atom finger)
 
@@ -168,9 +168,9 @@ end function
 
 --Video mode functions
 
-public constant xsfVideoMode_getDesktopMode = define_c_func(win,"sfVideoMode_getDesktopMode",{},C_POINTER),
-				xsfVideoMode_getFullscreenModes = define_c_func(win,"sfVideoMode_getFullscreenModes",{C_POINTER},C_POINTER),
-				xsfVideoMode_isValid = define_c_func(win,"sfVideoMode_isValid",{C_INT,C_INT,C_INT},C_BOOL)
+public constant xsfVideoMode_getDesktopMode = define_c_func(win,"+sfVideoMode_getDesktopMode",{},C_POINTER),
+				xsfVideoMode_getFullscreenModes = define_c_func(win,"+sfVideoMode_getFullscreenModes",{C_POINTER},C_POINTER),
+				xsfVideoMode_isValid = define_c_func(win,"+sfVideoMode_isValid",{C_INT,C_INT,C_INT},C_BOOL)
 				
 public function sfVideoMode_getDesktopMode()
 
@@ -192,33 +192,33 @@ end function
 
 --Window functions
 
-public constant xsfWindow_create = define_c_func(win,"sfWindow_create",{C_INT,C_INT,C_INT,C_POINTER,C_UINT,C_POINTER},C_POINTER),
-				xsfWindow_createUnicode = define_c_func(win,"sfWindow_createUnicode",{C_INT,C_INT,C_INT,C_POINTER,C_UINT,C_POINTER},C_POINTER),
-				xsfWindow_createFromHandle = define_c_func(win,"sfWindow_createFromHandle",{C_POINTER,C_POINTER},C_POINTER),
-				xsfWindow_destroy = define_c_proc(win,"sfWindow_destroy",{C_POINTER}),
-				xsfWindow_close = define_c_proc(win,"sfWindow_close",{C_POINTER}),
-				xsfWindow_isOpen = define_c_func(win,"sfWindow_isOpen",{C_POINTER},C_BOOL),
-				xsfWindow_getSettings = define_c_func(win,"sfWindow_getSettings",{C_POINTER},C_POINTER),
-				xsfWindow_pollEvent = define_c_func(win,"sfWindow_pollEvent",{C_POINTER,C_POINTER},C_BOOL),
-				xsfWindow_waitEvent = define_c_func(win,"sfWindow_waitEvent",{C_POINTER,C_POINTER},C_BOOL),
-				xsfWindow_getPosition = define_c_func(win,"sfWindow_getPosition",{C_POINTER},C_INT),
-				xsfWindow_setPosition = define_c_proc(win,"sfWindow_setPosition",{C_POINTER,C_INT,C_INT}),
-				xsfWindow_getSize = define_c_func(win,"sfWindow_getSize",{C_POINTER},C_INT),
-				xsfWindow_setSize = define_c_proc(win,"sfWindow_setSize",{C_POINTER,C_INT,C_INT}),
-				xsfWindow_setTitle = define_c_proc(win,"sfWindow_setTitle",{C_POINTER,C_POINTER}),
-				xsfWindow_setUnicodeTitle = define_c_proc(win,"sfWindow_setUnicodeTitle",{C_POINTER,C_POINTER}),
-				xsfWindow_setIcon = define_c_proc(win,"sfWindow_setIcon",{C_POINTER,C_UINT,C_UINT,C_POINTER}),
-				xsfWindow_setVisible = define_c_proc(win,"sfWindow_setVisible",{C_POINTER,C_BOOL}),
-				xsfWindow_setMouseCursorVisible = define_c_proc(win,"sfWindow_setMouseCursorVisible",{C_POINTER,C_BOOL}),
-				xsfWindow_setVerticalSyncEnabled = define_c_proc(win,"sfWindow_setVerticalSyncEnabled",{C_POINTER,C_BOOL}),
-				xsfWindow_setKeyRepeatEnabled = define_c_proc(win,"sfWindow_setKeyRepeatEnabled",{C_POINTER,C_BOOL}),
-				xsfWindow_setActive = define_c_func(win,"sfWindow_setActive",{C_POINTER,C_BOOL},C_BOOL),
-				xsfWindow_requestFocus = define_c_proc(win,"sfWindow_requestFocus",{C_POINTER}),
-				xsfWindow_hasFocus = define_c_func(win,"sfWindow_hasFocus",{C_POINTER},C_BOOL),
-				xsfWindow_display = define_c_proc(win,"sfWindow_display",{C_POINTER}),
-				xsfWindow_setFramerateLimit = define_c_proc(win,"sfWindow_setFramerateLimit",{C_POINTER,C_UINT}),
-				xsfWindow_setJoystickThreshold = define_c_proc(win,"sfWindow_setJoystickThreshold",{C_POINTER,C_FLOAT}),
-				xsfWindow_getSystemHandle = define_c_func(win,"sfWindow_getSystemHandle",{C_POINTER},C_POINTER)
+public constant xsfWindow_create = define_c_func(win,"+sfWindow_create",{C_INT,C_INT,C_INT,C_POINTER,C_UINT,C_POINTER},C_POINTER),
+				xsfWindow_createUnicode = define_c_func(win,"+sfWindow_createUnicode",{C_INT,C_INT,C_INT,C_POINTER,C_UINT,C_POINTER},C_POINTER),
+				xsfWindow_createFromHandle = define_c_func(win,"+sfWindow_createFromHandle",{C_POINTER,C_POINTER},C_POINTER),
+				xsfWindow_destroy = define_c_proc(win,"+sfWindow_destroy",{C_POINTER}),
+				xsfWindow_close = define_c_proc(win,"+sfWindow_close",{C_POINTER}),
+				xsfWindow_isOpen = define_c_func(win,"+sfWindow_isOpen",{C_POINTER},C_BOOL),
+				xsfWindow_getSettings = define_c_func(win,"+sfWindow_getSettings",{C_POINTER},C_POINTER),
+				xsfWindow_pollEvent = define_c_func(win,"+sfWindow_pollEvent",{C_POINTER,C_POINTER},C_BOOL),
+				xsfWindow_waitEvent = define_c_func(win,"+sfWindow_waitEvent",{C_POINTER,C_POINTER},C_BOOL),
+				xsfWindow_getPosition = define_c_func(win,"+sfWindow_getPosition",{C_POINTER},C_INT),
+				xsfWindow_setPosition = define_c_proc(win,"+sfWindow_setPosition",{C_POINTER,C_INT,C_INT}),
+				xsfWindow_getSize = define_c_func(win,"+sfWindow_getSize",{C_POINTER},C_INT),
+				xsfWindow_setSize = define_c_proc(win,"+sfWindow_setSize",{C_POINTER,C_INT,C_INT}),
+				xsfWindow_setTitle = define_c_proc(win,"+sfWindow_setTitle",{C_POINTER,C_POINTER}),
+				xsfWindow_setUnicodeTitle = define_c_proc(win,"+sfWindow_setUnicodeTitle",{C_POINTER,C_POINTER}),
+				xsfWindow_setIcon = define_c_proc(win,"+sfWindow_setIcon",{C_POINTER,C_UINT,C_UINT,C_POINTER}),
+				xsfWindow_setVisible = define_c_proc(win,"+sfWindow_setVisible",{C_POINTER,C_BOOL}),
+				xsfWindow_setMouseCursorVisible = define_c_proc(win,"+sfWindow_setMouseCursorVisible",{C_POINTER,C_BOOL}),
+				xsfWindow_setVerticalSyncEnabled = define_c_proc(win,"+sfWindow_setVerticalSyncEnabled",{C_POINTER,C_BOOL}),
+				xsfWindow_setKeyRepeatEnabled = define_c_proc(win,"+sfWindow_setKeyRepeatEnabled",{C_POINTER,C_BOOL}),
+				xsfWindow_setActive = define_c_func(win,"+sfWindow_setActive",{C_POINTER,C_BOOL},C_BOOL),
+				xsfWindow_requestFocus = define_c_proc(win,"+sfWindow_requestFocus",{C_POINTER}),
+				xsfWindow_hasFocus = define_c_func(win,"+sfWindow_hasFocus",{C_POINTER},C_BOOL),
+				xsfWindow_display = define_c_proc(win,"+sfWindow_display",{C_POINTER}),
+				xsfWindow_setFramerateLimit = define_c_proc(win,"+sfWindow_setFramerateLimit",{C_POINTER,C_UINT}),
+				xsfWindow_setJoystickThreshold = define_c_proc(win,"+sfWindow_setJoystickThreshold",{C_POINTER,C_FLOAT}),
+				xsfWindow_getSystemHandle = define_c_func(win,"+sfWindow_getSystemHandle",{C_POINTER},C_POINTER)
 				
 public function sfWindow_create(integer w,integer h,integer bpp,sequence title,atom style,atom settings)
 
@@ -392,9 +392,9 @@ end function
 
 --Cursor functions
 
-public constant xsfCursor_createFromPixels = define_c_func(win,"sfCursor_createFromPixels",{C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT},C_POINTER),
-				xsfCursor_createFromSystem = define_c_func(win,"sfCursor_createFromSystem",{C_POINTER},C_POINTER),
-				xsfCursor_destroy = define_c_proc(win,"sfCursor_destroy",{C_POINTER})
+public constant xsfCursor_createFromPixels = define_c_func(win,"+sfCursor_createFromPixels",{C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT},C_POINTER),
+				xsfCursor_createFromSystem = define_c_func(win,"+sfCursor_createFromSystem",{C_POINTER},C_POINTER),
+				xsfCursor_destroy = define_c_proc(win,"+sfCursor_destroy",{C_POINTER})
 				
 public function sfCursor_createFromPixels(atom pix,atom x,atom y,atom x2,atom y2)
 
@@ -416,10 +416,10 @@ end procedure
 
 --Clipboard Functions
 
-public constant xsfClipboard_getString = define_c_func(win,"sfClipboard_getString",{},C_POINTER),
-				xsfClipboard_getUnicodeString = define_c_func(win,"sfClipboard_getUnicodeString",{},C_POINTER),
-				xsfClipboard_setString = define_c_proc(win,"sfClipboard_setString",{C_POINTER}),
-				xsfClipboard_setUnicodeString = define_c_proc(win,"sfClipboard_setUnicodeString",{C_POINTER})
+public constant xsfClipboard_getString = define_c_func(win,"+sfClipboard_getString",{},C_POINTER),
+				xsfClipboard_getUnicodeString = define_c_func(win,"+sfClipboard_getUnicodeString",{},C_POINTER),
+				xsfClipboard_setString = define_c_proc(win,"+sfClipboard_setString",{C_POINTER}),
+				xsfClipboard_setUnicodeString = define_c_proc(win,"+sfClipboard_setUnicodeString",{C_POINTER})
 				
 public function sfClipboard_getString()
 
@@ -446,4 +446,4 @@ public procedure sfClipboard_setUnicodeString(sequence text)
  c_proc(xsfClipboard_setUnicodeString,{str})
 	
 end procedure
-­395.136
+­422.56

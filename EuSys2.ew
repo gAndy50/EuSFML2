@@ -15,11 +15,11 @@ end if
 
 --Clock functions
 
-public constant xsfClock_create = define_c_func(sys,"sfClock_create",{},C_POINTER),
-				xsfClock_copy = define_c_func(sys,"sfClock_copy",{C_POINTER},C_POINTER),
-				xsfClock_destroy = define_c_proc(sys,"sfClock_destroy",{C_POINTER}),
-				xsfClock_getElapsedTime = define_c_func(sys,"sfClock_getElapsedTime",{C_POINTER},C_POINTER),
-				xsfClock_restart = define_c_func(sys,"sfClock_restart",{C_POINTER},C_POINTER)
+public constant xsfClock_create = define_c_func(sys,"+sfClock_create",{},C_POINTER),
+				xsfClock_copy = define_c_func(sys,"+sfClock_copy",{C_POINTER},C_POINTER),
+				xsfClock_destroy = define_c_proc(sys,"+sfClock_destroy",{C_POINTER}),
+				xsfClock_getElapsedTime = define_c_func(sys,"+sfClock_getElapsedTime",{C_POINTER},C_POINTER),
+				xsfClock_restart = define_c_func(sys,"+sfClock_restart",{C_POINTER},C_POINTER)
 				
 public function sfClock_create()
 
@@ -53,12 +53,12 @@ end function
 
 --Time Functions
 
-public constant xsfTime_asSeconds = define_c_func(sys,"sfTime_asSeconds",{C_POINTER},C_FLOAT),
-				xsfTime_asMilliseconds = define_c_func(sys,"sfTime_asMilliseconds",{C_POINTER},C_POINTER),
-				xsfTime_asMicroseconds = define_c_func(sys,"sfTime_asMircoseconds",{C_POINTER},C_POINTER),
-				xsfSeconds = define_c_func(sys,"sfTime_sfSeconds",{C_FLOAT},C_POINTER),
-				xsfMilliseconds = define_c_func(sys,"sfTime_Milliseconds",{C_POINTER},C_POINTER),
-				xsfMicroseconds = define_c_func(sys,"sfTime_Microseconds",{C_POINTER},C_POINTER)
+public constant xsfTime_asSeconds = define_c_func(sys,"+sfTime_asSeconds",{C_POINTER},C_FLOAT),
+				xsfTime_asMilliseconds = define_c_func(sys,"+sfTime_asMilliseconds",{C_POINTER},C_POINTER),
+				xsfTime_asMicroseconds = define_c_func(sys,"+sfTime_asMircoseconds",{C_POINTER},C_POINTER),
+				xsfSeconds = define_c_func(sys,"+sfTime_sfSeconds",{C_FLOAT},C_POINTER),
+				xsfMilliseconds = define_c_func(sys,"+sfTime_Milliseconds",{C_POINTER},C_POINTER),
+				xsfMicroseconds = define_c_func(sys,"+sfTime_Microseconds",{C_POINTER},C_POINTER)
 				
 public function sfTime_asSeconds(atom xtime)
 
@@ -98,10 +98,10 @@ end function
 
 --Mutex functions
 
-public constant xsfMutex_create = define_c_func(sys,"sfMutex_create",{},C_POINTER),
-				xsfMutex_destroy = define_c_proc(sys,"sfMutex_destroy",{C_POINTER}),
-				xsfMutex_lock = define_c_proc(sys,"sfMutex_lock",{C_POINTER}),
-				xsfMutex_unlock = define_c_proc(sys,"sfMutex_unlock",{C_POINTER})
+public constant xsfMutex_create = define_c_func(sys,"+sfMutex_create",{},C_POINTER),
+				xsfMutex_destroy = define_c_proc(sys,"+sfMutex_destroy",{C_POINTER}),
+				xsfMutex_lock = define_c_proc(sys,"+sfMutex_lock",{C_POINTER}),
+				xsfMutex_unlock = define_c_proc(sys,"+sfMutex_unlock",{C_POINTER})
 				
 public function sfMutex_create()
 
@@ -129,11 +129,11 @@ end procedure
 
 --Thread functions
 
-public constant xsfThread_create = define_c_func(sys,"sfThread_create",{C_POINTER,C_POINTER,C_POINTER},C_POINTER),
-				xsfThread_destroy = define_c_proc(sys,"sfThread_destroy",{C_POINTER}),
-				xsfThread_launch = define_c_proc(sys,"sfThread_launch",{C_POINTER}),
-				xsfThread_wait = define_c_proc(sys,"sfThread_wait",{C_POINTER}),
-				xsfThread_terminate = define_c_proc(sys,"sfThread_terminate",{C_POINTER})
+public constant xsfThread_create = define_c_func(sys,"+sfThread_create",{C_POINTER,C_POINTER,C_POINTER},C_POINTER),
+				xsfThread_destroy = define_c_proc(sys,"s+fThread_destroy",{C_POINTER}),
+				xsfThread_launch = define_c_proc(sys,"+sfThread_launch",{C_POINTER}),
+				xsfThread_wait = define_c_proc(sys,"+sfThread_wait",{C_POINTER}),
+				xsfThread_terminate = define_c_proc(sys,"+sfThread_terminate",{C_POINTER})
 				
 public function sfThread_create(object x,object func,object data)
 
@@ -164,4 +164,4 @@ public procedure sfThread_terminate(atom thread)
  c_proc(xsfThread_terminate,{thread})
 	
 end procedure
-­164.37
+­136.46
