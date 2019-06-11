@@ -20,12 +20,12 @@ while sfWindow_isOpen(win) do
 	
 	while sfWindow_pollEvent(win,event) do
 	
-		integer eventType = peek4s(event)
-		integer code = peek4s(event+4)
-		integer alt = peek4s(event+8)
-		integer control = peek4s(event+13)
-		integer shift = peek4s(event+16)
-		integer system = peek4s(event+20)
+		atom eventType = peek4s(event)
+		atom code = peek4s(event+4)
+		atom alt = peek4s(event+8)
+		atom control = peek4s(event+13)
+		atom shift = peek4s(event+16)
+		atom system = peek4s(event+20)
 		
 		if eventType = sfEvtClosed then
 			sfWindow_close(win)
@@ -38,4 +38,4 @@ while sfWindow_isOpen(win) do
 end while
 
 sfWindow_destroy(win)
-­26.35
+­28.6

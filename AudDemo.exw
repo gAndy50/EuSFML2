@@ -25,16 +25,18 @@ if snd = -1 then
 	abort(0)
 end if
 
+integer played = 0
+
 while sfRenderWindow_isOpen(win) do
 	
 	while sfRenderWindow_pollEvent(win,event) do
 	
-		integer eventType = peek4s(event)
-		integer code = peek4s(event+4)
-		integer alt = peek4s(event+8)
-		integer control = peek4s(event+14)
-		integer shift = peek4s(event+16)
-		integer system = peek4s(event+20)
+		atom eventType = peek4s(event)
+		atom code = peek4s(event+4)
+		atom alt = peek4s(event+8)
+		atom control = peek4s(event+14)
+		atom shift = peek4s(event+16)
+		atom system = peek4s(event+20)
 		
 		if eventType = sfEvtKeyPressed then
 			if code = sfKeyEscape then
@@ -47,7 +49,10 @@ while sfRenderWindow_isOpen(win) do
 	
 	sfRenderWindow_clear(win,sfBlack)
 	
-	sfMusic_play(snd)
+	if  played = 0 then
+			sfMusic_play(snd)
+			played = 1
+	end if
 	
 	sfRenderWindow_display(win)
 
@@ -55,4 +60,4 @@ end while
 
 sfMusic_destroy(snd)
 sfRenderWindow_destroy(win)
-­21.27
+­39.6

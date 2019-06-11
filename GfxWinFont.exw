@@ -35,12 +35,12 @@ while sfRenderWindow_isOpen(win) do
 
   while sfRenderWindow_pollEvent(win,event) do
     
-    integer eventType = peek4s(event)
-    integer code = peek4s(event+4)
-    integer alt = peek4s(event+8)
-    integer control = peek4s(event+14)
-    integer shift = peek4s(event+16)
-    integer system = peek4s(event+20)
+    atom eventType = peek4s(event)
+    atom code = peek4s(event+4)
+    atom alt = peek4s(event+8)
+    atom control = peek4s(event+14)
+    atom shift = peek4s(event+16)
+    atom system = peek4s(event+20)
     
     if eventType = sfEvtClosed then
 		sfRenderWindow_close(win)
@@ -59,4 +59,4 @@ end while
 sfText_destroy(text)
 sfFont_destroy(font)
 sfRenderWindow_destroy(win)
-­41.37
+­43.8
