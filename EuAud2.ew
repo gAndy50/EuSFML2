@@ -618,7 +618,9 @@ public constant xsfSoundRecorder_create = define_c_func(aud,"+sfSoundRecorder_cr
 				xsfSoundRecorder_getAvailableDevices = define_c_func(aud,"+sfSoundRecorder_getAvailableDevices",{C_POINTER},C_POINTER),
 				xsfSoundRecorder_getDefaultDevice = define_c_func(aud,"+sfSoundRecorder_getDefaultDevice",{},C_POINTER),
 				xsfSoundRecorder_setDevice = define_c_func(aud,"+sfSoundRecorder_setDevice",{C_POINTER,C_POINTER},C_BOOL),
-				xsfSoundRecorder_getDevice = define_c_func(aud,"+sfSoundRecorder_getDevice",{C_POINTER},C_POINTER)
+				xsfSoundRecorder_getDevice = define_c_func(aud,"+sfSoundRecorder_getDevice",{C_POINTER},C_POINTER),
+				xsfSoundRecorder_setChannelCount = define_c_proc(aud,"+sfSoundRecorder_setChannelCount",{C_POINTER,C_UINT}),
+				xsfSoundRecorder_getChannelCount = define_c_func(aud,"+sfSoundRecorder_getChannelCount",{C_POINTER},C_UINT)
 				
 public function sfSoundRecorder_create(object onst,object onproc,object onstop,object dat)
 
@@ -686,6 +688,18 @@ end function
 public function sfSoundRecorder_getDevice(atom sr)
 
  return c_func(xsfSoundRecorder_getDevice,{sr})
+	
+end function
+
+public procedure sfSoundRecorder_setChannelCount(atom sr,atom count)
+
+ c_proc(xsfSoundRecorder_setChannelCount,{sr,count})
+	
+end procedure
+
+public function sfSoundRecorder_getChannelCount(atom sr)
+
+ return c_func(xsfSoundRecorder_getChannelCount,{sr})
 	
 end function
 
@@ -847,4 +861,4 @@ public function sfSoundStream_getPlayingOffset(atom ss)
  return c_func(xsfSoundStream_getPlayingOffset,{ss})
 	
 end function
-­605.54
+­702.53
