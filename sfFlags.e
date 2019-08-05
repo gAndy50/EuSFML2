@@ -56,6 +56,7 @@ public enum type sfKeyCode
 	sfKeyU,
 	sfKeyV,
 	sfKeyW,
+	sfKeyX,
 	sfKeyY,
 	sfKeyZ,
 	sfKeyNum0,
@@ -389,4 +390,4 @@ public enum type sfVertexBufferUsage
  sfVertexBufferStatic
 	
 end type
-­389.21
+­59.8
