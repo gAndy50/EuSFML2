@@ -19,7 +19,8 @@ end if
 
 public constant xsfContext_create = define_c_func(win,"+sfContext_create",{},C_POINTER),
 				xsfContext_destroy = define_c_proc(win,"+sfContext_destroy",{C_POINTER}),
-				xsfContext_setActive = define_c_proc(win,"+sfContext_setActive",{C_POINTER,C_BOOL})
+				xsfContext_setActive = define_c_proc(win,"+sfContext_setActive",{C_POINTER,C_BOOL}),
+				xsfContext_getSettings = define_c_func(win,"+sfContext_getSettings",{C_POINTER},C_UINT)
 				
 public function sfContext_create()
 
@@ -38,6 +39,12 @@ public procedure sfContext_setActive(atom context,integer active)
  c_proc(xsfContext_setActive,{context,active})
 	
 end procedure
+
+public function sfContext_getSettings(atom ctx)
+
+ return c_func(xsfContext_getSettings,{ctx})
+	
+end function
 
 --Joystick functions
 
@@ -446,4 +453,4 @@ public procedure sfClipboard_setUnicodeString(sequence text)
  c_proc(xsfClipboard_setUnicodeString,{str})
 	
 end procedure
-­422.56
+­45.44
