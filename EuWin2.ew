@@ -20,7 +20,8 @@ end if
 public constant xsfContext_create = define_c_func(win,"+sfContext_create",{},C_POINTER),
 				xsfContext_destroy = define_c_proc(win,"+sfContext_destroy",{C_POINTER}),
 				xsfContext_setActive = define_c_proc(win,"+sfContext_setActive",{C_POINTER,C_BOOL}),
-				xsfContext_getSettings = define_c_func(win,"+sfContext_getSettings",{C_POINTER},C_UINT)
+				xsfContext_getSettings = define_c_func(win,"+sfContext_getSettings",{C_POINTER},C_UINT),
+				xsfContext_getActiveContextId = define_c_func(win,"+sfContext_getActiveContextId",{},C_UINT)
 				
 public function sfContext_create()
 
@@ -43,6 +44,12 @@ end procedure
 public function sfContext_getSettings(atom ctx)
 
  return c_func(xsfContext_getSettings,{ctx})
+	
+end function
+
+public function sfContext_getActiveContextId()
+
+ return c_func(xsfContext_getActiveContextId,{})
 	
 end function
 
@@ -453,4 +460,4 @@ public procedure sfClipboard_setUnicodeString(sequence text)
  c_proc(xsfClipboard_setUnicodeString,{str})
 	
 end procedure
-­45.44
+­52.48
