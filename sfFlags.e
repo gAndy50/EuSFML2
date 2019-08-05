@@ -293,7 +293,7 @@ public enum type sfFtpStatus
 	sfFtpDirectoryOk = 257,
 	sfFtpNeedPassword = 331,
 	sfFtpNeedAccountToLogIn = 332,
-	sfFtpNeedInofmration = 350,
+	sfFtpNeedInformation = 350,
 	sfFtpServiceUnavailable = 421,
 	sfFtpDataConnectionUnavailable = 425,
 	sfFtpTransferAborted = 426,
@@ -390,4 +390,4 @@ public enum type sfVertexBufferUsage
  sfVertexBufferStatic
 	
 end type
-­59.8
+­296.15
