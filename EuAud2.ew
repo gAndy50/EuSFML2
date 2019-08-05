@@ -552,7 +552,9 @@ public constant xsfSoundBufferRecorder_create = define_c_func(aud,"+sfSoundBuffe
 				xsfSoundBufferRecorder_start = define_c_proc(aud,"+sfSoundBufferRecorder_start",{C_POINTER,C_UINT}),
 				xsfSoundBufferRecorder_stop = define_c_proc(aud,"+sfSoundBufferRecorder_stop",{C_POINTER}),
 				xsfSoundBufferRecorder_getSampleRate = define_c_func(aud,"+sfSoundBufferRecorder_getSampleRate",{C_POINTER},C_UINT),
-				xsfSoundBufferRecorder_getBuffer = define_c_func(aud,"+sfSoundBufferRecorder_getBuffer",{C_POINTER},C_POINTER)
+				xsfSoundBufferRecorder_getBuffer = define_c_func(aud,"+sfSoundBufferRecorder_getBuffer",{C_POINTER},C_POINTER),
+				xsfSoundBufferRecorder_setDevice = define_c_func(aud,"+sfSoundBufferRecorder_setDevice",{C_POINTER,C_POINTER},C_BOOL),
+				xsfSoundBufferRecorder_getDevice = define_c_func(aud,"+sfSoundBufferRecorder_getDevice",{C_POINTER},C_POINTER)
 				
 public function sfSoundBufferRecorder_create()
 
@@ -587,6 +589,20 @@ end function
 public function sfSoundBufferRecorder_getBuffer(atom sbr)
 
  return c_func(xsfSoundBufferRecorder_getBuffer,{sbr})
+	
+end function
+
+public function sfSoundBufferRecorder_setDevice(atom sbr,sequence name)
+
+ atom str = allocate_string(name,1)
+ 
+ return c_func(xsfSoundBufferRecorder_setDevice,{sbr,str})
+	
+end function
+
+public function sfSoundBufferRecorder_getDevice(atom sbr)
+
+ return c_func(xsfSoundBufferRecorder_getDevice,{sbr})
 	
 end function
 
@@ -831,4 +847,4 @@ public function sfSoundStream_getPlayingOffset(atom ss)
  return c_func(xsfSoundStream_getPlayingOffset,{ss})
 	
 end function
-­701.58
+­605.54
