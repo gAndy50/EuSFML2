@@ -44,4 +44,5 @@ NOTE: Audio Demo is not working at the moment.
 -----------------------------------------------------------------------
 # Links
 [SFML2 Documentation] (http://www.sfml-dev.org/)
+
 [Euphoria Documentation] (openeuphoria.org)
