@@ -1560,7 +1560,32 @@ public constant xsfShader_createFromFile = define_c_func(gfx,"+sfShader_createFr
 				xsfShader_setCurrentTextureParameter = define_c_proc(gfx,"+sfShader_setCurrentTextureParameter",{C_POINTER,C_POINTER}),
 				xsfShader_getNativeHandle = define_c_func(gfx,"+sfShader_getNativeHandle",{C_POINTER},C_UINT),
 				xsfShader_bind = define_c_proc(gfx,"+sfShader_bind",{C_POINTER}),
-				xsfShader_isAvailable = define_c_func(gfx,"+sfShader_isAvailable",{},C_BOOL)
+				xsfShader_isAvailable = define_c_func(gfx,"+sfShader_isAvailable",{},C_BOOL),
+				xsfShader_isGeometryAvailable = define_c_func(gfx,"+sfShader_isGeometryAvailable",{},C_BOOL),
+				xsfShader_setFloatUniform = define_c_proc(gfx,"+sfShader_setFloatUniform",{C_POINTER,C_POINTER,C_FLOAT}),
+				xsfShader_setVec2Uniform = define_c_proc(gfx,"+sfShader_setVec2Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT}),
+				xsfShader_setVec3Uniform = define_c_proc(gfx,"+sfShader_setVec3Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT}),
+				xsfShader_setVec4Uniform = define_c_proc(gfx,"+sfShader_setVec4Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT}),
+				xsfShader_setColorUniform = define_c_proc(gfx,"+sfShader_setColorUniform",{C_POINTER,C_POINTER,C_UINT,C_UINT,C_UINT,C_UINT}),
+				xsfShader_setIntUniform = define_c_proc(gfx,"+sfShader_setIntUniform",{C_POINTER,C_POINTER,C_INT}),
+				xsfShader_setIvec2Uniform = define_c_proc(gfx,"+sfShader_setIvec2Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT}),
+				xsfShader_setIvec3Uniform = define_c_proc(gfx,"+sfShader_setIvec3Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT}),
+				xsfShader_setIvec4Uniform = define_c_proc(gfx,"+sfShader_setIvec4Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT}),
+				xsfShader_setIntColorUniform = define_c_proc(gfx,"+sfShader_setIntColorUniform",{C_POINTER,C_POINTER,C_UINT,C_UINT,C_UINT,C_UINT}),
+				xsfShader_setBoolUniform = define_c_proc(gfx,"+sfShader_setBoolUniform",{C_POINTER,C_POINTER,C_BOOL}),
+				xsfShader_setBvec2Uniform = define_c_proc(gfx,"+sfShader_setBvec2Uniform",{C_POINTER,C_POINTER,C_BOOL,C_BOOL}),
+				xsfShader_setBvec3Uniform = define_c_proc(gfx,"+sfShader_setBvec3Uniform",{C_POINTER,C_POINTER,C_BOOL,C_BOOL,C_BOOL}),
+				xsfShader_setBvec4Uniform = define_c_proc(gfx,"+sfShader_setBvec4Uniform",{C_POINTER,C_POINTER,C_BOOL,C_BOOL,C_BOOL,C_BOOL}),
+				xsfShader_setMat3Uniform = define_c_proc(gfx,"+sfShader_setMat3Uniform",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfShader_setMat4Uniform = define_c_proc(gfx,"+sfShader_setMat4Uniform",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfShader_setTextureUniform = define_c_proc(gfx,"+sfShader_setTextureUniform",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfShader_setCurrentTextureUniform = define_c_proc(gfx,"+sfShader_setCurrentTextureUniform",{C_POINTER,C_POINTER}),
+				xsfShader_setFloatUniformArray = define_c_proc(gfx,"+sfShader_setFloatUniformArray",{C_POINTER,C_POINTER,C_POINTER,C_SIZE_T}),
+				xsfShader_setVec2UniformArray = define_c_proc(gfx,"+sfShader_setVec2UniformArray",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_SIZE_T}),
+				xsfShader_setVec3UniformArray = define_c_proc(gfx,"+sfShader_setVec3UniformArray",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_SIZE_T}),
+				xsfShader_setVec4UniformArray = define_c_proc(gfx,"+sfShader_setVec4UniformArray",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT,C_SIZE_T}),
+				xsfShader_setMat3UniformArray = define_c_proc(gfx,"+sfShader_setMat3UniformArray",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_SIZE_T}),
+				xsfShader_setMat4UniformArray = define_c_proc(gfx,"+sfShader_setMat4UniformArray",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT,C_SIZE_T})
 				
 public function sfShader_createFromFile(sequence file,sequence file2)
 
@@ -1681,6 +1706,180 @@ public function sfShader_isAvailable()
  return c_func(xsfShader_isAvailable,{})
 	
 end function
+
+public function sfShader_isGeometryAvailable()
+
+ return c_func(xsfShader_isGeometryAvailable,{})
+	
+end function
+
+public procedure sfShader_setFloatUniform(atom shade,sequence name,atom x)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setFloatUniform,{shade,str,x})
+	
+end procedure
+
+public procedure sfShader_setVec2Uniform(atom shade,sequence name,atom x,atom y)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setVec2Uniform,{shade,str,x,y})
+	
+end procedure
+
+public procedure sfShader_setVec3Uniform(atom shade,sequence name,atom x,atom y,atom z)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setVec3Uniform,{shade,str,x,y,z})
+	
+end procedure
+
+public procedure sfShader_setVec4Uniform(atom shade,sequence name,atom x,atom y,atom z,atom w)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setVec4Uniform,{shade,str,x,y,z,w})
+	
+end procedure
+
+public procedure sfShader_setColorUniform(atom shade,sequence name,atom r,atom g,atom b,atom a)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setColorUniform,{shade,str,r,g,b,a})
+	
+end procedure
+
+public procedure sfShader_setIntUniform(atom shade,sequence name,atom x)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setIntUniform,{shade,str,x})
+	
+end procedure
+
+public procedure sfShader_setIvec2Uniform(atom shade,sequence name,atom x,atom y)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setIvec2Uniform,{shade,str,x,y})
+	
+end procedure
+
+public procedure sfShader_setIvec3Uniform(atom shade,sequence name,atom x,atom y,atom z)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setIvec3Uniform,{shade,str,x,y,z})
+	
+end procedure
+
+public procedure sfShader_setIvec4Uniform(atom shade,sequence name,atom x,atom y,atom z,atom w)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setIvec4Uniform,{shade,str,x,y,z,w})
+	
+end procedure
+
+public procedure sfShader_setIntColorUniform(atom shade,sequence name,atom r,atom g,atom b,atom a)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setIntColorUniform,{shade,str,r,g,b,a})
+	
+end procedure
+
+public procedure sfShader_setBoolUniform(atom shade,sequence name,atom x)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setBoolUniform,{shade,str,x})
+	
+end procedure
+
+public procedure sfShader_setBvec2Uniform(atom shade,sequence name,atom x,atom y)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setBvec2Uniform,{shade,str,x,y})
+	
+end procedure
+
+public procedure sfShader_setBvec3Uniform(atom shade,sequence name,atom x,atom y,atom z)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setBvec3Uniform,{shade,str,x,y,z})
+	
+end procedure
+
+public procedure sfShader_setBvec4Uniform(atom shade,sequence name,atom x,atom y,atom z,atom w)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setBvec4Uniform,{shade,str,x,y,z,w})
+	
+end procedure
+
+public procedure sfShader_setMat3Uniform(atom shade,sequence name,atom x,atom y,atom z)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setMat3Uniform,{shade,str,x,y,z})
+	
+end procedure
+
+public procedure sfShader_setMat4Uniform(atom shade,sequence name,atom x,atom y,atom z,atom w)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setMat4Uniform,{shade,str,x,y,z,w})
+	
+end procedure
+
+public procedure sfShader_setTextureUniform(atom shade,sequence name,atom tex)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setTextureUniform,{shade,str,tex})
+	
+end procedure
+
+public procedure sfShader_setCurrentTextureUniform(atom shade,sequence name)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setCurrentTextureUniform,{shade,str})
+	
+end procedure
+
+public procedure sfShader_setFloatUniformArray(atom shade,sequence name,atom sca,atom len)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setFloatUniformArray,{shade,str,sca,len})
+	
+end procedure
+
+public procedure sfShader_setVec2UniformArray(atom shade,sequence name,atom x,atom y,atom len)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setVec2UniformArray,{shade,str,x,y,len})
+	
+end procedure
+
+public procedure sfShader_setVec3UniformArray(atom shade,sequence name,atom x,atom y,atom z,atom len)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setVec3UniformArray,{shade,str,x,y,z,len})
+	
+end procedure
+
+public procedure sfShader_setVec4UniformArray(atom shade,sequence name,atom x,atom y,atom z,atom w,atom len)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setVec4UniformArray,{shade,str,x,y,z,w,len})
+	
+end procedure
+
+public procedure sfShader_setMat3UniformArray(atom shade,sequence name,atom x,atom y,atom z,atom len)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setMat3UniformArray,{shade,str,x,y,z,len})
+	
+end procedure
+
+public procedure sfShader_setMat4UniformArray(atom shade,sequence name,atom x,atom y,atom z,atom w,atom len)
+
+ atom str = allocate_string(name,1)
+ c_proc(xsfShader_setMat4UniformArray,{shade,str,x,y,z,w,len})
+	
+end procedure
 
 --Transform Functions
 
@@ -2932,4 +3131,4 @@ public function sfVertexBuffer_isAvailable()
  return c_func(xsfVertexBuffer_isAvailable,{})
 	
 end function
-­2924.16
+­1880.62
