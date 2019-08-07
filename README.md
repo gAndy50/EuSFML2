@@ -43,6 +43,6 @@ Updated for SFML 2.5
 NOTE: Audio Demo is not working at the moment. 
 -----------------------------------------------------------------------
 # Links
-[SFML2 Documentation] (http://www.sfml-dev.org/)
+[SFML2 Documentation](http://www.sfml-dev.org/)
 
-[Euphoria Documentation] (openeuphoria.org)
+[Euphoria Documentation](https://openeuphoria.org/index.wc)
