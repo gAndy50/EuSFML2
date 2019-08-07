@@ -1,9 +1,9 @@
 # EuSFML2
-Version of SFML2 Wrapped: 2.5
-Written In: Euphoria 4.1.0 Beta 2
-Written By: Andy P. (Icy_Viking)
-Icy Viking Games
-Contact/Paypal: g_andy <at> live.com
+1. Version of SFML2 Wrapped: 2.5
+2. Written In: Euphoria 4.1.0 Beta 2
+3. Written By: Andy P. (Icy_Viking)
+4. Icy Viking Games
+5. Contact/Paypal: g_andy <at> live.com
 
 # About:
 
@@ -28,11 +28,11 @@ helpful. Note: SFML2 is licensed under the zlib/png license.
 
 Updated wrapper to make more Euphoria friendly. Fixed and updated demos. 
 -----------------------------------------------------------------------
-Update: 7/15/16
+1. Update: 7/15/16
 
-Updated for SFML 2.3.2
+2. Updated for SFML 2.3.2
 
-Update: 3/05/17
+3. Update: 3/05/17
 
 Updated for SFML 2.4
 -----------------------------------------------------------------------
@@ -42,5 +42,6 @@ Updated for SFML 2.5
 -----------------------------------------------------------------------
 NOTE: Audio Demo is not working at the moment. 
 -----------------------------------------------------------------------
+# Links
 [SFML2 Documentation] (http://www.sfml-dev.org/)
 [Euphoria Documentation] (openeuphoria.org)
