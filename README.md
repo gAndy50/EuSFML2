@@ -1,11 +1,11 @@
-#H1 EuSFML2
+# EuSFML2
 Version of SFML2 Wrapped: 2.5
 Written In: Euphoria 4.1.0 Beta 2
 Written By: Andy P. (Icy_Viking)
 Icy Viking Games
 Contact/Paypal: g_andy <at> live.com
 
-#H2 About:
+# About:
 
 EuSFML2 is a wrapper of SFML2 for the Euphoria programming languages. All major and minor functions
 have been wrapped. As SFML2 is written in modules for graphics, audio, windows and so on, the
@@ -16,7 +16,7 @@ wrapper of the C binding of SFML2. To learn how to use this library, you can go 
 included with this software.
 
 
-#H2 License:
+# License:
 
 This software is provided as-is. There is no warranty for this software. You use this software
 at your own risk. You may not hold the developers of the wrapper, SFML2 developers or Euphoria
@@ -24,7 +24,7 @@ community responsible for anything you do with this library. You may distribute 
 with this wrapper as you please, royalty free. This software is provided in the event that it is
 helpful. Note: SFML2 is licensed under the zlib/png license.
 
-#H2 Updates:
+# Updates:
 
 Updated wrapper to make more Euphoria friendly. Fixed and updated demos. 
 -----------------------------------------------------------------------
