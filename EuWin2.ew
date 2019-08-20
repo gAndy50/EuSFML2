@@ -107,13 +107,20 @@ end procedure
 
 --Keyboard function
 
-public constant xsfKeyboard_isKeyPressed = define_c_func(win,"+sfKeyboard_isKeyPressed",{C_POINTER},C_BOOL)
+public constant xsfKeyboard_isKeyPressed = define_c_func(win,"+sfKeyboard_isKeyPressed",{C_POINTER},C_BOOL),
+				xsfKeyboard_setVirtualKeyboardVisible = define_c_proc(win,"+sfKeyboard_setVirtualKeyboardVisible",{C_BOOL})
 
 public function sfKeyboard_isKeyPressed(sfKeyCode key)
 
  return c_func(xsfKeyboard_isKeyPressed,{key})
 	
 end function
+
+public procedure sfKeyboard_setVirtualKeyboardVisible(atom vis)
+
+ c_proc(xsfKeyboard_setVirtualKeyboardVisible,{vis})
+	
+end procedure
 
 --Mouse functions
 
@@ -460,4 +467,4 @@ public procedure sfClipboard_setUnicodeString(sequence text)
  c_proc(xsfClipboard_setUnicodeString,{str})
 	
 end procedure
-­52.48
+­121.52
