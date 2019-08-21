@@ -27,6 +27,7 @@ helpful. Note: SFML2 is licensed under the zlib/png license.
 # Updates:
 
 Updated wrapper to make more Euphoria friendly. Fixed and updated demos. 
+
 -----------------------------------------------------------------------
 1. Update: 7/15/16
 
@@ -35,14 +36,19 @@ Updated wrapper to make more Euphoria friendly. Fixed and updated demos.
 3. Update: 3/05/17
 
 Updated for SFML 2.4
+
 -----------------------------------------------------------------------
 Update: 12/17/18
 
 Updated for SFML 2.5
+
 -----------------------------------------------------------------------
 NOTE: Audio Demo is not working at the moment. 
 -----------------------------------------------------------------------
 # Links
+
 [SFML2 Documentation](http://www.sfml-dev.org/)
 
 [Euphoria Documentation](https://openeuphoria.org/index.wc)
+
+[Patreon](https://www.patreon.com/CrazyVikingGamer)
