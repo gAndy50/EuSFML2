@@ -1024,7 +1024,8 @@ public constant xsfRenderTexture_create = define_c_func(gfx,"+sfRenderTexture_cr
 				xsfRenderTexture_setSmooth = define_c_proc(gfx,"+sfRenderTexture_setSmooth",{C_POINTER,C_BOOL}),
 				xsfRenderTexture_isSmooth = define_c_func(gfx,"+sfRenderTexture_isSmooth",{C_POINTER},C_BOOL),
 				xsfRenderTexture_setRepeated = define_c_proc(gfx,"+sfRenderTexture_setRepeated",{C_POINTER,C_BOOL}),
-				xsfRenderTexture_isRepeated = define_c_func(gfx,"+sfRenderTexture_isRepeated",{C_POINTER},C_BOOL)
+				xsfRenderTexture_isRepeated = define_c_func(gfx,"+sfRenderTexture_isRepeated",{C_POINTER},C_BOOL),
+				xsfRenderTexture_generateMipmap = define_c_func(gfx,"+sfRenderTexture_generateMipmap",{C_POINTER},C_BOOL)
 				
 public function sfRenderTexture_create(atom w,atom h,integer depbuf)
 
@@ -1185,6 +1186,12 @@ end procedure
 public function sfRenderTexture_isRepeated(atom rt)
 
  return c_func(xsfRenderTexture_isRepeated,{rt})
+	
+end function
+
+public function sfRenderTexture_generateMipMap(atom rt)
+
+ return c_func(xsfRenderTexture_generateMipmap,{rt})
 	
 end function
 
@@ -3131,4 +3138,4 @@ public function sfVertexBuffer_isAvailable()
  return c_func(xsfVertexBuffer_isAvailable,{})
 	
 end function
-­1880.62
+­1194.52
