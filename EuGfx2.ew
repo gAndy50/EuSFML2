@@ -2106,7 +2106,10 @@ public constant xsfText_create = define_c_func(gfx,"+sfText_create",{},C_POINTER
 				xsfText_setFont = define_c_proc(gfx,"+sfText_setFont",{C_POINTER,C_POINTER}),
 				xsfText_setCharacterSize = define_c_proc(gfx,"+sfText_setCharacterSize",{C_POINTER,C_UINT}),
 				xsfText_setStyle = define_c_proc(gfx,"+sfText_setStyle",{C_POINTER,C_UINT}),
-				xsfText_setColor = define_c_proc(gfx,"+sfText_setColor",{C_POINTER,C_POINTER}),
+				xsfText_setColor = define_c_proc(gfx,"+sfText_setColor",{C_POINTER,C_UBYTE}),
+				sfText_setFillColor = define_c_proc(gfx,"+sfText_setFillColor",{C_POINTER,C_UBYTE}),
+				sfText_setOutlineColor = define_c_proc(gfx,"+sfText_setOutlineColor",{C_POINTER,C_UBYTE}),
+				sfText_setOutlineThickness = define_c_proc(gfx,"+sfText_setOutlineThickness",{C_POINTER,C_FLOAT}),
 				xsfText_getString = define_c_func(gfx,"+sfText_getString",{C_POINTER},C_POINTER),
 				xsfText_getUnicodeString = define_c_func(gfx,"+sfText_getUnicodeString",{C_POINTER},C_POINTER),
 				xsfText_getFont = define_c_func(gfx,"+sfText_getFont",{C_POINTER},C_POINTER),
@@ -2246,6 +2249,30 @@ public procedure sfText_setStyle(atom txt,atom style)
  c_proc(xsfText_setStyle,{txt,style})
 	
 end procedure
+
+public procedure sfText_setColor(atom txt,sfColor col)
+
+ c_proc(xsfText_setColor,{txt,col})
+	
+end procedure
+
+--public procedure sfText_setFillColor(atom txt,sfColor col)
+
+-- c_proc(xsfText_setFillColor,{txt,col})
+	
+--end procedure
+
+--public procedure sfText_setOutlineColor(atom txt,sfColor col)
+
+-- c_proc(xsfText_setOutlineColor,{txt,col})
+	
+--end procedure
+
+--public procedure sfText_setOutlineThickness(atom txt,atom thick)
+
+-- c_proc(xsfText_setOutlineThickness,{txt,thick})
+	
+--end procedure
 
 public function sfText_getString(atom txt)
 
@@ -3138,4 +3165,4 @@ public function sfVertexBuffer_isAvailable()
  return c_func(xsfVertexBuffer_isAvailable,{})
 	
 end function
-­1194.52
+­2257.13

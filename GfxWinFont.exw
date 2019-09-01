@@ -29,7 +29,12 @@ end if
 atom text = sfText_create()
 sfText_setString(text,"Hello World")
 sfText_setFont(text,font)
-sfText_setCharacterSize(text,50)
+sfText_setCharacterSize(text,30)
+sfText_move(text,w / 2, h / 2)
+
+atom c = sfColor_fromRGBA(255,255,255,255) --you will need sfColor_fromRGB or fromRGBA to
+--change the color!
+sfText_setColor(text,c)
 
 while sfRenderWindow_isOpen(win) do
 
@@ -59,4 +64,4 @@ end while
 sfText_destroy(text)
 sfFont_destroy(font)
 sfRenderWindow_destroy(win)
-­43.8
+­36.19
