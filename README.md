@@ -3,7 +3,7 @@
 2. Written In: Euphoria 4.1.0 Beta 2
 3. Written By: Andy P. (Icy_Viking)
 4. Icy Viking Games
-5. Contact/Paypal: g_andy <at> live.com
+5. Contact/Paypal: g_andy at live.com
 
 # About:
 
