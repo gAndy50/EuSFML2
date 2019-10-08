@@ -22,7 +22,8 @@ This software is provided as-is. There is no warranty for this software. You use
 at your own risk. You may not hold the developers of the wrapper, SFML2 developers or Euphoria
 community responsible for anything you do with this library. You may distribute creations developed
 with this wrapper as you please, royalty free. This software is provided in the event that it is
-helpful. Note: SFML2 is licensed under the zlib/png license.
+helpful. Note: SFML2 is licensed under the zlib/png license. You may not claim you wrote the original
+EuSFML2 wrapper. While not required an aknowledgement of the original author would be nice.
 
 # Updates:
 
