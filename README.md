@@ -53,3 +53,4 @@ NOTE: Audio Demo is not working at the moment.
 [Euphoria Documentation](https://openeuphoria.org/index.wc)
 
 [Patreon](https://www.patreon.com/CrazyVikingGamer)
+[Paypal](paypal.me/IcyViking)
