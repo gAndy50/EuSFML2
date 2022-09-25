@@ -33,6 +33,7 @@ Updated for SFML 2.5.1
 
 -----------------------------------------------------------------------
 NOTE: Audio Demo is not working at the moment. 
+
 NOTE: New Music Demo does work!
 -----------------------------------------------------------------------
 # Links
