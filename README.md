@@ -1,5 +1,5 @@
 # EuSFML2
-1. Version of SFML2 Wrapped: 2.5
+1. Version of SFML2 Wrapped: 2.5.1
 2. Written In: Euphoria 4.1.0 Beta 2
 3. Written By: Andy P. (Icy_Viking)
 4. Icy Viking Games
@@ -29,22 +29,11 @@ EuSFML2 wrapper. While not required an aknowledgement of the original author wou
 
 Updated wrapper to make more Euphoria friendly. Fixed and updated demos. 
 
------------------------------------------------------------------------
-1. Update: 7/15/16
-
-2. Updated for SFML 2.3.2
-
-3. Update: 3/05/17
-
-Updated for SFML 2.4
-
------------------------------------------------------------------------
-Update: 12/17/18
-
-Updated for SFML 2.5
+Updated for SFML 2.5.1
 
 -----------------------------------------------------------------------
 NOTE: Audio Demo is not working at the moment. 
+NOTE: New Music Demo does work!
 -----------------------------------------------------------------------
 # Links
 
