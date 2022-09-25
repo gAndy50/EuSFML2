@@ -1,0 +1,2728 @@
+--EuSFML 2.5.1
+--Written by Andy P.
+--Graphic Functions (csfml-graphics-2.dll)
+--Copyright (c) 2022
+
+include std/machine.e
+include std/dll.e
+include std/os.e
+
+include flags.e
+
+atom gfx = 0
+
+ifdef WINDOWS then
+	gfx = open_dll("csfml-graphics-2.dll")
+	elsifdef LINUX or FREEBSD then
+	gfx = open_dll("csfml-graphics-2.so")
+	elsif gfx = -1 then
+		puts(1,"Failed to open csfml-graphics-2.dll!\n")
+		abort(1)
+end ifdef
+
+--BlendMode Functions (blendmode.h)
+--No Functions
+
+--Color Functions
+
+public constant xsfColor_fromRGB = define_c_func(gfx,"+sfColor_fromRGB",{C_UINT,C_UINT,C_UINT},C_UINT)
+
+public function sfColor_fromRGB(atom r,atom g,atom b)
+
+ return c_func(xsfColor_fromRGB,{r,g,b})
+	
+end function
+
+public constant xsfColor_fromRGBA = define_c_func(gfx,"+sfColor_fromRGBA",{C_UINT,C_UINT,C_UINT,C_UINT},C_UINT)
+
+public function sfColor_fromRGBA(atom r,atom g,atom b,atom a)
+
+ return c_func(xsfColor_fromRGBA,{r,g,b,a})
+	
+end function
+
+public constant xsfColor_fromInteger = define_c_func(gfx,"+sfColor_fromInteger",{C_UINT},C_UINT)
+
+public function sfColor_fromInteger(atom col)
+
+ return c_func(xsfColor_fromInteger,{col})
+	
+end function
+
+public constant xsfColor_toInteger = define_c_func(gfx,"+sfColor_toInteger",{C_POINTER},C_POINTER)
+
+public function sfColor_toInteger(sfColor col)
+
+ return c_func(xsfColor_toInteger,{col})
+	
+end function
+
+public constant xsfColor_add = define_c_func(gfx,"+sfColor_add",{C_POINTER,C_POINTER},C_POINTER)
+
+public function sfColor_add(sfColor col,sfColor col2)
+
+ return c_func(xsfColor_add,{col,col2})
+	
+end function
+
+public constant xsfColor_subtract = define_c_func(gfx,"+sfColor_subtract",{C_POINTER,C_POINTER},C_POINTER)
+
+public function sfColor_subtract(sfColor col, sfColor col2)
+
+ return c_func(xsfColor_subtract,{col,col2})
+	
+end function
+
+public constant xsfColor_modulate = define_c_func(gfx,"+sfColor_modulate",{C_POINTER,C_POINTER},C_POINTER)
+
+public function sfColor_modulate(sfColor col,sfColor col2)
+
+ return c_func(xsfColor_modulate,{col,col2})
+	
+end function
+
+--Rect Functions (rect.h)
+
+public constant xsfFloatRect_contains = define_c_func(gfx,"+sfFloatRect_contains",{C_POINTER,C_FLOAT,C_FLOAT},C_BOOL),
+				xsfIntRect_contains = define_c_func(gfx,"+sfIntRect_contains",{C_POINTER,C_INT,C_INT},C_BOOL)
+				
+public function sfFloatRect_contains(atom rect,atom x,atom y)
+
+ return c_func(xsfFloatRect_contains,{rect,x,y})
+	
+end function
+
+public function sfIntRect_contains(atom rect,atom x,atom y)
+
+ return c_func(xsfIntRect_contains,{rect,x,y})
+	
+end function
+
+public constant xsfFloatRect_intersects = define_c_func(gfx,"+sfFloatRect_intersects",{C_POINTER,C_POINTER,C_POINTER},C_BOOL),
+				xsfIntRect_intersects = define_c_func(gfx,"+sfIntRect_intersects",{C_POINTER,C_POINTER,C_POINTER},C_BOOL)
+				
+public function sfFloatRect_intersects(atom rect,atom rect2,atom intersect)
+
+ return c_func(xsfFloatRect_intersects,{rect,rect2,intersect})
+	
+end function
+
+public function sfIntRect_intersects(atom rect,atom rect2,atom intersect)
+
+ return c_func(xsfIntRect_intersects,{rect,rect2,intersect})
+	
+end function
+
+--Transform Functions (transform.h)
+
+public constant xsfTransform_fromMatrix = define_c_func(gfx,"+sfTransform_fromMatrix",{C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT},C_FLOAT)
+
+public function sfTransform_fromMatrix(atom a00,atom a01,atom a02,atom a10,atom a11,atom a12,atom a20,atom a21,atom a22)
+
+ return c_func(xsfTransform_fromMatrix,{a00,a01,a02,a10,a11,a12,a20,a21,a22})
+	
+end function
+
+public constant xsfTransform_getMatrix = define_c_proc(gfx,"+sfTransform_getMatrix",{C_POINTER,C_POINTER})
+
+public procedure sfTransform_getMatrix(atom trans,atom matrix)
+
+ c_proc(xsfTransform_getMatrix,{trans,matrix})
+	
+end procedure
+
+public constant xsfTransform_getInverse = define_c_func(gfx,"+sfTransform_getInverse",{C_POINTER},C_FLOAT)
+
+public function sfTransform_getInverse(atom trans)
+
+ return c_func(xsfTransform_getInverse,{trans})
+	
+end function
+
+public constant xsfTransform_transformPoint = define_c_func(gfx,"+sfTransform_transformPoint",{C_POINTER,C_FLOAT,C_FLOAT},C_FLOAT)
+
+public function sfTransform_transformPoint(atom trans,atom x,atom y)
+
+ return c_func(xsfTransform_transformPoint,{trans,x,y})
+	
+end function
+
+public constant xsfTransform_transformRect = define_c_func(gfx,"+sfTransform_transformRect",{C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT},C_FLOAT)
+
+public function sfTransform_transformRect(atom trans,atom top,atom left,atom w,atom h)
+
+ return c_func(xsfTransform_transformRect,{trans,top,left,w,h})
+	
+end function
+
+public constant xsfTransform_combine = define_c_proc(gfx,"+sfTransform_combine",{C_POINTER,C_POINTER})
+
+public procedure sfTransform_combine(atom trans,atom other)
+
+ c_proc(xsfTransform_combine,{trans,other})
+	
+end procedure
+
+public constant xsfTransform_translate = define_c_proc(gfx,"+sfTransform_translate",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfTransform_translate(atom trans,atom x,atom y)
+
+ c_proc(xsfTransform_translate,{trans,x,y})
+	
+end procedure
+
+public constant xsfTransform_rotate = define_c_proc(gfx,"+sfTransform_rotate",{C_POINTER,C_FLOAT})
+
+public procedure sfTransform_rotate(atom trans,atom angle)
+
+ c_proc(xsfTransform_rotate,{trans,angle})
+	
+end procedure
+
+public constant xsfTransform_rotateWithCenter = define_c_proc(gfx,"+sfTransform_rotateWithCenter",{C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT})
+
+public procedure sfTransform_rotateWithCenter(atom trans,atom angle,atom x,atom y)
+
+ c_proc(xsfTransform_rotateWithCenter,{trans,angle,x,y})
+	
+end procedure
+
+public constant xsfTransform_scale = define_c_proc(gfx,"+sfTransform_scale",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfTransform_scale(atom trans,atom x,atom y)
+
+ c_proc(xsfTransform_scale,{trans,x,y})
+	
+end procedure
+
+public constant xsfTransform_scaleWithCenter = define_c_proc(gfx,"+sfTransform_scaleWithCenter",{C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT})
+
+public procedure sfTransform_scaleWithCenter(atom trans,atom x,atom y,atom cx,atom cy)
+
+ c_proc(xsfTransform_scaleWithCenter,{trans,x,y,cx,cy})
+	
+end procedure
+
+public constant xsfTransform_equal = define_c_func(gfx,"+sfTransform_equal",{C_POINTER,C_POINTER},C_BOOL)
+
+public function sfTransform_equal(atom left,atom right)
+
+ return c_func(xsfTransform_equal,{left,right})
+	
+end function
+
+--Circle Shape Functions (circleShape.h)
+
+public constant xsfCircleShape_create = define_c_func(gfx,"+sfCircleShape_create",{},C_POINTER)
+
+public function sfCircleShape_create()
+
+ return c_func(xsfCircleShape_create,{})
+	
+end function
+
+public constant xsfCircleShape_copy = define_c_func(gfx,"+sfCircleShape_copy",{C_POINTER},C_POINTER)
+
+public function sfCircleShape_copy(atom shape)
+
+ return c_func(xsfCircleShape_copy,{shape})
+	
+end function
+
+public constant xsfCircleShape_destroy = define_c_proc(gfx,"+sfCircleShape_destroy",{C_POINTER})
+
+public procedure sfCircleShape_destroy(atom shape)
+
+ c_proc(xsfCircleShape_destroy,{shape})
+	
+end procedure
+
+public constant xsfCircleShape_setPosition = define_c_proc(gfx,"+sfCircleShape_setPosition",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfCircleShape_setPosition(atom shape,atom x,atom y)
+
+ c_proc(xsfCircleShape_setPosition,{shape,x,y})
+	
+end procedure
+
+public constant xsfCircleShape_setRotation = define_c_proc(gfx,"+sfCircleShape_setRotation",{C_POINTER,C_FLOAT})
+
+public procedure sfCircleShape_setRotation(atom shape,atom ang)
+
+ c_proc(xsfCircleShape_setRotation,{shape,ang})
+	
+end procedure
+
+public constant xsfCircleShape_setScale = define_c_proc(gfx,"+sfCircleShape_setScale",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfCircleShape_setScale(atom shape,atom x,atom y)
+
+ c_proc(xsfCircleShape_setScale,{shape,x,y})
+	
+end procedure
+
+public constant xsfCircleShape_setOrigin = define_c_proc(gfx,"+sfCircleShape_setOrigin",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfCircleShape_setOrigin(atom shape,atom x,atom y)
+
+ c_proc(xsfCircleShape_setOrigin,{shape,x,y})
+	
+end procedure
+
+public constant xsfCircleShape_getPosition = define_c_func(gfx,"+sfCircleShape_getPosition",{C_POINTER},C_FLOAT)
+
+public function sfCircleShape_getPosition(atom shape)
+
+ return c_func(xsfCircleShape_getPosition,{shape})
+	
+end function
+
+public constant xsfCircleShape_getRotation = define_c_func(gfx,"+sfCircleShape_getRotation",{C_POINTER},C_FLOAT)
+
+public function sfCircleShape_getRotation(atom shape)
+
+ return c_func(xsfCircleShape_getRotation,{shape})
+	
+end function
+
+public constant xsfCircleShape_getScale = define_c_func(gfx,"+sfCircleShape_getScale",{C_POINTER},C_FLOAT)
+
+public function sfCircleShape_getScale(atom shape)
+
+ return c_func(xsfCircleShape_getScale,{shape})
+	
+end function
+
+public constant xsfCircleShape_getOrigin = define_c_func(gfx,"+sfCircleShape_getOrigin",{C_POINTER},C_FLOAT)
+
+public function sfCircleShape_getOrigin(atom shape)
+
+ return c_func(xsfCircleShape_getOrigin,{shape})
+	
+end function
+
+public constant xsfCircleShape_move = define_c_proc(gfx,"+sfCircleShape_move",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfCircleShape_move(atom shape,atom x,atom y)
+
+ c_proc(xsfCircleShape_move,{shape,x,y})
+	
+end procedure
+
+public constant xsfCircleShape_rotate = define_c_proc(gfx,"+sfCircleShape_rotate",{C_POINTER,C_FLOAT})
+
+public procedure sfCircleShape_rotate(atom shape,atom ang)
+
+ c_proc(xsfCircleShape_rotate,{shape,ang})
+	
+end procedure
+
+public constant xsfCircleShape_scale = define_c_proc(gfx,"+sfCircleShape_scale",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfCircleShape_scale(atom shape,atom x,atom y)
+
+ c_proc(xsfCircleShape_scale,{shape,x,y})
+	
+end procedure
+
+public constant xsfCircleShape_getTransform = define_c_func(gfx,"+sfCircleShape_getTransform",{C_POINTER},C_POINTER)
+
+public function sfCircleShape_getTransform(atom shape)
+
+ return c_func(xsfCircleShape_getTransform,{shape})
+	
+end function
+
+public constant xsfCircleShape_getInverseTransform = define_c_func(gfx,"+sfCircleShape_getInverseTransform",{C_POINTER},C_POINTER)
+
+public function sfCircleShape_getInverseTransform(atom shape)
+
+ return c_func(xsfCircleShape_getInverseTransform,{shape})
+	
+end function
+
+public constant xsfCircleShape_setTexture = define_c_proc(gfx,"+sfCircleShape_setTexture",{C_POINTER,C_POINTER,C_BOOL})
+
+public procedure sfCircleShape_setTexture(atom shape,atom tex,atom reset)
+
+ c_proc(xsfCircleShape_setTexture,{shape,tex,reset})
+	
+end procedure
+
+public constant xsfCircleShape_setTextureRect = define_c_proc(gfx,"+sfCircleShape_setTextureRect",{C_POINTER,C_INT,C_INT,C_INT,C_INT})
+
+public procedure sfCircleShape_setTextureRect(atom shape,atom left,atom top,atom w,atom h)
+
+ c_proc(xsfCircleShape_setTextureRect,{shape,left,top,w,h})
+	
+end procedure
+
+public constant xsfCircleShape_setFillColor = define_c_proc(gfx,"+sfCircleShape_setFillColor",{C_POINTER,C_POINTER})
+
+public procedure sfCircleShape_setFillColor(atom shape,sfColor col)
+
+ c_proc(xsfCircleShape_setFillColor,{shape,col})
+	
+end procedure
+
+public constant xsfCircleShape_setOutlineColor = define_c_proc(gfx,"+sfCircleShape_setOutlineColor",{C_POINTER,C_POINTER})
+
+public procedure sfCircleShape_setOutlineColor(atom shape,sfColor col)
+
+ c_proc(xsfCircleShape_setOutlineColor,{shape,col})
+	
+end procedure
+
+public constant xsfCircleShape_setOutlineThickness = define_c_proc(gfx,"+sfCircleShape_setOutlineThickness",{C_POINTER,C_FLOAT})
+
+public procedure sfCircleShape_setOutlineThickness(atom shape,atom thick)
+
+ c_proc(xsfCircleShape_setOutlineThickness,{shape,thick})
+	
+end procedure
+
+public constant xsfCircleShape_getTexture = define_c_func(gfx,"+sfCircleShape_getTexture",{C_POINTER},C_POINTER)
+
+public function sfCircleShape_getTexture(atom shape)
+
+ return c_func(xsfCircleShape_getTexture,{shape})
+	
+end function
+
+public constant xsfCircleShape_getTextureRect = define_c_func(gfx,"+sfCircleShape_getTextureRect",{C_POINTER},C_INT)
+
+public function sfCircleShape_getTextureRect(atom shape)
+
+ return c_func(xsfCircleShape_getTextureRect,{shape})
+	
+end function
+
+public constant xsfCircleShape_getFillColor = define_c_func(gfx,"+sfCircleShape_getFillColor",{C_POINTER},C_UINT)
+
+public function sfCircleShape_getFillColor(atom shape)
+
+ return c_func(xsfCircleShape_getFillColor,{shape})
+	
+end function
+
+public constant xsfCircleShape_getOutlineColor = define_c_func(gfx,"+sfCircleShape_getOutlineColor",{C_POINTER},C_UINT)
+
+public function sfCircleShape_getOutlineColor(atom shape)
+
+ return c_func(xsfCircleShape_getOutlineColor,{shape})
+	
+end function
+
+public constant xsfCircleShape_getOutlineThickness = define_c_func(gfx,"+sfCircleShape_getOutlineThickness",{C_POINTER},C_FLOAT)
+
+public function sfCircleShape_getOutlineThickness(atom shape)
+
+ return c_func(xsfCircleShape_getOutlineThickness,{shape})
+	
+end function
+
+public constant xsfCircleShape_getPointCount = define_c_func(gfx,"+sfCircleShape_getPointCount",{C_POINTER},C_SIZE_T)
+
+public function sfCircleShape_getPointCount(atom shape)
+
+ return c_func(xsfCircleShape_getPointCount,{shape})
+	
+end function
+
+public constant xsfCircleShape_getPoint = define_c_func(gfx,"+sfCircleShape_getPoint",{C_POINTER,C_SIZE_T},C_FLOAT)
+
+public function sfCircleShape_getPoint(atom shape,atom idx)
+
+ return c_func(xsfCircleShape_getPoint,{shape,idx})
+	
+end function
+
+public constant xsfCircleShape_setRadius = define_c_proc(gfx,"+sfCircleShape_setRadius",{C_POINTER,C_FLOAT})
+
+public procedure sfCircleShape_setRadius(atom shape,atom rad)
+
+ c_proc(xsfCircleShape_setRadius,{shape,rad})
+	
+end procedure
+
+public constant xsfCircleShape_getRadius = define_c_func(gfx,"+sfCircleShape_getRadius",{C_POINTER},C_FLOAT)
+
+public function sfCircleShape_getRadius(atom shape)
+
+ return c_func(xsfCircleShape_getRadius,{shape})
+	
+end function
+
+public constant xsfCircleShape_setPointCount = define_c_proc(gfx,"+sfCircleShape_setPointCount",{C_POINTER,C_SIZE_T})
+
+public procedure sfCircleShape_setPointCount(atom shape,atom cnt)
+
+ c_proc(xsfCircleShape_setPointCount,{shape,cnt})
+	
+end procedure
+
+public constant xsfCircleShape_getLocalBounds = define_c_func(gfx,"+sfCircleShape_getLocalBounds",{C_POINTER},C_FLOAT)
+
+public function sfCircleShape_getLocalBounds(atom shape)
+
+ return c_func(xsfCircleShape_getLocalBounds,{shape})
+	
+end function
+
+public constant xsfCircleShape_getGlobalBounds = define_c_func(gfx,"+sfCircleShape_getGlobalBounds",{C_POINTER},C_FLOAT)
+
+public function sfCircleShape_getGlobalBounds(atom shape)
+
+ return c_func(xsfCircleShape_getGlobalBounds,{shape})
+	
+end function
+
+--ConvexShape Functions (ConvexShape.h)
+
+public constant xsfConvexShape_create = define_c_func(gfx,"+sfConvexShape_create",{},C_POINTER)
+
+public function sfConvexShape_create()
+
+ return c_func(xsfConvexShape_create,{})
+	
+end function
+
+public constant xsfConvexShape_copy = define_c_func(gfx,"+sfConvexShape_copy",{C_POINTER},C_POINTER)
+
+public function sfConvexShape_copy(atom shape)
+
+ return c_func(xsfConvexShape_copy,{shape})
+	
+end function
+
+public constant xsfConvexShape_destroy = define_c_proc(gfx,"+sfConvexShape_destroy",{C_POINTER})
+
+public procedure sfConvexShape_destroy(atom shape)
+
+ c_proc(xsfConvexShape_destroy,{shape})
+	
+end procedure
+
+public constant xsfConvexShape_setPosition = define_c_proc(gfx,"+sfConvexShape_setPosition",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfConvexShape_setPosition(atom shape,atom x,atom y)
+
+ c_proc(xsfConvexShape_setPosition,{shape,x,y})
+	
+end procedure
+
+public constant xsfConvexShape_setRotation = define_c_proc(gfx,"+sfConvexShape_setRotation",{C_POINTER,C_FLOAT})
+
+public procedure sfConvexShape_setRotation(atom shape,atom angle)
+
+ c_proc(xsfConvexShape_setRotation,{shape,angle})
+	
+end procedure
+
+public constant xsfConvexShape_setScale = define_c_proc(gfx,"sfConvexShape_setScale",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfConvexShape_setScale(atom shape,atom x,atom y)
+
+ c_proc(xsfConvexShape_setScale,{shape,x,y})
+	
+end procedure
+
+public constant xsfConvexShape_setOrigin = define_c_proc(gfx,"+sfConvexShape_setOrigin",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfConvexShape_setOrigin(atom shape,atom x,atom y)
+
+ c_proc(xsfConvexShape_setOrigin,{shape,x,y})
+	
+end procedure
+
+public constant xsfConvexShape_getPosition = define_c_func(gfx,"+sfConvexShape_getPosition",{C_POINTER},C_FLOAT)
+
+public function sfConvexShape_getPosition(atom shape)
+
+ return c_func(xsfConvexShape_getPosition,{shape})
+	
+end function
+
+public constant xsfConvexShape_getRotation = define_c_func(gfx,"+sfConvexShape_getRotation",{C_POINTER},C_FLOAT)
+
+public function sfConvexShape_getRotation(atom shape)
+
+ return c_func(xsfConvexShape_getRotation,{shape})
+	
+end function
+
+public constant xsfConvexShape_getScale = define_c_func(gfx,"+sfConvexShape_getScale",{C_POINTER},C_FLOAT)
+
+public function sfConvexShape_getScale(atom shape)
+
+ return c_func(xsfConvexShape_getScale,{shape})
+	
+end function
+
+public constant xsfConvexShape_getOrigin = define_c_func(gfx,"+sfConvexShape_getOrigin",{C_POINTER},C_FLOAT)
+
+public function sfConvexShape_getOrigin(atom shape)
+
+ return c_func(xsfConvexShape_getOrigin,{shape})
+	
+end function
+
+public constant xsfConvexShape_move = define_c_proc(gfx,"+sfConvexShape_move",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfConvexShape_move(atom shape,atom x,atom y)
+
+ c_proc(xsfConvexShape_move,{shape,x,y})
+	
+end procedure
+
+public constant xsfConvexShape_rotate = define_c_proc(gfx,"+sfConvexShape_rotate",{C_POINTER,C_FLOAT})
+
+public procedure sfConvexShape_rotate(atom shape,atom ang)
+
+ c_proc(xsfConvexShape_rotate,{shape,ang})
+	
+end procedure
+
+public constant xsfConvexShape_scale = define_c_proc(gfx,"+sfConvexShape_scale",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfConvexShape_scale(atom shape,atom x,atom y)
+
+ c_proc(xsfConvexShape_scale,{shape,x,y})
+	
+end procedure
+
+public constant xsfConvexShape_getTransform = define_c_func(gfx,"+sfConvexShape_getTransform",{C_POINTER},C_POINTER)
+
+public function sfConvexShape_getTransform(atom shape)
+
+ return c_func(xsfConvexShape_getTransform,{shape})
+	
+end function
+
+public constant xsfConvexShape_getInverseTransform = define_c_func(gfx,"+sfConvexShape_getInverseTransform",{C_POINTER},C_POINTER)
+
+public function sfConvexShape_getInverseTransform(atom shape)
+
+ return c_func(xsfConvexShape_getInverseTransform,{shape})
+	
+end function
+
+public constant xsfConvexShape_setTexture = define_c_proc(gfx,"+sfConvexShape_setTexture",{C_POINTER,C_POINTER,C_BOOL})
+
+public procedure sfConvexShape_setTexture(atom shape,atom tex,atom reset)
+
+ c_proc(xsfConvexShape_setTexture,{shape,tex,reset})
+	
+end procedure
+
+public constant xsfConvexShape_setTextureRect = define_c_proc(gfx,"+sfConvexShape_setTextureRect",{C_POINTER,C_INT,C_INT,C_INT,C_INT})
+
+public procedure sfConvexShape_setTextureRect(atom shape,atom top,atom left,atom w,atom h)
+
+ c_proc(xsfConvexShape_setTextureRect,{shape,top,left,w,h})
+	
+end procedure
+
+public constant xsfConvexShape_setFillColor = define_c_proc(gfx,"+sfConvexShape_setFillColor",{C_POINTER,C_POINTER})
+
+public procedure sfConvexShape_setFillColor(atom shape,sfColor col)
+
+ c_proc(xsfConvexShape_setFillColor,{shape,col})
+	
+end procedure
+
+public constant xsfConvexShape_setOutlineColor = define_c_proc(gfx,"+sfConvexShape_setOutlineColor",{C_POINTER,C_POINTER})
+
+public procedure sfConvexShape_setOutlineColor(atom shape,sfColor col)
+
+ c_proc(xsfConvexShape_setOutlineColor,{shape,col})
+	
+end procedure
+
+public constant xsfConvexShape_setOutlineThickness = define_c_proc(gfx,"+sfConvexShape_setOutlineThickness",{C_POINTER,C_FLOAT})
+
+public procedure sfConvexShape_setOutlineThickness(atom shape,atom thick)
+
+ c_proc(xsfConvexShape_setOutlineThickness,{shape,thick})
+	
+end procedure
+
+public constant xsfConvexShape_getTexture = define_c_func(gfx,"+sfConvexShape_getTexture",{C_POINTER},C_POINTER)
+
+public function sfConvexShape_getTexture(atom shape)
+
+ return c_func(xsfConvexShape_getTexture,{shape})
+	
+end function
+
+public constant xsfConvexShape_getTextureRect = define_c_func(gfx,"+sfConvexShape_getTextureRect",{C_POINTER},C_INT)
+
+public function sfConvexShape_getTextureRect(atom shape)
+
+ return c_func(xsfConvexShape_getTextureRect,{shape})
+	
+end function
+
+public constant xsfConvexShape_getFillColor = define_c_func(gfx,"+sfConvexShape_getFillColor",{C_POINTER},C_UINT)
+
+public function sfConvexShape_getFillColor(atom shape)
+
+ return c_func(xsfConvexShape_getFillColor,{shape})
+	
+end function
+
+public constant xsfConvexShape_getOutlineColor = define_c_func(gfx,"+sfConvexShape_getOutlineColor",{C_POINTER},C_UINT)
+
+public function sfConvexShape_getOutlineColor(atom shape)
+
+ return c_func(xsfConvexShape_getOutlineColor,{shape})
+	
+end function
+
+public constant xsfConvexShape_getOutlineThickness = define_c_func(gfx,"+sfConvexShape_getOutlineThickness",{C_POINTER},C_FLOAT)
+
+public function sfConvexShape_getOutlineThickness(atom shape)
+
+ return c_func(xsfConvexShape_getOutlineThickness,{shape})
+	
+end function
+
+public constant xsfConvexShape_getPointCount = define_c_func(gfx,"+sfConvexShape_getPointCount",{C_POINTER},C_SIZE_T)
+
+public function sfConvexShape_getPointCount(atom shape)
+
+ return c_func(xsfConvexShape_getPointCount,{shape})
+	
+end function
+
+public constant xsfConvexShape_getPoint = define_c_func(gfx,"+sfConvexShape_getPoint",{C_POINTER,C_SIZE_T},C_FLOAT)
+
+public function sfConvexShape_getPoint(atom shape,atom idx)
+
+ return c_func(xsfConvexShape_getPoint,{shape,idx})
+	
+end function
+
+public constant xsfConvexShape_setPointCount = define_c_proc(gfx,"+sfConvexShape_setPointCount",{C_POINTER,C_SIZE_T})
+
+public procedure sfConvexShape_setPointCount(atom shape,atom cnt)
+
+ c_proc(xsfConvexShape_setPointCount,{shape,cnt})
+	
+end procedure
+
+public constant xsfConvexShape_setPoint = define_c_proc(gfx,"+sfConvexShape_setPoint",{C_POINTER,C_SIZE_T,C_FLOAT,C_FLOAT})
+
+public procedure sfConvexShape_setPoint(atom shape,atom index,atom x,atom y)
+
+ c_proc(xsfConvexShape_setPoint,{shape,index,x,y})
+	
+end procedure
+
+public constant xsfConvexShape_getLocalBounds = define_c_func(gfx,"+sfConvexShape_getLocalBounds",{C_POINTER},C_FLOAT)
+
+public function sfConvexShape_getLocalBounds(atom shape)
+
+ return c_func(xsfConvexShape_getLocalBounds,{shape})
+	
+end function
+
+public constant xsfConvexShape_getGlobalBounds = define_c_func(gfx,"+sfConvexShape_getGlobalBounds",{C_POINTER},C_FLOAT)
+
+public function sfConvexShape_getGlobalBounds(atom shape)
+
+ return c_func(xsfConvexShape_getGlobalBounds,{shape})
+	
+end function
+
+--Font Functions (font.h)
+
+public constant xsfFont_createFromFile = define_c_func(gfx,"+sfFont_createFromFile",{C_POINTER},C_POINTER)
+
+public function sfFont_createFromFile(sequence file)
+
+ atom str = allocate_string(file,1)
+ 
+ return c_func(xsfFont_createFromFile,{str})
+	
+end function
+
+public constant xsfFont_createFromMemory = define_c_func(gfx,"+sfFont_createFromMemory",{C_POINTER,C_SIZE_T},C_POINTER)
+
+public function sfFont_createFromMemory(atom dat,atom size)
+
+ return c_func(xsfFont_createFromMemory,{dat,size})
+	
+end function
+
+public constant xsfFont_createFromStream = define_c_func(gfx,"+sfFont_createFromStream",{C_POINTER},C_POINTER)
+
+public function sfFont_createFromStream(atom stream)
+
+ return c_func(xsfFont_createFromStream,{stream})
+	
+end function
+
+public constant xsfFont_copy = define_c_func(gfx,"+sfFont_copy",{C_POINTER},C_POINTER)
+
+public function sfFont_copy(atom font)
+
+ return c_func(xsfFont_copy,{font})
+	
+end function
+
+public constant xsfFont_destroy = define_c_proc(gfx,"+sfFont_destroy",{C_POINTER})
+
+public procedure sfFont_destroy(atom font)
+
+ c_proc(xsfFont_destroy,{font})
+	
+end procedure
+
+public constant xsfFont_getGlyph = define_c_func(gfx,"+sfFont_getGlyph",{C_POINTER,C_UINT,C_UINT,C_BOOL,C_FLOAT},C_POINTER)
+
+public function sfFont_getGlyph(atom font,atom cp,atom size,atom bold,atom thick)
+
+ return c_func(xsfFont_getGlyph,{font,cp,size,bold,thick})
+	
+end function
+
+public constant xsfFont_getKerning = define_c_func(gfx,"+sfFont_getKerning",{C_POINTER,C_UINT,C_UINT,C_UINT},C_FLOAT)
+
+public function sfFont_getKerning(atom font,atom first,atom second,atom size)
+
+ return c_func(xsfFont_getKerning,{font,first,second,size})
+	
+end function
+
+public constant xsfFont_getLineSpacing = define_c_func(gfx,"+sfFont_getLineSpacing",{C_POINTER,C_UINT},C_FLOAT)
+
+public function sfFont_getLineSpacing(atom font,atom size)
+
+ return c_func(xsfFont_getLineSpacing,{font,size})
+	
+end function
+
+public constant xsfFont_getUnderlinePosition = define_c_func(gfx,"+sfFont_getUnderlinePosition",{C_POINTER,C_UINT},C_FLOAT)
+
+public function sfFont_getUnderlinePosition(atom font,atom size)
+
+ return c_func(xsfFont_getUnderlinePosition,{font,size})
+	
+end function
+
+public constant xsfFont_getUnderlineThickness = define_c_func(gfx,"+sfFont_getUnderlineThickness",{C_POINTER,C_UINT},C_FLOAT)
+
+public function sfFont_getUnderlineThickness(atom font,atom size)
+
+ return c_func(xsfFont_getUnderlineThickness,{font,size})
+	
+end function
+
+public constant xsfFont_getTexture = define_c_func(gfx,"+sfFont_getTexture",{C_POINTER,C_UINT},C_POINTER)
+
+public function sfFont_getTexture(atom font,atom size)
+
+ return c_func(xsfFont_getTexture,{font,size})
+	
+end function
+
+public constant xsfFont_getInfo = define_c_func(gfx,"+sfFont_getInfo",{C_POINTER},C_POINTER)
+
+public function sfFont_getInfo(atom font)
+
+ return c_func(xsfFont_getInfo,{font})
+	
+end function
+
+--Image Functions (image.h)
+
+public constant xsfImage_create = define_c_func(gfx,"+sfImage_create",{C_UINT,C_UINT},C_POINTER)
+
+public function sfImage_create(atom w,atom h)
+
+ return c_func(xsfImage_create,{w,h})
+	
+end function
+
+public constant xsfImage_createFromColor = define_c_func(gfx,"+sfImage_createFromColor",{C_UINT,C_UINT,C_POINTER},C_POINTER)
+
+public function sfImage_createFromColor(atom w,atom h,sfColor col)
+
+ return c_func(xsfImage_createFromColor,{w,h,col})
+	
+end function
+
+public constant xsfImage_createFromPixels = define_c_func(gfx,"+sfImage_createFromPixels",{C_UINT,C_UINT,C_POINTER},C_POINTER)
+
+public function sfImage_createFromPixels(atom w,atom h,atom pix)
+
+ return c_func(xsfImage_createFromPixels,{w,h,pix})
+	
+end function
+
+public constant xsfImage_createFromFile = define_c_func(gfx,"+sfImage_createFromFile",{C_POINTER},C_POINTER)
+
+public function sfImage_createFromFile(sequence file)
+
+ atom str = allocate_string(file,1)
+ 
+ return c_func(xsfImage_createFromFile,{str})
+	
+end function
+
+public constant xsfImage_createFromMemory = define_c_func(gfx,"+sfImage_createFromMemory",{C_POINTER,C_SIZE_T},C_POINTER)
+
+public function sfImage_createFromMemory(atom dat,atom size)
+
+ return c_func(xsfImage_createFromMemory,{dat,size})
+	
+end function
+
+public constant xsfImage_createFromStream = define_c_func(gfx,"+sfImage_createFromStream",{C_POINTER},C_POINTER)
+
+public function sfImage_createFromStream(atom stream)
+
+ return c_func(xsfImage_createFromStream,{stream})
+	
+end function
+
+public constant xsfImage_copy = define_c_func(gfx,"+sfImage_copy",{C_POINTER},C_POINTER)
+
+public function sfImage_copy(atom img)
+
+ return c_func(xsfImage_copy,{img})
+	
+end function
+
+public constant xsfImage_destroy = define_c_proc(gfx,"+sfImage_destroy",{C_POINTER})
+
+public procedure sfImage_destroy(atom img)
+
+ c_proc(xsfImage_destroy,{img})
+	
+end procedure
+
+public constant xsfImage_saveToFile = define_c_func(gfx,"+sfImage_saveToFile",{C_POINTER,C_POINTER},C_BOOL)
+
+public function sfImage_saveToFile(atom img,sequence file)
+
+ atom str = allocate_string(file,1)
+ 
+ return c_func(xsfImage_saveToFile,{img,str})
+	
+end function
+
+public constant xsfImage_getSize = define_c_func(gfx,"+sfImage_getSize",{C_POINTER},C_UINT)
+
+public function sfImage_getSize(atom img)
+
+ return c_func(xsfImage_getSize,{img})
+	
+end function
+
+public constant xsfImage_createMaskFromColor = define_c_proc(gfx,"+sfImage_createMaskFromColor",{C_POINTER,C_POINTER,C_UINT})
+
+public procedure sfImage_createMaskFromColor(atom img,sfColor col,atom alpha)
+
+ c_proc(xsfImage_createMaskFromColor,{img,col,alpha})
+	
+end procedure
+
+public constant xsfImage_copyImage = define_c_proc(gfx,"+sfImage_copyImage",{C_POINTER,C_POINTER,C_UINT,C_UINT,C_INT,C_INT,C_INT,C_INT,C_BOOL})
+
+public procedure sfImage_copyImage(atom img,atom source,atom x,atom y,atom top,atom left,atom w,atom h,atom apply)
+
+ c_proc(xsfImage_copyImage,{img,source,x,y,top,left,w,h,apply})
+	
+end procedure
+
+public constant xsfImage_setPixel = define_c_proc(gfx,"+sfImage_setPixel",{C_POINTER,C_UINT,C_UINT,C_POINTER})
+
+public procedure sfImage_setPixel(atom img,atom x,atom y,sfColor col)
+
+ c_proc(xsfImage_setPixel,{img,x,y,col})
+	
+end procedure
+
+public constant xsfImage_getPixel = define_c_func(gfx,"+sfImage_getPixel",{C_POINTER,C_UINT,C_UINT},C_UINT)
+
+public function sfImage_getPixel(atom img,atom x,atom y)
+
+ return c_func(xsfImage_getPixel,{img,x,y})
+	
+end function
+
+public constant xsfImage_getPixelsPtr = define_c_func(gfx,"+sfImage_getPixelsPtr",{C_POINTER},C_POINTER)
+
+public function sfImage_getPixelsPtr(atom img)
+
+ return c_func(xsfImage_getPixelsPtr,{img})
+	
+end function
+
+public constant xsfImage_flipHorizontal = define_c_proc(gfx,"+sfImage_flipHorizontal",{C_POINTER})
+
+public procedure sfImage_flipHorizontal(atom img)
+
+ c_proc(xsfImage_flipHorizontal,{img})
+	
+end procedure
+
+public constant xsfImage_flipVertically = define_c_proc(gfx,"+sfImage_flipVertically",{C_POINTER})
+
+public procedure sfImage_flipVertically(atom img)
+
+ c_proc(xsfImage_flipVertically,{img})
+	
+end procedure
+
+--RectangleShape Functions (RectangleShape.h)
+
+public constant xsfRectangleShape_create = define_c_func(gfx,"+sfRectangleShape_create",{},C_POINTER)
+
+public function sfRectangleShape_create()
+
+ return c_func(xsfRectangleShape_create,{})
+	
+end function
+
+public constant xsfRectangleShape_copy = define_c_func(gfx,"+sfRectangleShape_copy",{C_POINTER},C_POINTER)
+
+public function sfRectangleShape_copy(atom shape)
+
+ return c_func(xsfRectangleShape_copy,{shape})
+	
+end function
+
+public constant xsfRectangleShape_destroy = define_c_proc(gfx,"+sfRectangleShape_destroy",{C_POINTER})
+
+public procedure sfRectangleShape_destroy(atom shape)
+
+ c_proc(xsfRectangleShape_destroy,{shape})
+	
+end procedure
+
+public constant xsfRectangleShape_setPosition = define_c_proc(gfx,"+sfRectangleShape_setPosition",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfRectangleShape_setPosition(atom shape,atom x,atom y)
+
+ c_proc(xsfRectangleShape_setPosition,{shape,x,y})
+	
+end procedure
+
+public constant xsfRectangleShape_setRotation = define_c_proc(gfx,"+sfRectangleShape_setRotation",{C_POINTER,C_FLOAT})
+
+public procedure sfRectangleShape_setRotation(atom shape,atom ang)
+
+ c_proc(xsfRectangleShape_setRotation,{shape,ang})
+	
+end procedure
+
+public constant xsfRectangleShape_setScale = define_c_proc(gfx,"+sfRectangleShape_setScale",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfRectangleShape_setScale(atom shape,atom x,atom y)
+
+ c_proc(xsfRectangleShape_setScale,{shape,x,y})
+	
+end procedure
+
+public constant xsfRectangleShape_setOrigin = define_c_proc(gfx,"+sfRectangleShape_setOrigin",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfRectangleShape_setOrigin(atom shape,atom x,atom y)
+
+ c_proc(xsfRectangleShape_setOrigin,{shape,x,y})
+	
+end procedure
+
+public constant xsfRectangleShape_getPosition = define_c_func(gfx,"+sfRectangleShape_getPosition",{C_POINTER},C_FLOAT)
+
+public function sfRectangleShape_getPosition(atom shape)
+
+ return c_func(xsfRectangleShape_getPosition,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getRotation = define_c_func(gfx,"+sfRectangleShape_getRotation",{C_POINTER},C_FLOAT)
+
+public function sfRectangleShape_getRotation(atom shape)
+
+ return c_func(xsfRectangleShape_getRotation,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getScale = define_c_func(gfx,"+sfRectangleShape_getScale",{C_POINTER},C_FLOAT)
+
+public function sfRectangleShape_getScale(atom shape)
+
+ return c_func(xsfRectangleShape_getScale,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getOrigin = define_c_func(gfx,"+sfRectangleShape_getOrigin",{C_POINTER},C_FLOAT)
+
+public function sfRectangleShape_getOrigin(atom shape)
+
+ return c_func(xsfRectangleShape_getOrigin,{shape})
+	
+end function
+
+public constant xsfRectangleShape_move = define_c_proc(gfx,"+sfRectangleShape_move",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfRectangleShape_move(atom shape,atom x,atom y)
+
+ c_proc(xsfRectangleShape_move,{shape,x,y})
+	
+end procedure
+
+public constant xsfRectangleShape_rotate = define_c_proc(gfx,"+sfRectangleShape_rotate",{C_POINTER,C_FLOAT})
+
+public procedure sfRectangleShape_rotate(atom shape,atom ang)
+
+ c_proc(xsfRectangleShape_rotate,{shape,ang})
+	
+end procedure
+
+public constant xsfRectangleShape_scale = define_c_proc(gfx,"+sfRectangleShape_scale",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfRectangleShape_scale(atom shape,atom x,atom y)
+
+ c_proc(xsfRectangleShape_scale,{shape,x,y})
+	
+end procedure
+
+public constant xsfRectangleShape_getTransform = define_c_func(gfx,"+sfRectangleShape_getTransform",{C_POINTER},C_POINTER)
+
+public function sfRectangleShape_getTransform(atom shape)
+
+ return c_func(xsfRectangleShape_getTransform,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getInverseTransform = define_c_func(gfx,"+sfRectangleShape_getInverseTransform",{C_POINTER},C_POINTER)
+
+public function sfRectangleShape_getInverseTransform(atom shape)
+
+ return c_func(xsfRectangleShape_getInverseTransform,{shape})
+	
+end function
+
+public constant xsfRectangleShape_setTexture = define_c_proc(gfx,"+sfRectangleShape_setTexture",{C_POINTER,C_POINTER,C_BOOL})
+
+public procedure sfRectangleShape_setTexture(atom shape,atom tex,atom reset)
+
+ c_proc(xsfRectangleShape_setTexture,{shape,tex,reset})
+	
+end procedure
+
+public constant xsfRectangleShape_setTextureRect = define_c_proc(gfx,"+sfRectangleShape_setTextureRect",{C_POINTER,C_INT,C_INT,C_INT,C_INT})
+
+public procedure sfRectangleShape_setTextureRect(atom shape,atom top,atom left,atom w,atom h)
+
+ c_proc(xsfRectangleShape_setTextureRect,{shape,top,left,w,h})
+	
+end procedure
+
+public constant xsfRectangleShape_setFillColor = define_c_proc(gfx,"+sfRectangleShape_setFillColor",{C_POINTER,C_POINTER})
+
+public procedure sfRectangleShape_setFillColor(atom shape, sfColor col)
+
+ c_proc(xsfRectangleShape_setFillColor,{shape,col})
+	
+end procedure
+
+public constant xsfRectangleShape_setOutlineColor = define_c_proc(gfx,"+sfRectangleShape_setOutlineColor",{C_POINTER,C_POINTER})
+
+public procedure sfRectangleShape_setOutlineColor(atom shape, sfColor col)
+
+ c_proc(xsfRectangleShape_setOutlineColor,{shape,col})
+	
+end procedure
+
+public constant xsfRectangleShape_setOutlineThickness = define_c_proc(gfx,"+sfRectangleShape_setOutlineThickness",{C_POINTER,C_FLOAT})
+
+public procedure sfRectangleShape_setOutlineThickness(atom shape,atom thick)
+
+ c_proc(xsfRectangleShape_setOutlineThickness,{shape,thick})
+	
+end procedure
+
+public constant xsfRectangleShape_getTexture = define_c_func(gfx,"+sfRectangleShape_getTexture",{C_POINTER},C_POINTER)
+
+public function sfRectangleShape_getTexture(atom shape)
+
+ return c_func(xsfRectangleShape_getTexture,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getTextureRect = define_c_func(gfx,"+sfRectangleShape_getTextureRect",{C_POINTER},C_INT)
+
+public function sfRectangleShape_getTextureRect(atom shape)
+
+ return c_func(xsfRectangleShape_getTextureRect,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getFillColor = define_c_func(gfx,"+sfRectangleShape_getFillColor",{C_POINTER},C_UINT)
+
+public function sfRectangleShape_getFillColor(atom shape)
+
+ return c_func(xsfRectangleShape_getFillColor,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getOutlineColor = define_c_func(gfx,"+sfRectangleShape_getOutlineColor",{C_POINTER},C_UINT)
+
+public function sfRectangleShape_getOutlineColor(atom shape)
+
+ return c_func(xsfRectangleShape_getOutlineColor,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getOutlineThickness = define_c_func(gfx,"+sfRectangleShape_getOutlineThickness",{C_POINTER},C_FLOAT)
+
+public function sfRectangleShape_getOutlineThickness(atom shape)
+
+ return c_func(xsfRectangleShape_getOutlineThickness,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getPointCount = define_c_func(gfx,"+sfRectangleShape_getPointCount",{C_POINTER},C_SIZE_T)
+
+public function sfRectangleShape_getPointCount(atom shape)
+
+ return c_func(xsfRectangleShape_getPointCount,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getPoint = define_c_func(gfx,"+sfRectangleShape_getPoint",{C_POINTER,C_SIZE_T},C_FLOAT)
+
+public function sfRectangleShape_getPoint(atom shape,atom idx)
+
+ return c_func(xsfRectangleShape_getPoint,{shape,idx})
+	
+end function
+
+public constant xsfRectangleShape_setSize = define_c_proc(gfx,"+sfRectangleShape_setSize",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfRectangleShape_setSize(atom shape,atom x,atom y)
+
+ c_proc(xsfRectangleShape_setSize,{shape,x,y})
+	
+end procedure
+
+public constant xsfRectangleShape_getSize = define_c_func(gfx,"+sfRectangleShape_getSize",{C_POINTER},C_FLOAT)
+
+public function sfRectangleShape_getSize(atom shape)
+
+ return c_func(xsfRectangleShape_getSize,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getLocalBounds = define_c_func(gfx,"+sfRectangleShape_getLocalBounds",{C_POINTER},C_FLOAT)
+
+public function sfRectangleShape_getLocalBounds(atom shape)
+
+ return c_func(xsfRectangleShape_getLocalBounds,{shape})
+	
+end function
+
+public constant xsfRectangleShape_getGlobalBounds = define_c_func(gfx,"+sfRectangleShape_getGlobalBounds",{C_POINTER},C_FLOAT)
+
+public function sfRectangleShape_getGlobalBounds(atom shape)
+
+ return c_func(xsfRectangleShape_getGlobalBounds,{shape})
+	
+end function
+
+--RenderTexture Functions (RenderTexture.h)
+
+public constant xsfRenderTexture_create = define_c_func(gfx,"+sfRenderTexture_create",{C_UINT,C_UINT,C_BOOL},C_POINTER)
+
+public function sfRenderTexture_create(atom w,atom h,atom depth)
+
+ return c_func(xsfRenderTexture_create,{w,h,depth})
+	
+end function
+
+public constant xsfRenderTexture_createWithSettings = define_c_func(gfx,"+sfRenderTexture_createWithSettings",{C_UINT,C_UINT,C_POINTER},C_POINTER)
+
+public function sfRenderTexture_createWithSettings(atom w,atom h,atom set)
+
+ return c_func(xsfRenderTexture_createWithSettings,{w,h,set})
+	
+end function
+
+public constant xsfRenderTexture_destroy = define_c_proc(gfx,"+sfRenderTexture_destroy",{C_POINTER})
+
+public procedure sfRenderTexture_destroy(atom rt)
+
+ c_proc(xsfRenderTexture_destroy,{rt})
+	
+end procedure
+
+public constant xsfRenderTexture_getSize = define_c_func(gfx,"+sfRenderTexture_getSize",{C_POINTER},C_UINT)
+
+public function sfRenderTexture_getSize(atom rt)
+
+ return c_func(xsfRenderTexture_getSize,{rt})
+	
+end function
+
+public constant xsfRenderTexture_setActive = define_c_func(gfx,"+sfRenderTexture_setActive",{C_POINTER,C_BOOL},C_BOOL)
+
+public function sfRenderTexture_setActive(atom rt,atom act)
+
+ return c_func(xsfRenderTexture_setActive,{rt,act})
+	
+end function
+
+public constant xsfRenderTexture_display = define_c_proc(gfx,"+sfRenderTexture_display",{C_POINTER})
+
+public procedure sfRenderTexture_display(atom rt)
+
+ c_proc(xsfRenderTexture_display,{rt})
+	
+end procedure
+
+public constant xsfRenderTexture_clear = define_c_proc(gfx,"+sfRenderTexture_clear",{C_POINTER,C_POINTER})
+
+public procedure sfRenderTexture_clear(atom rt,sfColor col)
+
+ c_proc(xsfRenderTexture_clear,{rt,col})
+	
+end procedure
+
+public constant xsfRenderTexture_setView = define_c_proc(gfx,"+sfRenderTexture_setView",{C_POINTER,C_POINTER})
+
+public procedure sfRenderTexture_setView(atom rt,atom v)
+
+ c_proc(xsfRenderTexture_setView,{rt,v})
+	
+end procedure
+
+public constant xsfRenderTexture_getView = define_c_func(gfx,"+sfRenderTexture_getView",{C_POINTER},C_POINTER)
+
+public function sfRenderTexture_getView(atom rt)
+
+ return c_func(xsfRenderTexture_getView,{rt})
+	
+end function
+
+public constant xsfRenderTexture_getDefaultView = define_c_func(gfx,"+sfRenderTexture_getDefaultView",{C_POINTER},C_POINTER)
+
+public function sfRenderTexture_getDefaultView(atom rt)
+
+ return c_func(xsfRenderTexture_getDefaultView,{rt})
+	
+end function
+
+public constant xsfRenderTexture_getViewport = define_c_func(gfx,"+sfRenderTexture_getViewport",{C_POINTER,C_POINTER},C_INT)
+
+public function sfRenderTexture_getViewport(atom rt,atom v)
+
+ return c_func(xsfRenderTexture_getViewport,{rt,v})
+	
+end function
+
+public constant xsfRenderTexture_mapPixelToCoords = define_c_func(gfx,"+sfRenderTexture_mapPixelToCoords",{C_POINTER,C_INT,C_INT,C_POINTER},C_FLOAT)
+
+public function sfRenderTexture_mapPixelToCoords(atom rt,atom x,atom y,atom v)
+
+ return c_func(xsfRenderTexture_mapPixelToCoords,{rt,x,y,v})
+	
+end function
+
+public constant xsfRenderTexture_mapCoordsToPixel = define_c_func(gfx,"+sfRenderTexture_mapCoordsToPixel",{C_POINTER,C_FLOAT,C_FLOAT,C_POINTER},C_INT)
+
+public function sfRenderTexture_mapCoordsToPixel(atom rt,atom x,atom y,atom v)
+ 
+ return c_func(xsfRenderTexture_mapCoordsToPixel,{rt,x,y,v})
+	
+end function
+
+public constant xsfRenderTexture_drawSprite = define_c_proc(gfx,"+sfRenderTexture_drawSprite",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderTexture_drawText = define_c_proc(gfx,"+sfRenderTexture_drawText",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderTexture_drawShape = define_c_proc(gfx,"+sfRenderTexture_drawShape",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderTexture_drawCircleShape = define_c_proc(gfx,"+sfRenderTexture_drawCircleShape",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderTexture_drawConvexShape = define_c_proc(gfx,"+sfRenderTexture_drawConvexShape",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderTexture_drawRectangleShape = define_c_proc(gfx,"+sfRenderTexture_drawRectangleSHape",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderTexture_drawVertexArray = define_c_proc(gfx,"+sfRenderTexture_drawVertexArray",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderTexture_drawVertexBuffer = define_c_proc(gfx,"+sfRenderTexture_drawVertexBuffer",{C_POINTER,C_POINTER,C_POINTER})
+				
+public procedure sfRenderTexture_drawSprite(atom rt,atom obj,atom st)
+
+ c_proc(xsfRenderTexture_drawSprite,{rt,obj,st})
+	
+end procedure
+
+public procedure sfRenderTexture_drawText(atom rt,atom obj,atom st)
+
+ c_proc(xsfRenderTexture_drawText,{rt,obj,st})
+	
+end procedure
+
+public procedure sfRenderTexture_drawShape(atom rt,atom obj,atom st)
+
+ c_proc(xsfRenderTexture_drawShape,{rt,obj,st})
+	
+end procedure
+
+public procedure sfRenderTexture_drawCircleShape(atom rt,atom obj,atom st)
+
+ c_proc(xsfRenderTexture_drawCircleShape,{rt,obj,st})
+	
+end procedure
+
+public procedure sfRenderTexture_drawConvexShape(atom rt,atom obj,atom st)
+
+ c_proc(xsfRenderTexture_drawConvexShape,{rt,obj,st})
+	
+end procedure
+
+public procedure sfRenderTexture_drawRectangleShape(atom rt,atom obj,atom st)
+
+ c_proc(xsfRenderTexture_drawRectangleShape,{rt,obj,st})
+	
+end procedure
+
+public procedure sfRenderTexture_drawVertexArray(atom rt,atom obj,atom st)
+
+ c_proc(xsfRenderTexture_drawVertexArray,{rt,obj,st})
+	
+end procedure
+
+public procedure sfRenderTexture_drawVertexBuffer(atom rt,atom obj,atom st)
+
+ c_proc(xsfRenderTexture_drawVertexBuffer,{rt,obj,st})
+	
+end procedure
+
+public constant xsfRenderTexture_drawPrimitives = define_c_proc(gfx,"+sfRenderTexture_drawPrimitives",{C_POINTER,C_POINTER,C_SIZE_T,C_INT,C_POINTER})
+
+public procedure sfRenderTexture_drawPrimitives(atom rt,atom verts,atom count,atom xtype,atom st)
+
+ c_proc(xsfRenderTexture_drawPrimitives,{rt,verts,count,xtype,st})
+	
+end procedure
+
+public constant xsfRenderTexture_pushGLStates = define_c_proc(gfx,"+sfRenderTexture_pushGLStates",{C_POINTER})
+
+public procedure sfRenderTexture_pushGLStates(atom rt)
+
+ c_proc(xsfRenderTexture_pushGLStates,{rt})
+	
+end procedure
+
+public constant xsfRenderTexture_popGLStates = define_c_proc(gfx,"+sfRenderTexture_popGLStates",{C_POINTER})
+
+public procedure sfRenderTexture_popGLStates(atom rt)
+
+ c_proc(xsfRenderTexture_popGLStates,{rt})
+	
+end procedure
+
+public constant xsfRenderTexture_resetGLStates = define_c_proc(gfx,"+sfRenderTexture_resetGLStates",{C_POINTER})
+
+public procedure sfRenderTexture_resetGLStates(atom rt)
+
+ c_proc(xsfRenderTexture_resetGLStates,{rt})
+	
+end procedure
+
+public constant xsfRenderTexture_getTexture = define_c_func(gfx,"+sfRenderTexture_getTexture",{C_POINTER},C_POINTER)
+
+public function sfRenderTexture_getTexture(atom rt)
+
+ return c_func(xsfRenderTexture_getTexture,{rt})
+	
+end function
+
+public constant xsfRenderTexture_getMaximumAntialiasingLevel = define_c_func(gfx,"+sfRenderTexture_getMaximumAntialiasingLevel",{},C_UINT)
+
+public function sfRenderTexture_getMaximumAntialiasingLevel()
+
+ return c_func(xsfRenderTexture_getMaximumAntialiasingLevel,{})
+	
+end function
+
+public constant xsfRenderTexture_setSmooth = define_c_proc(gfx,"+sfRenderTexture_setSmooth",{C_POINTER,C_BOOL})
+
+public procedure sfRenderTexture_setSmooth(atom rt,atom s)
+
+ c_proc(xsfRenderTexture_setSmooth,{rt,s})
+	
+end procedure
+
+public constant xsfRenderTexture_isSmooth = define_c_func(gfx,"+sfRenderTexture_isSmooth",{C_POINTER},C_BOOL)
+
+public function sfRenderTexture_isSmooth(atom rt)
+
+ return c_func(xsfRenderTexture_isSmooth,{rt})
+	
+end function
+
+public constant xsfRenderTexture_setRepeated = define_c_proc(gfx,"+sfRenderTexture_setRepeated",{C_POINTER,C_BOOL})
+
+public procedure sfRenderTexture_setRepeated(atom rt,atom rep)
+
+ c_proc(xsfRenderTexture_setRepeated,{rt,rep})
+	
+end procedure
+
+public constant xsfRenderTexture_isRepeated = define_c_func(gfx,"+sfRenderTexture_isRepeated",{C_POINTER},C_BOOL)
+
+public function sfRenderTexture_isRepeated(atom rt)
+
+ return c_func(xsfRenderTexture_isRepeated,{rt})
+	
+end function
+
+public constant xsfRenderTexture_generateMipmap = define_c_func(gfx,"+sfRenderTexture_generateMipmap",{C_POINTER},C_BOOL)
+
+public function sfRenderTexture_generateMipmap(atom rt)
+
+ return c_func(xsfRenderTexture_generateMipmap,{rt})
+	
+end function
+
+--RenderWindow Functions (RenderWindow.h)
+
+public constant xsfRenderWindow_create = define_c_func(gfx,"+sfRenderWindow_create",{C_UINT,C_UINT,C_UINT,C_POINTER,C_UINT,C_POINTER},C_POINTER)
+
+public function sfRenderWindow_create(atom w,atom h,atom bpp,sequence title,atom style,atom set)
+
+ atom str = allocate_string(title,1)
+ 
+ return c_func(xsfRenderWindow_create,{w,h,bpp,str,style,set})
+	
+end function
+
+public constant xsfRenderWindow_createUnicode = define_c_func(gfx,"+sfRenderWindow_createUnicode",{C_UINT,C_UINT,C_UINT,C_POINTER,C_UINT,C_POINTER},C_POINTER)
+
+public function sfRenderWindow_createUnicode(atom w,atom h,atom bpp,sequence title,atom style,atom set)
+
+ atom str = allocate_string(title,1)
+ 
+ return c_func(xsfRenderWindow_createUnicode,{w,h,bpp,str,style,set})
+	
+end function
+
+public constant xsfRenderWindow_createFromHandle = define_c_func(gfx,"+sfRenderWindow_createFromHandle",{C_POINTER,C_POINTER},C_POINTER)
+
+public function sfRenderWindow_createFromHandle(atom hand,atom set)
+
+ return c_func(xsfRenderWindow_createFromHandle,{hand,set})
+	
+end function
+
+public constant xsfRenderWindow_destroy = define_c_proc(gfx,"+sfRenderWindow_destroy",{C_POINTER})
+
+public procedure sfRenderWindow_destroy(atom rw)
+
+ c_proc(xsfRenderWindow_destroy,{rw})
+	
+end procedure
+
+public constant xsfRenderWindow_close = define_c_proc(gfx,"+sfRenderWindow_close",{C_POINTER})
+
+public procedure sfRenderWindow_close(atom rw)
+
+ c_proc(xsfRenderWindow_close,{rw})
+	
+end procedure
+
+public constant xsfRenderWindow_isOpen = define_c_func(gfx,"+sfRenderWindow_isOpen",{C_POINTER},C_BOOL)
+
+public function sfRenderWindow_isOpen(atom rw)
+
+ return c_func(xsfRenderWindow_isOpen,{rw})
+	
+end function
+
+public constant xsfRenderWindow_getSettings = define_c_func(gfx,"+sfRenderWindow_getSettings",{C_POINTER},C_POINTER)
+
+public function sfRenderWindow_getSettings(atom rw)
+
+ return c_func(xsfRenderWindow_getSettings,{rw})
+	
+end function
+
+public constant xsfRenderWindow_pollEvent = define_c_func(gfx,"+sfRenderWindow_pollEvent",{C_POINTER,C_POINTER},C_BOOL)
+
+public function sfRenderWindow_pollEvent(atom rw,atom evt)
+
+ return c_func(xsfRenderWindow_pollEvent,{rw,evt})
+	
+end function
+
+public constant xsfRenderWindow_waitEvent = define_c_func(gfx,"+sfRenderWindow_waitEvent",{C_POINTER,C_POINTER},C_BOOL)
+
+public function sfRenderWindow_waitEvent(atom rw,atom evt)
+
+ return c_func(xsfRenderWindow_waitEvent,{rw,evt})
+	
+end function
+
+public constant xsfRenderWindow_getPosition = define_c_func(gfx,"+sfRenderWindow_getPosition",{C_POINTER},C_INT)
+
+public function sfRenderWindow_getPosition(atom rw)
+
+ return c_func(xsfRenderWindow_getPosition,{rw})
+	
+end function
+
+public constant xsfRenderWindow_setPosition = define_c_proc(gfx,"+sfRenderWindow_setPosition",{C_POINTER,C_INT,C_INT})
+
+public procedure sfRenderWindow_setPosition(atom rw,atom x,atom y)
+
+ c_proc(xsfRenderWindow_setPosition,{rw,x,y})
+	
+end procedure
+
+public constant xsfRenderWindow_getSize = define_c_func(gfx,"+sfRenderWindow_getSize",{C_POINTER},C_UINT)
+
+public function sfRenderWindow_getSize(atom rw)
+
+ return c_func(xsfRenderWindow_getSize,{rw})
+	
+end function
+
+public constant xsfRenderWindow_setSize = define_c_proc(gfx,"+sfRenderWindow_setSize",{C_POINTER,C_UINT,C_UINT})
+
+public procedure sfRenderWindow_setSize(atom rw,atom x,atom y)
+
+ c_proc(xsfRenderWindow_setSize,{rw,x,y})
+	
+end procedure
+
+public constant xsfRenderWindow_setTitle = define_c_proc(gfx,"+sfRenderWindow_setTitle",{C_POINTER,C_POINTER})
+
+public procedure sfRenderWindow_setTitle(atom rw,sequence title)
+
+ atom str = allocate_string(title,1)
+ 
+ c_proc(xsfRenderWindow_setTitle,{rw,str})
+	
+end procedure
+
+public constant xsfRenderWindow_setUnicodeTitle = define_c_proc(gfx,"+sfRenderWindow_setUnicodeTitle",{C_POINTER,C_POINTER})
+
+public procedure sfRenderWindow_setUnicodeTitle(atom rw,sequence title)
+
+ atom str = allocate_string(title,1)
+ 
+ c_proc(xsfRenderWindow_setUnicodeTitle,{rw,str})
+	
+end procedure
+
+public constant xsfRenderWindow_setVisible = define_c_proc(gfx,"+sfRenderWindow_setVisible",{C_POINTER,C_BOOL})
+
+public procedure sfRenderWindow_setVisible(atom rw,atom vis)
+
+ c_proc(xsfRenderWindow_setVisible,{rw,vis})
+	
+end procedure
+
+public constant xsfRenderWindow_setIcon = define_c_proc(gfx,"+sfRenderWindow_setIcon",{C_POINTER,C_UINT,C_UINT,C_POINTER})
+
+public procedure sfRenderWindow_setIcon(atom rw,atom w,atom h,atom pix)
+
+ c_proc(xsfRenderWindow_setIcon,{rw,w,h,pix})
+	
+end procedure
+
+public constant xsfRenderWindow_setVerticalSyncEnabled = define_c_proc(gfx,"+sfRenderWindow_setVerticalSyncEnabled",{C_POINTER,C_BOOL})
+
+public procedure sfRenderWindow_setVerticalSyncEnabled(atom rw,atom en)
+
+ c_proc(xsfRenderWindow_setVerticalSyncEnabled,{rw,en})
+	
+end procedure
+
+public constant xsfRenderWindow_setMouseCursorVisible = define_c_proc(gfx,"+sfRenderWindow_setMouseCursorVisible",{C_POINTER,C_BOOL})
+
+public procedure sfRenderWindow_setMouseCursorVisible(atom rw,atom show)
+
+ c_proc(xsfRenderWindow_setMouseCursorVisible,{rw,show})
+	
+end procedure
+
+public constant xsfRenderWindow_setMouseCursorGrabbed = define_c_proc(gfx,"+sfRenderWindow_setMouseCursorGrabbed",{C_POINTER,C_BOOL})
+
+public procedure sfRenderWindow_setMouseCursorGrabbed(atom rw,atom grab)
+
+ c_proc(xsfRenderWindow_setMouseCursorGrabbed,{rw,grab})
+	
+end procedure
+
+public constant xsfRenderWindow_setMouseCursor = define_c_proc(gfx,"+sfRenderWindow_setMouseCursor",{C_POINTER,C_POINTER})
+
+public procedure sfRenderWindow_setMouseCursor(atom rw,atom cur)
+
+ c_proc(xsfRenderWindow_setMouseCursor,{rw,cur})
+	
+end procedure
+
+public constant xsfRenderWindow_setKeyRepeatEnabled = define_c_proc(gfx,"+sfRenderWindow_setKeyRepeatEnabled",{C_POINTER,C_BOOL})
+
+public procedure sfRenderWindow_setKeyRepeatEnabled(atom rw,atom en)
+
+ c_proc(xsfRenderWindow_setKeyRepeatEnabled,{rw,en})
+	
+end procedure
+
+public constant xsfRenderWindow_setFramerateLimit = define_c_proc(gfx,"+sfRenderWindow_setFramerateLimit",{C_POINTER,C_UINT})
+
+public procedure sfRenderWindow_setFramerateLimit(atom rw,atom lim)
+
+ c_proc(xsfRenderWindow_setFramerateLimit,{rw,lim})
+	
+end procedure
+
+public constant xsfRenderWindow_setJoystickThreshold = define_c_proc(gfx,"+sfRenderWindow_setJoystickThreshold",{C_POINTER,C_FLOAT})
+
+public procedure sfRenderWindow_setJoystickThreshold(atom rw,atom thres)
+
+ c_proc(xsfRenderWindow_setJoystickThreshold,{rw,thres})
+	
+end procedure
+
+public constant xsfRenderWindow_setActive = define_c_func(gfx,"+sfRenderWindow_setActive",{C_POINTER,C_BOOL},C_BOOL)
+
+public function sfRenderWindow_setActive(atom rw,atom act)
+
+ return c_func(xsfRenderWindow_setActive,{rw,act})
+	
+end function
+
+public constant xsfRenderWindow_requestFocus = define_c_proc(gfx,"+sfRenderWindow_requestFocus",{C_POINTER})
+
+public procedure sfRenderWindow_requestFocus(atom rw)
+
+ c_proc(xsfRenderWindow_requestFocus,{rw})
+	
+end procedure
+
+public constant xsfRenderWindow_hasFocus = define_c_func(gfx,"+sfRenderWindow_hasFocus",{C_POINTER},C_BOOL)
+
+public function sfRenderWindow_hasFocus(atom rw)
+
+ return c_func(xsfRenderWindow_hasFocus,{rw})
+	
+end function
+
+public constant xsfRenderWindow_display = define_c_proc(gfx,"+sfRenderWindow_display",{C_POINTER})
+
+public procedure sfRenderWindow_display(atom rw)
+
+ c_proc(xsfRenderWindow_display,{rw})
+	
+end procedure
+
+public constant xsfRenderWindow_getSystemHandle = define_c_func(gfx,"+sfRenderWindow_getSystemHandle",{C_POINTER},C_POINTER)
+
+public function sfRenderWindow_getSystemHandle(atom rw)
+
+ return c_func(xsfRenderWindow_getSystemHandle,{rw})
+	
+end function
+
+public constant xsfRenderWindow_clear = define_c_proc(gfx,"+sfRenderWindow_clear",{C_POINTER,C_POINTER})
+
+public procedure sfRenderWindow_clear(atom rw,sfColor col)
+
+ c_proc(xsfRenderWindow_clear,{rw,col})
+	
+end procedure
+
+public constant xsfRenderWindow_setView = define_c_proc(gfx,"+sfRenderWindow_setView",{C_POINTER,C_POINTER})
+
+public procedure sfRenderWindow_setView(atom rw,atom v)
+
+ c_proc(xsfRenderWindow_setView,{rw,v})
+	
+end procedure
+
+public constant xsfRenderWindow_getView = define_c_func(gfx,"+sfRenderWindow_getView",{C_POINTER},C_POINTER)
+
+public function sfRenderWindow_getView(atom rw)
+
+ return c_func(xsfRenderWindow_getView,{rw})
+	
+end function
+
+public constant xsfRenderWindow_getDefaultView = define_c_func(gfx,"+sfRenderWindow_getDefaultView",{C_POINTER},C_POINTER)
+
+public function sfRenderWindow_getDefaultView(atom rw)
+
+ return c_func(xsfRenderWindow_getDefaultView,{rw})
+	
+end function
+
+public constant xsfRenderWindow_getViewport = define_c_func(gfx,"+sfRenderWindow_getViewport",{C_POINTER,C_POINTER},C_INT)
+
+public function sfRenderWindow_getViewport(atom rw,atom v)
+
+ return c_func(xsfRenderWindow_getViewport,{rw,v})
+	
+end function
+
+public constant xsfRenderWindow_mapPixelToCoords = define_c_func(gfx,"+sfRenderWindow_mapPixelToCoords",{C_POINTER,C_INT,C_INT,C_POINTER},C_FLOAT)
+
+public function sfRenderWindow_mapPixelToCoords(atom rw,atom x,atom y,atom v)
+
+ return c_func(xsfRenderWindow_mapPixelToCoords,{rw,x,y,v})
+	
+end function
+
+public constant xsfRenderWindow_mapCoordsToPixel = define_c_func(gfx,"+sfRenderWindow_mapCoordsToPixel",{C_POINTER,C_FLOAT,C_FLOAT,C_POINTER},C_INT)
+
+public function sfRenderWindow_mapCoordsToPixel(atom rw,atom x,atom y,atom v)
+
+ return c_func(xsfRenderWindow_mapCoordsToPixel,{rw,x,y,v})
+	
+end function
+
+public constant xsfRenderWindow_drawSprite = define_c_proc(gfx,"+sfRenderWindow_drawSprite",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderWindow_drawText = define_c_proc(gfx,"+sfRenderWindow_drawText",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderWindow_drawShape = define_c_proc(gfx,"+sfRenderWindow_drawShape",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderWindow_drawCircleShape = define_c_proc(gfx,"+sfRenderWindow_drawCircleShape",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderWindow_drawConvexShape = define_c_proc(gfx,"+sfRenderWindow_drawConvexShape",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderWindow_drawRectangleShape = define_c_proc(gfx,"+sfRenderWindow_drawRectangleShape",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderWindow_drawVertexArray = define_c_proc(gfx,"+sfRenderWindow_drawVertexArray",{C_POINTER,C_POINTER,C_POINTER}),
+				xsfRenderWindow_drawVertexBuffer = define_c_proc(gfx,"+sfRenderWindow_drawVertexBuffer",{C_POINTER,C_POINTER,C_POINTER})
+				
+public procedure sfRenderWindow_drawSprite(atom rw,atom obj,atom st)
+
+ c_proc(xsfRenderWindow_drawSprite,{rw,obj,st})
+	
+end procedure
+
+public procedure sfRenderWindow_drawText(atom rw,atom obj,atom st)
+
+ c_proc(xsfRenderWindow_drawText,{rw,obj,st})
+	
+end procedure
+
+public procedure sfRenderWindow_drawShape(atom rw,atom obj,atom st)
+
+ c_proc(xsfRenderWindow_drawShape,{rw,obj,st})
+	
+end procedure
+
+public procedure sfRenderWindow_drawCircleShape(atom rw,atom obj,atom st)
+
+ c_proc(xsfRenderWindow_drawCircleShape,{rw,obj,st})
+	
+end procedure
+
+public procedure sfRenderWindow_drawConvexShape(atom rw,atom obj,atom st)
+
+ c_proc(xsfRenderWindow_drawConvexShape,{rw,obj,st})
+	
+end procedure
+
+public procedure sfRenderWindow_drawRectangleShape(atom rw,atom obj,atom st)
+
+ c_proc(xsfRenderWindow_drawRectangleShape,{rw,obj,st})
+	
+end procedure
+
+public procedure sfRenderWindow_drawVertexArray(atom rw,atom obj,atom st)
+
+ c_proc(xsfRenderWindow_drawVertexArray,{rw,obj,st})
+	
+end procedure
+
+public procedure sfRenderWindow_drawVertexBuffer(atom rw,atom obj,atom st)
+
+ c_proc(xsfRenderWindow_drawVertexBuffer,{rw,obj,st})
+	
+end procedure
+
+public constant xsfRenderWindow_drawPrimitives = define_c_proc(gfx,"+sfRenderWindow_drawPrimitives",{C_POINTER,C_POINTER,C_SIZE_T,C_INT,C_POINTER})
+
+public procedure sfRenderWindow_drawPrimitives(atom rw,atom vt,atom count,atom xtype,atom st)
+
+ c_proc(xsfRenderWindow_drawPrimitives,{rw,vt,count,xtype,st})
+	
+end procedure
+
+public constant xsfRenderWindow_pushGLStates = define_c_proc(gfx,"+sfRenderWindow_pushGLStates",{C_POINTER})
+
+public procedure sfRenderWindow_pushGLStates(atom rw)
+
+ c_proc(xsfRenderWindow_pushGLStates,{rw})
+	
+end procedure
+
+public constant xsfRenderWindow_popGLStates = define_c_proc(gfx,"+sfRenderWindow_popGLStates",{C_POINTER})
+
+public procedure sfRenderWindow_popGLStates(atom rw)
+
+ c_proc(xsfRenderWindow_popGLStates,{rw})
+	
+end procedure
+
+public constant xsfRenderWindow_resetGLStates = define_c_proc(gfx,"+sfRenderWindow_resetGLStates",{C_POINTER})
+
+public procedure sfRenderWindow_resetGLStates(atom rw)
+
+ c_proc(xsfRenderWindow_resetGLStates,{rw})
+	
+end procedure
+
+public constant xsfRenderWindow_capture = define_c_func(gfx,"+sfRenderWindow_capture",{C_POINTER},C_POINTER)
+
+public function sfRenderWindow_capture(atom rw)
+
+ return c_func(xsfRenderWindow_capture,{rw})
+	
+end function
+
+public constant xsfMouse_getPositionRenderWindow = define_c_func(gfx,"+sfMouse_getPositionRenderWindow",{C_POINTER},C_INT)
+
+public function sfMouse_getPositionRenderWindow(atom rt)
+
+ return c_func(xsfMouse_getPositionRenderWindow,{rt})
+	
+end function
+
+public constant xsfRenderWindow_setPositionRenderWindow = define_c_proc(gfx,"+sfRenderWindow_setPositionRenderWindow",{C_INT,C_INT,C_POINTER})
+
+public procedure sfRenderWindow_setPositionRenderWindow(atom x,atom y,atom rt)
+
+ c_proc(xsfRenderWindow_setPositionRenderWindow,{x,y,rt})
+	
+end procedure
+
+public constant xsfRenderWindow_getPositionRenderWindow = define_c_func(gfx,"+sfRenderWindow_getPositionRenderWindow",{C_UINT,C_POINTER},C_INT)
+
+public function sfRenderWindow_getPositionRenderWindow(atom fing,atom rt)
+
+ return c_func(xsfRenderWindow_getPositionRenderWindow,{fing,rt})
+	
+end function
+
+--Shader Functions (shader.h)
+
+public constant xsfShader_createFromFile = define_c_func(gfx,"+sfShader_createFromFile",{C_POINTER,C_POINTER,C_POINTER},C_POINTER)
+
+public function sfShader_createFromFile(sequence vsfile,sequence gsfile,sequence fsfile)
+
+ atom str = allocate_string(vsfile,1)
+ atom str2 = allocate_string(gsfile,1)
+ atom str3 = allocate_string(fsfile,1)
+ 
+ return c_func(xsfShader_createFromFile,{str,str2,str3})
+	
+end function
+
+public constant xsfShader_createFromMemory = define_c_func(gfx,"+sfShader_createFromMemory",{C_POINTER,C_POINTER,C_POINTER},C_POINTER)
+
+public function sfShader_createFromMemory(sequence vs,sequence gs,sequence fs)
+
+ atom str = allocate_string(vs,1)
+ atom str2 = allocate_string(gs,1)
+ atom str3 = allocate_string(fs,1)
+ 
+ return c_func(xsfShader_createFromMemory,{str,str2,str3})
+	
+end function
+
+public constant xsfShader_createFromStream = define_c_func(gfx,"+sfShader_createFromStream",{C_POINTER,C_POINTER,C_POINTER},C_POINTER)
+
+public function sfShader_createFromStream(atom ss,atom gss,atom fss)
+
+ return c_func(xsfShader_createFromStream,{ss,gss,fss})
+	
+end function
+
+public constant xsfShader_destroy = define_c_proc(gfx,"+sfShader_destroy",{C_POINTER})
+
+public procedure sfShader_destroy(atom s)
+
+ c_proc(xsfShader_destroy,{s})
+	
+end procedure
+
+public constant xsfShader_setFloatUniform = define_c_proc(gfx,"+sfShader_setFloatUniform",{C_POINTER,C_POINTER,C_FLOAT})
+
+public procedure sfShader_setFloatUniform(atom s,sequence name,atom x)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setFloatUniform,{s,str,x})
+	
+end procedure
+
+public constant xsfShader_setVec2Uniform = define_c_proc(gfx,"+sfShader_setVec2Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfShader_setVec2Uniform(atom s,sequence name,atom x,atom y)
+
+ atom str = allocate_string(str,1)
+
+ c_proc(xsfShader_setVec2Uniform,{s,str,x,y})
+	
+end procedure
+
+public constant xsfShader_setVec3Uniform = define_c_proc(gfx,"+sfShader_setVec3Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT})
+
+public procedure sfShader_setVec3Uniform(atom s,sequence name,atom x,atom y,atom z)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setVec3Uniform,{s,str,x,y,z})
+	
+end procedure
+
+public constant xsfShader_setVec4Uniform = define_c_proc(gfx,"+sfShader_setVec4Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT})
+
+public procedure sfShader_setVec4Uniform(atom s,sequence name,atom x,atom y,atom z,atom w)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setVec4Uniform,{s,str,x,y,z,w})
+	
+end procedure
+
+public constant xsfShader_setColorUniform = define_c_proc(gfx,"+sfShader_setColorUniform",{C_POINTER,C_POINTER,C_POINTER})
+
+public procedure sfShader_setColorUniform(atom s,sequence name,sfColor col)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setColorUniform,{s,str,col})
+	
+end procedure
+
+public constant xsfShader_setIntUniform = define_c_proc(gfx,"+sfShader_setIntUniform",{C_POINTER,C_POINTER,C_INT})
+
+public procedure sfShader_setIntUniform(atom s,sequence name,atom x)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setIntUniform,{s,str,x})
+	
+end procedure
+
+public constant xsfShader_setIvec2Uniform = define_c_proc(gfx,"+sfShader_setIvec2Uniform",{C_POINTER,C_POINTER,C_INT,C_INT})
+
+public procedure sfShader_setIvec2Uniform(atom s,sequence name,atom x,atom y)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setIvec2Uniform,{s,str,x,y})
+	
+end procedure
+
+public constant xsfShader_setIvec3Uniform = define_c_proc(gfx,"+sfShader_setIvec3Uniform",{C_POINTER,C_POINTER,C_INT,C_INT,C_INT})
+
+public procedure sfShader_setIvec3Uniform(atom s,sequence name,atom x,atom y,atom z)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setIvec3Uniform,{s,str,x,y,z})
+	
+end procedure
+
+public constant xsfShader_setIvec4Uniform = define_c_proc(gfx,"+sfShader_setIvec4Uniform",{C_POINTER,C_POINTER,C_INT,C_INT,C_INT,C_INT})
+
+public procedure sfShader_setIvec4Uniform(atom s,sequence name,atom x,atom y,atom z,atom w)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setIvec4Uniform,{s,str,x,y,z,w})
+	
+end procedure
+
+public constant xsfShader_setIntColorUniform = define_c_proc(gfx,"+sfShader_setIntColorUniform",{C_POINTER,C_POINTER,C_POINTER})
+
+public procedure sfShader_setIntColorUniform(atom s,sequence name,sfColor col)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setIntColorUniform,{s,str,col})
+	
+end procedure
+
+public constant xsfShader_setBoolUniform = define_c_proc(gfx,"+sfShader_setBoolUniform",{C_POINTER,C_POINTER,C_BOOL})
+
+public procedure sfShader_setBoolUniform(atom s,sequence name,atom x)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setBoolUniform,{s,str,x})
+	
+end procedure
+
+public constant xsfShader_setBvec2Uniform = define_c_proc(gfx,"+sfShader_setBvec2Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfShader_setBvec2Uniform(atom s,sequence name,atom x,atom y)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setBvec2Uniform,{s,str,x,y})
+	
+end procedure
+
+public constant xsfShader_setBvec3Uniform = define_c_proc(gfx,"+sfShader_setBvec3Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT})
+
+public procedure sfShader_setBvec3Uniform(atom s,sequence name,atom x,atom y,atom z)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setBvec3Uniform,{s,str,x,y,z})
+	
+end procedure
+
+public constant xsfShader_setBvec4Uniform = define_c_proc(gfx,"+sfShader_setBvec4Uniform",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT})
+
+public procedure sfShader_setBvec4Uniform(atom s,sequence name,atom x,atom y,atom z,atom w)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setBvec4Uniform,{s,str,x,y,z,w})
+	
+end procedure
+
+public constant xsfShader_setMat3Uniform = define_c_proc(gfx,"+sfShader_setMat3Uniform",{C_POINTER,C_POINTER,C_POINTER})
+
+public procedure sfShader_setMat3Uniform(atom s,sequence name,atom mat)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setMat3Uniform,{s,str,mat})
+	
+end procedure
+
+public constant xsfShader_setMat4Uniform = define_c_proc(gfx,"+sfShader_setMat4Uniform",{C_POINTER,C_POINTER,C_POINTER})
+
+public procedure sfShader_setMat4Uniform(atom s,sequence name,atom mat)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setMat4Uniform,{s,str,mat})
+	
+end procedure
+
+public constant xsfShader_setTextureUniform = define_c_proc(gfx,"+sfShader_setTextureUniform",{C_POINTER,C_POINTER,C_POINTER})
+
+public procedure sfShader_setTextureUniform(atom s,sequence name,atom tex)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setTextureUniform,{s,str,tex})
+	
+end procedure
+
+public constant xsfShader_setCurrentTextureUniform = define_c_proc(gfx,"+sfShader_setCurrentTextureUniform",{C_POINTER,C_POINTER})
+
+public procedure sfShader_setCurrentTextureUniform(atom s,sequence name)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setCurrentTextureUniform,{s,str})
+	
+end procedure
+
+public constant xsfShader_setFloatUniformArray = define_c_proc(gfx,"+sfShader_setFloatUniformArray",{C_POINTER,C_POINTER,C_POINTER,C_SIZE_T})
+
+public procedure sfShader_setFloatUniformArray(atom s,sequence name,atom arr,atom len)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setFloatUniformArray,{s,str,arr,len})
+	
+end procedure
+
+public constant xsfShader_setVec2UniformArray = define_c_proc(gfx,"+sfShader_setVec2UniformArray",{C_POINTER,C_POINTER,C_POINTER,C_SIZE_T})
+
+public procedure sfShader_setVec2UniformArray(atom s,sequence name,atom va,atom len)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setVec2UniformArray,{s,str,va,len})
+	
+end procedure
+
+public constant xsfShader_setVec3UniformArray = define_c_proc(gfx,"+sfShader_setVec3UniformArray",{C_POINTER,C_POINTER,C_POINTER,C_SIZE_T})
+
+public procedure sfShader_setVec3UniformArray(atom s,sequence name,atom va,atom len)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setVec3UniformArray,{s,str,va,len})
+	
+end procedure
+
+public constant xsfShader_setVec4UniformArray = define_c_proc(gfx,"+sfShader_setVec4UniformArray",{C_POINTER,C_POINTER,C_POINTER,C_SIZE_T})
+
+public procedure sfShader_setVec4UniformArray(atom s,sequence name,atom va,atom len)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setVec4UniformArray,{s,str,va,len})
+	
+end procedure
+
+public constant xsfShader_setMat3UniformArray = define_c_proc(gfx,"+sfShader_setMat3UniformArray",{C_POINTER,C_POINTER,C_POINTER,C_SIZE_T})
+
+public procedure sfShader_setMat3UniformArray(atom s,sequence name,atom ma,atom len)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setMat3UniformArray,{s,str,ma,len})
+	
+end procedure
+
+public constant xsfShader_setMat4UniformArray = define_c_proc(gfx,"+sfShader_setMat4UniformArray",{C_POINTER,C_POINTER,C_POINTER,C_SIZE_T})
+
+public procedure sfShader_setMat4UniformArray(atom s,sequence name,atom ma,atom len)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setMat4UniformArray,{s,str,ma,len})
+	
+end procedure
+
+public constant xsfShader_setFloatParameter = define_c_proc(gfx,"+sfShader_setFloatParameter",{C_POINTER,C_POINTER,C_FLOAT})
+
+public procedure sfShader_setFloatParameter(atom s,sequence name,atom x)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setFloatParameter,{s,str,x})
+	
+end procedure
+
+public constant xsfShader_setFloat2Parameter = define_c_proc(gfx,"+sfShader_setFloat2Parameter",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfShader_setFloat2Parameter(atom s,sequence name,atom x,atom y)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setFloat2Parameter,{s,str,x,y})
+	
+end procedure
+
+public constant xsfShader_setFloat3Parameter = define_c_proc(gfx,"+sfShader_setFloat3Parameter",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT})
+
+public procedure sfShader_setFloat3Parameter(atom s,sequence name,atom x,atom y,atom z)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setFloat3Parameter,{s,str,x,y,z})
+	
+end procedure
+
+public constant xsfShader_setFloat4Parameter = define_c_proc(gfx,"+sfShader_setFloat4Parameter",{C_POINTER,C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT})
+
+public procedure sfShader_setFloat4Parameter(atom s,sequence name,atom x,atom y,atom z,atom w)
+
+ atom str = allocate_string(name,1)
+ 
+ c_proc(xsfShader_setFloat4Parameter,{s,str,x,y,z,w})
+	
+end procedure
+
+public constant xsfShader_getNativeHandle = define_c_func(gfx,"+sfShader_getNativeHandle",{C_POINTER},C_UINT)
+
+public function sfShader_getNativeHandle(atom s)
+
+ return c_func(xsfShader_getNativeHandle,{s})
+	
+end function
+
+public constant xsfShader_bind = define_c_proc(gfx,"+sfShader_bind",{C_POINTER})
+
+public procedure sfShader_bind(atom s)
+
+ c_proc(xsfShader_bind,{s})
+	
+end procedure
+
+public constant xsfShader_isAvailable = define_c_func(gfx,"+sfShader_isAvailable",{},C_BOOL)
+
+public function sfShader_isAvailable()
+
+ return c_func(xsfShader_isAvailable,{})
+	
+end function
+
+public constant xsfShader_isGeometryAvailable = define_c_func(gfx,"+sfShader_isGeometryAvailable",{},C_BOOL)
+
+public function sfShader_isGeometryAvailable()
+
+ return c_func(xsfShader_isGeometryAvailable,{})
+	
+end function
+
+--Transformable Functions (transformable.h)
+
+public constant xsfTransformable_create = define_c_func(gfx,"+sfTransformable_create",{},C_POINTER)
+
+public function sfTransformable_create()
+
+ return c_func(xsfTransformable_create,{})
+	
+end function
+
+public constant xsfTransformable_copy = define_c_func(gfx,"+sfTransformable_copy",{C_POINTER},C_POINTER)
+
+public function sfTransformable_copy(atom t)
+
+ return c_func(xsfTransformable_copy,{t})
+	
+end function
+
+public constant xsfTransformable_destroy = define_c_proc(gfx,"+sfTransformable_destroy",{C_POINTER})
+
+public procedure sfTransformable_destroy(atom t)
+
+ c_proc(xsfTransformable_destroy,{t})
+	
+end procedure
+
+public constant xsfTransformable_setPosition = define_c_proc(gfx,"+sfTransformable_setPosition",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfTransformable_setPosition(atom t,atom x,atom y)
+
+ c_proc(xsfTransformable_setPosition,{t,x,y})
+	
+end procedure
+
+public constant xsfTransformable_setRotation = define_c_proc(gfx,"+sfTransformable_setRotation",{C_POINTER,C_FLOAT})
+
+public procedure sfTransformable_setRotation(atom t,atom ang)
+
+ c_proc(xsfTransformable_setRotation,{t,ang})
+	
+end procedure
+
+public constant xsfTransformable_setScale = define_c_proc(gfx,"+sfTransformable_setScale",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfTransformable_setScale(atom t,atom x,atom y)
+
+ c_proc(xsfTransformable_setScale,{t,x,y})
+	
+end procedure
+
+public constant xsfTransformable_setOrigin = define_c_proc(gfx,"+sfTransformable_setOrigin",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfTransformable_setOrigin(atom t,atom x,atom y)
+
+ c_proc(xsfTransformable_setOrigin,{t,x,y})
+	
+end procedure
+
+public constant xsfTransformable_getPosition = define_c_func(gfx,"+sfTransformable_getPosition",{C_POINTER},C_FLOAT)
+
+public function sfTransformable_getPosition(atom t)
+
+ return c_func(xsfTransformable_getPosition,{t})
+	
+end function
+
+public constant xsfTransformable_getRotation = define_c_func(gfx,"+sfTransformable_getRotation",{C_POINTER},C_FLOAT)
+
+public function sfTransformable_getRotation(atom t)
+
+ return c_func(xsfTransformable_getRotation,{t})
+	
+end function
+
+public constant xsfTransformable_getScale = define_c_func(gfx,"+sfTransformable_getScale",{C_POINTER},C_FLOAT)
+
+public function sfTransformable_getScale(atom t)
+
+ return c_func(xsfTransformable_getScale,{t})
+	
+end function
+
+public constant xsfTransformable_getOrigin = define_c_func(gfx,"+sfTransformable_getOrigin",{C_POINTER},C_FLOAT)
+
+public function sfTransformable_getOrigin(atom t)
+
+ return c_func(xsfTransformable_getOrigin,{t})
+	
+end function
+
+public constant xsfTransformable_move = define_c_proc(gfx,"+sfTransformable_move",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfTransformable_move(atom t,atom x,atom y)
+
+ c_proc(xsfTransformable_move,{t,x,y})
+	
+end procedure
+
+public constant xsfTransformable_rotate = define_c_proc(gfx,"+sfTransformable_rotate",{C_POINTER,C_FLOAT})
+
+public procedure sfTransformable_rotate(atom t,atom rot)
+
+ c_proc(xsfTransformable_rotate,{t,rot})
+	
+end procedure
+
+public constant xsfTransformable_scale = define_c_proc(gfx,"+sfTransformable_scale",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfTransformable_scale(atom t,atom x,atom y)
+
+ c_proc(xsfTransformable_scale,{t,x,y})
+	
+end procedure
+
+public constant xsfTransformable_getTransform = define_c_func(gfx,"+sfTransformable_getTransform",{C_POINTER},C_POINTER)
+
+public function sfTransformable_getTransform(atom t)
+
+ return c_func(xsfTransformable_getTransform,{t})
+	
+end function
+
+public constant xsfTransformable_getInverseTransform = define_c_func(gfx,"+sfTransformable_getInverseTransform",{C_POINTER},C_POINTER)
+
+public function sfTransformable_getInverseTransform(atom t)
+
+ return c_func(xsfTransformable_getInverseTransform,{t})
+	
+end function
+
+--VertexArray Functions (VertexArray.h)
+
+public constant xsfVertexArray_create = define_c_func(gfx,"+sfVertexArray_create",{},C_POINTER)
+
+public function sfVertexArray_create()
+
+ return c_func(xsfVertexArray_create,{})
+	
+end function
+
+public constant xsfVertexArray_copy = define_c_func(gfx,"+sfVertexArray_copy",{C_POINTER},C_POINTER)
+
+public function sfVertexArray_copy(atom va)
+
+ return c_func(xsfVertexArray_copy,{va})
+	
+end function
+
+public constant xsfVertexArray_getVertexCount = define_c_func(gfx,"+sfVertex_getVertexCount",{C_POINTER},C_SIZE_T)
+
+public function sfVertexArray_getVertexCount(atom va)
+
+ return c_func(xsfVertexArray_getVertexCount,{va})
+	
+end function
+
+public constant xsfVertexArray_getVertex = define_c_func(gfx,"+sfVertexArray_getVertex",{C_POINTER,C_SIZE_T},C_POINTER)
+
+public function sfVertexArray_getVertex(atom va,atom idx)
+
+ return c_func(xsfVertexArray_getVertex,{va,idx})
+	
+end function
+
+public constant xsfVertexArray_clear = define_c_proc(gfx,"+sfVertexArray_clear",{C_POINTER})
+
+public procedure sfVertexArray_clear(atom va)
+
+ c_proc(xsfVertexArray_clear,{va})
+	
+end procedure
+
+public constant xsfVertexArray_resize = define_c_proc(gfx,"+sfVertexArray_resize",{C_POINTER,C_SIZE_T})
+
+public procedure sfVertexArray_resize(atom va,atom vcnt)
+
+ c_proc(xsfVertexArray_resize,{va,vcnt})
+	
+end procedure
+
+public constant xsfVertexArray_append = define_c_proc(gfx,"+sfVertexArray_append",{C_POINTER,C_POINTER})
+
+public procedure sfVertexArray_append(atom va,atom ver)
+
+ c_proc(xsfVertexArray_append,{va,ver})
+	
+end procedure
+
+public constant xsfVertexArray_setPrimitiveType = define_c_proc(gfx,"+sfVertexArray_setPrimitiveType",{C_POINTER,C_INT})
+
+public procedure sfVertexArray_setPrimitiveType(atom va,atom ptype)
+
+ c_proc(xsfVertexArray_setPrimitiveType,{va,ptype})
+	
+end procedure
+
+public constant xsfVertexArray_getPrimitiveType = define_c_func(gfx,"+sfVertexArray_getPrimitiveType",{C_POINTER},C_INT)
+
+public function sfVertexArray_getPrimitiveType(atom va)
+
+ return c_func(xsfVertexArray_getPrimitiveType,{va})
+	
+end function
+
+public constant xsfVertexArray_getBounds = define_c_func(gfx,"+sfVertexArray_getBounds",{C_POINTER},C_FLOAT)
+
+public function sfVertexArray_getBounds(atom va)
+
+ return c_func(xsfVertexArray_getBounds,{va})
+	
+end function
+
+--VertexBuffer Functions (VertexBuffer.h)
+
+public constant xsfVertexBuffer_create = define_c_func(gfx,"+sfVertexBuffer_create",{C_UINT,C_INT,C_INT},C_POINTER)
+
+public function sfVertexBuffer_create(atom count,sfPrimitiveType ptype,sfVertexBufferUsage use)
+
+ return c_func(xsfVertexBuffer_create,{count,ptype,use})
+	
+end function
+
+public constant xsfVertexBuffer_copy = define_c_func(gfx,"+sfVertexBuffer_copy",{C_POINTER},C_POINTER)
+
+public function sfVertexBuffer_copy(atom vb)
+
+ return c_func(xsfVertexBuffer_copy,{vb})
+	
+end function
+
+public constant xsfVertexBuffer_destroy = define_c_proc(gfx,"+sfVertexBuffer_destroy",{C_POINTER})
+
+public procedure sfVertexBuffer_destroy(atom vb)
+
+ c_proc(xsfVertexBuffer_destroy,{vb})
+	
+end procedure
+
+public constant xsfVertexBuffer_getVertexCount = define_c_func(gfx,"+sfVertexBuffer_getVertexCount",{C_POINTER},C_UINT)
+
+public function sfVertexBuffer_getVertexCount(atom vb)
+
+ return c_func(xsfVertexBuffer_getVertexCount,{vb})
+	
+end function
+
+public constant xsfVertexBuffer_update = define_c_func(gfx,"+sfVertexBuffer_update",{C_POINTER,C_POINTER,C_UINT,C_UINT},C_BOOL)
+
+public function sfVertexBuffer_update(atom vb,atom verts,atom count,atom os)
+
+ return c_func(xsfVertexBuffer_update,{vb,verts,count,os})
+	
+end function
+
+public constant xsfVertexBuffer_updateFromVertexBuffer = define_c_func(gfx,"+sfVertexBuffer_updateFromVertexBuffer",{C_POINTER,C_POINTER},C_BOOL)
+
+public function sfVertexBuffer_updateFromVertexBuffer(atom vb,atom ot)
+
+ return c_func(xsfVertexBuffer_updateFromVertexBuffer,{vb,ot})
+	
+end function
+
+public constant xsfVertexBuffer_swap = define_c_proc(gfx,"+sfVertexBuffer_swap",{C_POINTER,C_POINTER})
+
+public procedure sfVertexBuffer_swap(atom l,atom r)
+
+ c_proc(xsfVertexBuffer_swap,{l,r})
+	
+end procedure
+
+public constant xsfVertexBuffer_getNativeHandle = define_c_func(gfx,"+sfVertexBuffer_getNativeHandle",{C_POINTER},C_UINT)
+
+public function sfVertexBuffer_getNativeHandle(atom vb)
+
+ return c_func(xsfVertexBuffer_getNativeHandle,{vb})
+	
+end function
+
+public constant xsfVertexBuffer_setPrimitiveType = define_c_proc(gfx,"+sfVertexBuffer_setPrimitiveType",{C_POINTER,C_INT})
+
+public procedure sfVertexBuffer_setPrimitiveType(atom vb,sfPrimitiveType ptype)
+
+ c_proc(xsfVertexBuffer_setPrimitiveType,{vb,ptype})
+	
+end procedure
+
+public constant xsfVertexBuffer_getPrimitiveType = define_c_func(gfx,"+sfVertexBuffer_getPrimitiveType",{C_POINTER},C_INT)
+
+public function sfVertexBuffer_getPrimitiveType(atom vb)
+
+ return c_func(xsfVertexBuffer_getPrimitiveType,{vb})
+	
+end function
+
+public constant xsfVertexBuffer_setUsage = define_c_proc(gfx,"+sfVertexBuffer_setUsage",{C_POINTER,C_INT})
+
+public procedure sfVertexBuffer_setUsage(atom vb,sfVertexBufferUsage us)
+
+ c_proc(xsfVertexBuffer_setUsage,{vb,us})
+	
+end procedure
+
+public constant xsfVertexBuffer_getUsage = define_c_func(gfx,"+sfVertexBuffer_getUsage",{C_POINTER},C_INT)
+
+public function sfVertexBuffer_getUsage(atom vb)
+
+ return c_func(xsfVertexBuffer_getUsage,{vb})
+	
+end function
+
+public constant xsfVertexBuffer_bind = define_c_proc(gfx,"+sfVertexBuffer_bind",{C_POINTER})
+
+public procedure sfVertexBuffer_bind(atom vb)
+
+ c_proc(xsfVertexBuffer_bind,{vb})
+	
+end procedure
+
+public constant xsfVertexBuffer_isAvailable = define_c_func(gfx,"+sfVertexBuffer_isAvailable",{},C_BOOL)
+
+public function sfVertexBuffer_isAvailable()
+
+ return c_func(xsfVertexBuffer_isAvailable,{})
+	
+end function
+
+--View Functions (view.h)
+
+public constant xsfView_create = define_c_func(gfx,"+sfView_create",{},C_POINTER)
+
+public function sfView_create()
+
+ return c_func(xsfView_create,{})
+	
+end function
+
+public constant xsfView_createFromRect = define_c_func(gfx,"+sfView_createFromRect",{C_FLOAT,C_FLOAT,C_FLOAT},C_POINTER)
+
+public function sfView_createFromRect(atom top,atom left,atom w,atom h)
+
+ return c_func(xsfView_createFromRect,{top,left,w,h})
+	
+end function
+
+public constant xsfView_copy = define_c_func(gfx,"+sfView_copy",{C_POINTER},C_POINTER)
+
+public function sfView_copy(atom v)
+
+ return c_func(xsfView_copy,{v})
+	
+end function
+
+public constant xsfView_destroy = define_c_proc(gfx,"+sfView_destroy",{C_POINTER})
+
+public procedure sfView_destroy(atom v)
+
+ c_proc(xsfView_destroy,{v})
+	
+end procedure
+
+public constant xsfView_setCenter = define_c_proc(gfx,"+sfView_setCenter",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfView_setCenter(atom v,atom x,atom y)
+
+ c_proc(xsfView_setCenter,{v,x,y})
+	
+end procedure
+
+public constant xsfView_setSize = define_c_proc(gfx,"+sfView_setSize",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfView_setSize(atom v,atom x,atom y)
+
+ c_proc(xsfView_setSize,{v,x,y})
+	
+end procedure
+
+public constant xsfView_setRotation = define_c_proc(gfx,"+sfView_setRotation",{C_POINTER,C_FLOAT})
+
+public procedure sfView_setRotation(atom v,atom a)
+
+ c_proc(xsfView_setRotation,{v,a})
+	
+end procedure
+
+public constant xsfView_setViewport = define_c_proc(gfx,"+sfView_setViewport",{C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT})
+
+public procedure sfView_setViewport(atom v,atom top,atom left,atom w,atom h)
+
+ c_proc(xsfView_setViewport,{v,top,left,w,h})
+	
+end procedure
+
+public constant xsfView_reset = define_c_proc(gfx,"+sfView_reset",{C_POINTER,C_FLOAT,C_FLOAT,C_FLOAT,C_FLOAT})
+
+public procedure sfView_reset(atom v,atom top,atom left,atom w,atom h)
+
+ c_proc(xsfView_reset,{v,top,left,w,h})
+	
+end procedure
+
+public constant xsfView_getCenter = define_c_func(gfx,"+sfView_getCenter",{C_POINTER},C_FLOAT)
+
+public function sfView_getCenter(atom v)
+
+ return c_func(xsfView_getCenter,{v})
+	
+end function
+
+public constant xsfView_getSize = define_c_func(gfx,"+sfView_getSize",{C_POINTER},C_FLOAT)
+
+public function sfView_getSize(atom v)
+
+ return c_func(xsfView_getSize,{v})
+	
+end function
+
+public constant xsfView_getRotation = define_c_func(gfx,"+sfView_getRotation",{C_POINTER},C_FLOAT)
+
+public function sfView_getRotation(atom v)
+
+ return c_func(xsfView_getRotation,{v})
+	
+end function
+
+public constant xsfView_getViewport = define_c_func(gfx,"+sfView_getViewport",{C_POINTER},C_FLOAT)
+
+public function sfView_getViewport(atom v)
+
+ return c_func(xsfView_getViewport,{v})
+	
+end function
+
+public constant xsfView_move = define_c_proc(gfx,"+sfView_move",{C_POINTER,C_FLOAT,C_FLOAT})
+
+public procedure sfView_move(atom v,atom x,atom y)
+
+ c_proc(xsfView_move,{v,x,y})
+	
+end procedure
+
+public constant xsfView_rotate = define_c_proc(gfx,"+sfView_rotate",{C_POINTER,C_FLOAT})
+
+public procedure sfView_rotate(atom v,atom a)
+
+ c_proc(xsfView_rotate,{v,a})
+	
+end procedure
+
+public constant xsfView_zoom = define_c_proc(gfx,"+sfView_zoom",{C_POINTER,C_FLOAT})
+
+public procedure sfView_zoom(atom v,atom f)
+
+ c_proc(xsfView_zoom,{v,f})
+	
+end procedure
+
+--SFML Colors converted to be Euphoria friendly
+public constant sfBLACK = sfColor_fromRGBA(0,0,0,0)
+public constant sfWHITE = sfColor_fromRGBA(255,255,255,0)
+public constant sfRED = sfColor_fromRGBA(255,0,0,0)
+public constant sfGREEN = sfColor_fromRGBA(0,255,0,0)
+public constant sfBLUE = sfColor_fromRGBA(0,0,255,0)
+public constant sfYELLOW = sfColor_fromRGBA(255,255,0,0)
+public constant sfMAGENTA = sfColor_fromRGBA(255,0,255,1)
+public constant sfCYAN = sfColor_fromRGBA(0,255,255,0)
+public constant sfTRANSPARENT = sfColor_fromRGBA(255,255,255,255)
+­1527.52

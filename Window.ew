@@ -1,0 +1,542 @@
+--EuSFML 2.5.1
+--Written by Andy P.
+--Window Routines (for csfml-window-2.dll)
+--Copyright (c) 2022
+
+include std/machine.e
+include std/dll.e
+include std/os.e
+
+include flags.e
+
+atom win = 0
+
+ifdef WINDOWS then
+	win = open_dll("csfml-window-2.dll")
+	elsifdef LINUX or FREEBSD then
+	win = open_dll("csfml-window-2.so")
+	elsif win = -1 then
+		puts(1,"Failed to open csfml-window-2.dll!\n")
+		abort(1)
+end ifdef
+
+--VideoMode Functions (videomode.h)
+
+public constant xsfVideoMode_getDesktopMode = define_c_func(win,"+sfVideoMode_getDesktopMode",{},C_UINT)
+
+public function sfVideoMode_getDesktopMode()
+
+ return c_func(xsfVideoMode_getDesktopMode,{})
+	
+end function
+
+public constant xsfVideoMode_getFullscreenModes = define_c_func(win,"+sfVideoMode_getFullscreenModes",{C_POINTER},C_POINTER)
+
+public function sfVideoMode_getFullscreenModes(atom count)
+
+ return c_func(xsfVideoMode_getFullscreenModes,{count})
+	
+end function
+
+public constant xsfVideoMode_isValid = define_c_func(win,"+sfVideoMode_isValid",{C_UINT,C_UINT,C_UINT},C_BOOL)
+
+public function sfVideoMode_isValid(atom width,atom height,atom bitsPerPixel)
+
+ return c_func(xsfVideoMode_isValid,{width,height,bitsPerPixel})
+	
+end function
+
+--Window Functions (window.h)
+
+public constant xsfWindow_create = define_c_func(win,"+sfWindow_create",{C_UINT,C_UINT,C_UINT,C_POINTER,C_UINT,C_POINTER},C_POINTER)
+
+public function sfWindow_create(atom width,atom height,atom bpp,sequence title,atom style,atom ctxSettings)
+
+ atom str = allocate_string(title,1)
+ 
+ return c_func(xsfWindow_create,{width,height,bpp,str,style,ctxSettings})
+	
+end function
+
+public constant xsfWindow_createUnicode = define_c_func(win,"+sfWindow_createUnicode",{C_UINT,C_UINT,C_UINT,C_POINTER,C_UINT,C_POINTER},C_POINTER)
+
+public function sfWindow_createUnicode(atom w,atom h,atom bpp,sequence title,atom style,atom ctxSettings)
+
+ atom str = allocate_string(title,1)
+ 
+ return c_func(xsfWindow_createUnicode,{w,h,bpp,str,style,ctxSettings})
+	
+end function
+
+public constant xsfWindow_createFromHandle = define_c_func(win,"+sfWindow_createFromHandle",{C_POINTER,C_POINTER},C_POINTER)
+
+public function sfWindow_createFromHandle(atom handle,atom ctxSettings)
+
+ return c_func(xsfWindow_createFromHandle,{handle,ctxSettings})
+	
+end function
+
+public constant xsfWindow_destroy = define_c_proc(win,"+sfWindow_destroy",{C_POINTER})
+
+public procedure sfWindow_destroy(atom window)
+
+ c_proc(xsfWindow_destroy,{window})
+	
+end procedure
+
+public constant xsfWindow_close = define_c_proc(win,"+sfWindow_close",{C_POINTER})
+
+public procedure sfWindow_close(atom window)
+
+ c_proc(xsfWindow_close,{window})
+	
+end procedure
+
+public constant xsfWindow_isOpen = define_c_func(win,"+sfWindow_isOpen",{C_POINTER},C_BOOL)
+
+public function sfWindow_isOpen(atom window)
+
+ return c_func(xsfWindow_isOpen,{window})
+	
+end function
+
+public constant xsfWindow_getSettings = define_c_func(win,"+sfWindow_getSettings",{C_POINTER},C_POINTER)
+
+public function sfWindow_getSettings(atom window)
+
+ return c_func(xsfWindow_getSettings,{window})
+	
+end function
+
+public constant xsfWindow_pollEvent = define_c_func(win,"+sfWindow_pollEvent",{C_POINTER,C_POINTER},C_BOOL)
+
+public function sfWindow_pollEvent(atom window,atom evt)
+
+ return c_func(xsfWindow_pollEvent,{window,evt})
+	
+end function
+
+public constant xsfWindow_waitEvent = define_c_func(win,"+sfWindow_waitEvent",{C_POINTER,C_POINTER},C_BOOL)
+
+public function sfWindow_waitEvent(atom window,atom evt)
+
+ return c_func(xsfWindow_waitEvent,{window,evt})
+	
+end function
+
+public constant xsfWindow_getPosition = define_c_func(win,"+sfWindow_getPosition",{C_POINTER},C_INT)
+
+public function sfWindow_getPosition(atom window)
+
+ return c_func(xsfWindow_getPosition,{window})
+	
+end function
+
+public constant xsfWindow_setPosition = define_c_proc(win,"+sfWindow_setPosition",{C_POINTER,C_INT,C_INT})
+
+public procedure sfWindow_setPosition(atom window,atom x,atom y)
+
+ c_proc(xsfWindow_setPosition,{window,x,y})
+	
+end procedure
+
+public constant xsfWindow_getSize = define_c_func(win,"+sfWindow_getSize",{C_POINTER},C_UINT)
+
+public function sfWindow_getSize(atom window)
+
+ return c_func(xsfWindow_getSize,{window})
+	
+end function
+
+public constant xsfWindow_setSize = define_c_proc(win,"+sfWindow_setSize",{C_POINTER,C_UINT,C_UINT})
+
+public procedure sfWindow_setSize(atom window,atom x,atom y)
+
+ c_proc(xsfWindow_setSize,{window,x,y})
+	
+end procedure
+
+public constant xsfWindow_setTitle = define_c_proc(win,"+sfWindow_setTitle",{C_POINTER,C_POINTER})
+
+public procedure sfWindow_setTitle(atom window,sequence title)
+
+ atom str = allocate_string(title,1)
+ 
+ c_proc(xsfWindow_setTitle,{window,str})
+	
+end procedure
+
+public constant xsfWindow_setUnicodeTitle = define_c_proc(win,"+sfWindow_setUnicodeTitle",{C_POINTER,C_POINTER})
+
+public procedure sfWindow_setUnicodeTitle(atom window,sequence title)
+
+ atom str = allocate_string(title,1)
+ 
+ c_proc(xsfWindow_setUnicodeTitle,{window,str})
+	
+end procedure
+
+public constant xsfWindow_setIcon = define_c_proc(win,"+sfWindow_setIcon",{C_POINTER,C_UINT,C_UINT,C_POINTER})
+
+public procedure sfWindow_setIcon(atom window,atom w,atom h,atom pix)
+
+ c_proc(xsfWindow_setIcon,{window,w,h,pix})
+	
+end procedure
+
+public constant xsfWindow_setVisible = define_c_proc(win,"+sfWindow_setVisible",{C_POINTER,C_BOOL})
+
+public procedure sfWindow_setVisible(atom window,atom visible)
+
+ c_proc(xsfWindow_setVisible,{window,visible})
+	
+end procedure
+
+public constant xsfWindow_setVerticalSyncEnabled = define_c_proc(win,"+sfWindow_setVerticalSyncEnabled",{C_POINTER,C_BOOL})
+
+public procedure sfWindow_setVeritcalSyncEnabled(atom window,atom enabled)
+
+ c_proc(xsfWindow_setVerticalSyncEnabled,{window,enabled})
+	
+end procedure
+
+public constant xsfWindow_setMouseCursorVisible = define_c_proc(win,"+sfWindow_setMouseCursorVisible",{C_POINTER,C_BOOL})
+
+public procedure sfWindow_setMouseCursorVisible(atom window,atom visible)
+
+ c_proc(xsfWindow_setMouseCursorVisible,{window,visible})
+	
+end procedure
+
+public constant xsfWindow_setMouseCursorGrabbed = define_c_proc(win,"+sfWindow_setMouseCursorGrabbed",{C_POINTER,C_BOOL})
+
+public procedure sfWindow_setMouseCursorGrabbed(atom window,atom grabbed)
+
+ c_proc(xsfWindow_setMouseCursorGrabbed,{window,grabbed})
+	
+end procedure
+
+public constant xsfWindow_setMouseCursor = define_c_proc(win,"+sfWindow_setMouseCursor",{C_POINTER,C_POINTER})
+
+public procedure sfWindow_setMouseCursor(atom window,atom cur)
+
+ c_proc(xsfWindow_setMouseCursor,{window,cur})
+	
+end procedure
+
+public constant xsfWindow_setKeyRepeatEnabled = define_c_proc(win,"+sfWindow_setKeyRepeatEnabled",{C_POINTER,C_BOOL})
+
+public procedure sfWindow_setKeyRepeatEnabled(atom window,atom enabled)
+
+ c_proc(xsfWindow_setKeyRepeatEnabled,{window,enabled})
+	
+end procedure
+
+public constant xsfWindow_setFramerateLimit = define_c_proc(win,"+sfWindow_setFramerateLimit",{C_POINTER,C_UINT})
+
+public procedure sfWindow_setFramerateLimit(atom window,atom limit)
+
+ c_proc(xsfWindow_setFramerateLimit,{window,limit})
+	
+end procedure
+
+public constant xsfWindow_setJoystickThreshold = define_c_proc(win,"+sfWindow_setJoystickThreshold",{C_POINTER,C_FLOAT})
+
+public procedure sfWindow_setJoystickThreshold(atom window,atom threshold)
+
+ c_proc(xsfWindow_setJoystickThreshold,{window,threshold})
+	
+end procedure
+
+public constant xsfWindow_setActive = define_c_func(win,"+sfWindow_setActive",{C_POINTER,C_BOOL},C_BOOL)
+
+public function sfWindow_setActive(atom window,atom active)
+
+ return c_func(xsfWindow_setActive,{window,active})
+	
+end function
+
+public constant xsfWindow_requestFocus = define_c_proc(win,"+sfWindow_requestFocus",{C_POINTER})
+
+public procedure sfWindow_requestFocus(atom window)
+
+ c_proc(xsfWindow_requestFocus,{window})
+	
+end procedure
+
+public constant xsfWindow_hasFocus = define_c_func(win,"+sfWindow_hasFocus",{C_POINTER},C_BOOL)
+
+public function sfWindow_hasFocus(atom window)
+
+ return c_func(xsfWindow_hasFocus,{window})
+	
+end function
+
+public constant xsfWindow_display = define_c_proc(win,"+sfWindow_display",{C_POINTER})
+
+public procedure sfWindow_display(atom window)
+
+ c_proc(xsfWindow_display,{window})
+	
+end procedure
+
+public constant xsfWindow_getSystemHandle = define_c_func(win,"+sfWindow_getSystemHandle",{C_POINTER},C_POINTER)
+
+public function sfWindow_getSystemHandle(atom window)
+
+ return c_func(xsfWindow_getSystemHandle,{window})
+	
+end function
+
+--Clipboard Functions (clipboard.h)
+
+public constant xsfClipboard_getString = define_c_func(win,"+sfClipboard_getString",{},C_POINTER)
+
+public function sfClipboard_getString()
+
+ return c_func(xsfClipboard_getString,{})
+	
+end function
+
+public constant xsfClipboard_getUnicodeString = define_c_func(win,"+sfClipboard_getUnicodeString",{},C_POINTER)
+
+public function sfClipboard_getUnicodeString()
+
+ return c_func(xsfClipboard_getUnicodeString,{})
+	
+end function
+
+public constant xsfClipboard_setString = define_c_proc(win,"+sfClipboard_setString",{C_POINTER})
+
+public procedure sfClipboard_setString(sequence text)
+
+ atom str = allocate_string(text,1)
+ 
+ c_proc(xsfClipboard_setString,{str})
+	
+end procedure
+
+public constant xsfClipboard_setUnicodeString = define_c_proc(win,"+sfClipboard_setUnicodeString",{C_POINTER})
+
+public procedure sfClipboard_setUnicodeString(sequence text)
+
+ atom str = allocate_string(text,1)
+ 
+ c_proc(xsfClipboard_setUnicodeString,{str})
+	
+end procedure
+
+--Context Functions (context.h)
+
+public constant xsfContext_create = define_c_func(win,"+sfContext_create",{},C_POINTER)
+
+public function sfContext_create()
+
+ return c_func(xsfContext_create,{})
+	
+end function
+
+public constant xsfContext_destroy = define_c_proc(win,"+sfContext_destroy",{C_POINTER})
+
+public procedure sfContext_destroy(atom context)
+
+ c_proc(xsfContext_destroy,{context})
+	
+end procedure
+
+public constant xsfContext_setActive = define_c_func(win,"+sfContext_setActive",{C_POINTER,C_BOOL},C_BOOL)
+
+public function sfContext_setActive(atom context,atom active)
+
+ return c_func(xsfContext_setActive,{context,active})
+	
+end function
+
+public constant xsfContext_getSettings = define_c_func(win,"+sfContext_getSettings",{C_POINTER},C_POINTER)
+
+public function sfContext_getSettings(atom context)
+
+ return c_func(xsfContext_getSettings,{context})
+	
+end function
+
+public constant xsfContext_getActiveContextId = define_c_func(win,"+sfContext_getActiveContextId",{},C_LONG)
+
+public function sfContext_getActiveContextId()
+
+ return c_func(xsfContext_getActiveContextId,{})
+	
+end function
+
+--Cursor Functions (cursor.h)
+
+public constant xsfCursor_createFromPixels = define_c_func(win,"+sfCursor_createFromPixels",{C_POINTER,C_UINT,C_UINT,C_UINT,C_UINT},C_POINTER)
+
+public function sfCursor_createFromPixels(atom pixels,atom x,atom y,atom xh,atom yh)
+
+ return c_func(xsfCursor_createFromPixels,{pixels,x,y,xh,yh})
+	
+end function
+
+public constant xsfCursor_createFromSystem = define_c_func(win,"+sfCursor_createFromSystem",{C_INT},C_POINTER)
+
+public function sfCursor_createFromSystem(sfCursorType cur)
+
+ return c_func(xsfCursor_createFromSystem,{cur})
+	
+end function
+
+public constant xsfCursor_destroy = define_c_proc(win,"+sfCursor_destroy",{C_POINTER})
+
+public procedure sfCursor_destroy(atom cur)
+
+ c_proc(xsfCursor_destroy,{cur})
+	
+end procedure
+
+--Joystick Functions (joystick.h)
+
+public constant xsfJoystick_isConnected = define_c_func(win,"+sfJoystick_isConnected",{C_UINT},C_BOOL)
+
+public function sfJoystick_isConnected(atom joy)
+
+ return c_func(xsfJoystick_isConnected,{joy})
+	
+end function
+
+public constant xsfJoystick_getButtonCount = define_c_func(win,"+sfJoystick_getButtonCount",{C_UINT},C_UINT)
+
+public function sfJoystick_getButtonCount(atom joy)
+
+ return c_func(xsfJoystick_getButtonCount,{joy})
+	
+end function
+
+public constant xsfJoystick_hasAxis = define_c_func(win,"+sfJoystick_hasAxis",{C_UINT,C_INT},C_BOOL)
+
+public function sfJoystick_hasAxis(atom joy,sfJoystickAxis ax)
+
+ return c_func(xsfJoystick_hasAxis,{joy,ax})
+	
+end function
+
+public constant xsfJoystick_isButtonPressed = define_c_func(win,"+sfJoystick_isButtonPressed",{C_UINT,C_UINT},C_BOOL)
+
+public function sfJoystick_isButtonPressed(atom joy,atom btn)
+
+ return c_func(xsfJoystick_isButtonPressed,{joy,btn})
+	
+end function
+
+public constant xsfJoystick_getAxisPosition = define_c_func(win,"+sfJoystick_getAxisPosition",{C_UINT,C_INT},C_FLOAT)
+
+public function sfJoystick_getAxisPosition(atom joy,sfJoystickAxis ax)
+
+ return c_func(xsfJoystick_getAxisPosition,{joy,ax})
+	
+end function
+
+public constant xsfJoystick_getIdentification = define_c_func(win,"+sfJoystick_getIdentification",{C_UINT},C_POINTER)
+
+public function sfJoystick_getIdentification(atom joy)
+
+ return c_func(xsfJoystick_getIdentification,{joy})
+	
+end function
+
+public constant xsfJoystick_update = define_c_proc(win,"+sfJoystick_update",{})
+
+public procedure sfJoystick_update()
+
+ c_proc(xsfJoystick_update,{})
+	
+end procedure
+
+--Keyboard Functions (keyboard.h)
+
+public constant xsfKeyboard_isKeyPressed = define_c_func(win,"+sfKeyboard_isKeyPressed",{C_INT},C_BOOL)
+
+public function sfKeyboard_isKeyPressed(sfKeyCode key)
+
+ return c_func(xsfKeyboard_isKeyPressed,{key})
+	
+end function
+
+public constant xsfKeyboard_setVirtualKeyboard = define_c_proc(win,"+sfKeyboard_setVirtualKeyboard",{C_BOOL})
+
+public procedure sfKeyboard_setVirtualKeyboard(atom visible)
+
+ c_proc(xsfKeyboard_setVirtualKeyboard,{visible})
+	
+end procedure
+
+--Mouse Functions (mouse.h)
+
+public constant xsfMouse_isButtonPressed = define_c_func(win,"+sfMouse_isButtonPressed",{C_INT},C_BOOL)
+
+public function sfMouse_isButtonPressed(sfMouseButton btn)
+
+ return c_func(xsfMouse_isButtonPressed,{btn})
+	
+end function
+
+public constant xsfMouse_getPosition = define_c_func(win,"+sfMouse_getPosition",{C_POINTER},C_INT)
+
+public function sfMouse_getPosition(atom relTo)
+
+ return c_func(xsfMouse_getPosition,{relTo})
+	
+end function
+
+public constant xsfMouse_setPosition = define_c_proc(win,"+sfMouse_setPosition",{C_INT,C_INT,C_POINTER})
+
+public procedure sfMouse_setPosition(atom x,atom y,atom relTo)
+
+ c_proc(xsfMouse_setPosition,{x,y,relTo})
+	
+end procedure
+
+--Sensor Functions (sensor.h)
+
+public constant xsfSensor_isAvailable = define_c_func(win,"+sfSensor_isAvailable",{C_INT},C_BOOL)
+
+public function sfSensor_isAvailable(sfSensorType sen)
+
+ return c_func(xsfSesnor_isAvailable,{sen})
+	
+end function
+
+public constant xsfSensor_setEnabled = define_c_proc(win,"+sfSensor_setEnabled",{C_INT,C_BOOL})
+
+public procedure sfSensor_setEnabled(sfSensorType sen,atom enabled)
+
+ c_proc(xsfSensor_setEnabled,{sen,enabled})
+	
+end procedure
+
+public constant xsfSensor_getValue = define_c_func(win,"+sfSesnor_getValue",{C_INT},C_FLOAT)
+
+public function sfSensor_getValue(atom sfSensorType sen)
+
+ return c_func(xsfSensor_getValue,{sen})
+	
+end function
+
+--Touch Functions (touch.h)
+
+public constant xsfTouch_isDown = define_c_func(win,"+sfTouch_isDown",{C_UINT},C_BOOL)
+
+public function sfTouch_isDown(atom fing)
+
+ return c_func(xsfTouch_isDown,{fing})
+	
+end function
+
+public constant xsfTouch_getPosition = define_c_func(win,"+sfTouch_getPosition",{C_UINT,C_POINTER},C_INT)
+
+public function sfTouch_getPosition(atom fing,atom relTo)
+
+ return c_func(xsfTouch_getPosition,{fing,relTo})
+	
+end function
+­4.20

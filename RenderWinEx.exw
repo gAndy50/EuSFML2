@@ -12,28 +12,21 @@ include flags.e
 
 include System.ew
 include Graphics.ew
+include Audio.ew
 
-atom width = 800
-atom height = 600
-
-atom win = sfRenderWindow_create(width,height,32,"Shape Example",sfClose,0)
+atom win = sfRenderWindow_create(800,600,32,"Hello",sfClose,0)
 
 if win = -1 then
 	puts(1,"Failed to create Render Window!\n")
 	abort(0)
 end if
 
-atom circle = sfCircleShape_create()
-atom circle_col = sfColor_fromRGB(255,0,0)
-
-atom rad = 30.0
-
-sfCircleShape_setRadius(circle,rad)
-sfCircleShape_setPosition(circle,width / 2,height / 2)
-
-sfCircleShape_setFillColor(circle,circle_col)
-
 constant event = allocate(4 * 6) --allocate memory for events
+
+atom blue = sfColor_fromRGB(0,0,255) --blue
+--Use RGB values (i.e. red is 255,0,0)
+--You can also use sfColor_fromRGBA to add in a alpha color
+--use to change color of window
 
 while sfRenderWindow_isOpen(win)  do
 
@@ -52,15 +45,12 @@ while sfRenderWindow_isOpen(win)  do
 	
  end while
  
- sfRenderWindow_clear(win,sfBLACK)
- 
- sfRenderWindow_drawCircleShape(win,circle,sfBlendEquationAdd)
+  sfRenderWindow_clear(win,sfBLACK)
  
  sfRenderWindow_display(win)
 	
 end while
 
 free(event) --free event to prevent memory leaks
-sfCircleShape_destroy(circle)
 sfRenderWindow_destroy(win)
-­47.33
+­31.0
